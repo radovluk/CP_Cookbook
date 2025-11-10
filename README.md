@@ -51,6 +51,7 @@ All input files for the notebooks are in the [`data/`](data/) folder.
 
 - [PSPLIB datasets](https://www.om-db.wi.tum.de/psplib/data.html) - Standard benchmark library for project scheduling problems (JSSP, RCPSP, MRCPSP).
 
+- [OR&S project database datasets](https://www.projectmanagement.ugent.be/research/data) 
 
 ---
 
