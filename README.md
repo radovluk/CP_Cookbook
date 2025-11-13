@@ -16,7 +16,7 @@ This repository contains Jupyter notebooks for defining, learning and experiment
 | Preemptive RCPSP | Minimize project makespan | [Preemptive RCPSP](notebooks/preemptive_rcpsp.ipynb) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/radovluk/CP_Cookbook/blob/main/notebooks/preemptive_rcpsp.ipynb) | ⚙️ Not implemented |
 | RCPSP with Sequence-Dependent Setup Times (Unary Resources) | Minimize project makespan | [RCPSP with Sequence-Dependent Setup Times (Unary Resources)](notebooks/rcpsp_setup.ipynb) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/radovluk/CP_Cookbook/blob/main/notebooks/rcpsp_setup.ipynb) | ✅ Done? |
 | RCPSP with Transfer Times | Minimize project makespan | [RCPSP with Transfer Times](notebooks/rcpsptt.ipynb) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/radovluk/CP_Cookbook/blob/main/notebooks/rcpsptt.ipynb) | ⏳ In progress |
-| RCPSP with Alternative Process Plans | Minimize project makespan | [ RCPSP with Alternative Process Plans](notebooks/alternative_plans.ipynb) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/radovluk/CP_Cookbook/blob/main/notebooks/alternative_plans.ipynb) | ⏳ In progress |
+| RCPSP with Alternative Process Plans | Minimize project makespan | [ RCPSP with Alternative Process Plans](notebooks/RCPSPAS/rcpspas.ipynb) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/radovluk/CP_Cookbook/blob/main/notebooks/RCPSPAS/rcpspas.ipynb) | ⏳ In progress |
 
 
 
