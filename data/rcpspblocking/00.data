@@ -1,0 +1,32 @@
+# Header: <num_tasks> <num_resources>
+4 2
+
+# TASK FORMAT: <task_id> <size> <num_requirements>  <num_candidates_req1> <qty_req1> <res_id1> ... <res_idN>
+
+# Task 0: Start (dummy, size=0)
+0 0 1  2 0 0 1
+
+# Task 1: Work A (size=4, needs 1 resource from {R0, R1})
+1 4 1  2 1 0 1
+
+# Task 2: Work B (size=2, needs 2 resources from {R0, R1})
+2 2 1  2 2 0 1
+
+# Task 3: End (dummy, size=0)
+3 0 1  2 0 0 1
+
+# RESOURCE FORMAT: <res_id> <num_steps> <time1> <intensity1> <time2> <intensity2> ... <final_time> <final_intensity>
+# Step function: value holds from time[i] until time[i+1]
+# intensity=100 means available (100% efficiency), intensity=0 means unavailable
+
+# RESOURCE R0 - Works 0-2 and 4-8
+# 0-2: available, 2-4: unavailable, 4-8: available
+0 4 0 100 2 0 4 100 9 0
+
+# RESOURCE R1 - Works 2-4, 6-7, and 8-9 (pause 7-8)
+# 0-2: unavailable, 2-4: available, 4-6: unavailable, 6-7: available, 7-8: pause, 8-9: available
+1 6 0 0 2 100 4 0 6 100 7 0 8 100 9 0
+
+# PRECEDENCE FORMAT: <num_precedences> <pred_task1> <succ_task1> <pred_task2> <succ_task2> ...
+# "0 1" means task 0 must finish before task 1 starts
+5 0 1 0 2 1 3 2 3 1 2 1 2
