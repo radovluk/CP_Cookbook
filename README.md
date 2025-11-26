@@ -31,6 +31,8 @@ All input files for the notebooks are in the [`data/`](data/) folder.
 
 ## 📚 Additional Resources
 
+### IBM CP Optimizer
+
 - [IBM Tutorial: Getting started with Scheduling in CPLEX for Python](https://ibmdecisionoptimization.github.io/tutorials/html/Scheduling_Tutorial.html#:~:text=In%20the%20model%2C%20each%20task,the%20solution%20to%20the%20problem.)
 
 - [Examples and guidelines for modeling and solving combinatorial optimization problems with IBM ILOG CP Optimizer](https://github.com/plaborie/cpoptimizer-examples/tree/main) - Github repo of Philippe Laborie with resources 
@@ -51,11 +53,21 @@ All input files for the notebooks are in the [`data/`](data/) folder.
   *Christian Artigues, Sönke Hartmann, Mario Vanhoucke,*  
   *European Journal of Operational Research*, Volume 328, Issue 2, 2026, pp. 367–389.
 
+### Optal CP
+
+- [Getting started with OptalCP Python API](notebooks/optalcp_python.ipynb) - Jupyter notebook with basic overview
+
+- [OptalCP docs](https://optalcp.com/docs/api/)
+
+- [OptalCP Benchmarks](https://github.com/ScheduleOpt/optalcp-benchmarks/tree/main), 
+  
+- [Benchmarks against IBM ILOG CP Optimizer](https://optalcp.com/docs/benchmarks/)
+
+### Datasets
+
 - [PSPLIB datasets](https://www.om-db.wi.tum.de/psplib/data.html) - Standard benchmark library for project scheduling problems (JSSP, RCPSP, MRCPSP).
 
 - [OR&S project database datasets](https://www.projectmanagement.ugent.be/research/data) 
-
-- [OptalCP Benchmarks](https://github.com/ScheduleOpt/optalcp-benchmarks/tree/main), [Benchmarks against IBM ILOG CP Optimizer](https://optalcp.com/docs/benchmarks/)
 ---
 
 ## 🚀 How to run locally
