@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 import sys
 from typing import Callable, Self
-
 from ortools.sat.python.cp_model import CpSolver, CpSolverSolutionCallback
 from ortools.sat.sat_parameters_pb2 import SatParameters
 
