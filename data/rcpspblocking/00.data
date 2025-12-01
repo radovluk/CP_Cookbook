@@ -20,11 +20,11 @@
 # intensity=100 means available (100% efficiency), intensity=0 means unavailable
 
 # RESOURCE R0 - Works 0-2 and 4-10
-# 0-2: available, 2-4: unavailable, 4-10: available
-0 4 0 100 2 0 4 100 10 0
+# 0-2: available, 2-4: unavailable, 4-20: available
+0 4 0 100 2 0 4 100 12 0
 
-# RESOURCE R1 - Works 2-4, 6-7, and 8-10 (pause 7-8)
-1 7 0 0 2 100 4 0 6 100 7 0 8 100 10 0
+# RESOURCE R1 - Works 2-4, 6-7, and 8-20 (pause 7-8)
+1 7 0 0 2 100 4 0 6 100 7 0 8 100 12 0
 
 # PRECEDENCE FORMAT: <num_precedences> <pred_task1> <succ_task1> <pred_task2> <succ_task2> ...
 # "0 1" means task 0 must finish before task 1 starts
