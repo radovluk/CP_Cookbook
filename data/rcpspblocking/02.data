@@ -1,31 +1,67 @@
-# Header: <num_tasks> <num_resources>
-4 2
+# Heterogeneous Policy Example
+# Type 0 = Machines (no migration), Type 1 = Workers (migration)
 
-# TASK FORMAT: <task_id> <size> <num_requirements>  <num_candidates_req1> <qty_req1> <res_id1> ... <res_idN>
+# HEADER: <num_tasks> <num_types> <num_units>
+5 2 4
 
-# Task 0: Start (dummy, size=0)
-0 0 1  2 0 0 1
+# RESOURCE TYPES
+# Format: <type_id> <num_units> <unit_id1> <unit_id2> ...
 
-# Task 1: Work A (size=4, needs 1 resource from {R0, R1})
-1 4 1  2 1 0 1
+# Type 0: Machines (units 0, 1)
+0 2 0 1
+# Type 1: Workers (units 2, 3)
+1 2 2 3
 
-# Task 2: Work B (size=2, needs 2 resources from {R0, R1})
-2 2 1  2 2 0 1
-
-# Task 3: End (dummy, size=0)
-3 0 1  2 0 0 1
-
-# RESOURCE FORMAT: <res_id> <num_steps> <time1> <intensity1> <time2> <intensity2> ... <final_time> <final_intensity>
+# RESOURCE UNITS (Calendars)
+# Format: <unit_id> <num_steps> <t1> <v1> <t2> <v2> ...
 # Step function: value holds from time[i] until time[i+1]
-# intensity=100 means available (100% efficiency), intensity=0 means unavailable
+# v=100 means available (100% efficiency), v=0 means unavailable
 
-# RESOURCE R0 - Works 0-2 and 4-8
-# 0-2: available, 2-4: unavailable, 4-8: available
-0 4 0 100 2 0 4 100 10 0
+# Machine 0: available [1-8), [9-15)
+0 5 0 0 1 100 7 0 9 100 15 0
+# Machine 1: available [0-3), [8-9), [10-15)
+1 7 0 0 2 100 3 0 8 100 9 0 10 100 15 0
+# Worker 2: available [2-3), [8-9), [10-15)
+2 7 0 0 2 100 3 0 8 100 9 0 10 100 15 0
+# Worker 3: available [1-2), [3-7), [9-10), [11-15)
+3 9 0 0 1 100 2 0 3 100 7 0 9 100 10 0 11 100 15 0
 
-# RESOURCE R1 - Works 2-4, 6-7, and 8-9 (pause 7-8)
-1 7 0 0 2 100 4 0 6 100 7 0 8 100 10 0
+# TASKS
+# Format: <task_id> <size> <num_reqs>
+# Then for each requirement: <type_id> <qty>
 
-# PRECEDENCE FORMAT: <num_precedences> <pred_task1> <succ_task1> <pred_task2> <succ_task2> ...
-# "0 1" means task 0 must finish before task 1 starts
-5 0 1 0 2 1 3 2 3 1 2
+# Task 0: Start dummy
+0 0 2
+ 0 0
+ 1 0
+
+# Task 1: needs 1 machine + 1 worker, duration 5
+1 5 2
+ 0 1
+ 1 1
+
+# Task 2: needs 1 machine + 1 worker, duration 2
+2 2 2
+ 0 1
+ 1 1
+
+# Task 3: needs 1 worker only, duration 1
+3 1 1
+ 0 1
+
+# Task 4: End dummy
+4 0 2
+ 0 0
+ 1 0
+
+# PRECEDENCES
+# Format: <num_precedences>
+# Then pairs: <pred_task> <succ_task>
+
+6
+0 1
+0 2
+0 3
+1 4
+2 4
+3 4

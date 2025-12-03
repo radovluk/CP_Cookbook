@@ -17,13 +17,13 @@
 # Step function: value holds from time[i] until time[i+1]
 # v=100 means available (100% efficiency), v=0 means unavailable
 
-# Machine 0: available [0-5), [8-12)
+# Machine 0
 0 5 0 0 1 100 8 0 9 100 15 0
-# Machine 1: available [0-3), [6-12)
+# Machine 1
 1 6 0 100 3 0 8 100 9 0 10 100 15 0
-# Worker 2: available [0-4), [7-12)
+# Worker 2
 2 7 0 0 2 100 3 0 8 100 9 0 10 100 15 0
-# Worker 3: available [2-10), [12-12)
+# Worker 3
 3 9 0 0 1 100 2 0 3 100 7 0 9 100 10 0 11 100 15 0
 
 # TASKS
