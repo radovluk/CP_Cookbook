@@ -1,42 +1,38 @@
 #!/usr/bin/env python3
 """
-RCPSP-TT Solver using IBM CP Optimizer (DOcplex)
-
-This script solves RCPSP-TT instances and outputs results in JSON format
-for benchmarking comparisons.
+IBM CP Optimizer Solver Template
 
 Usage:
-    python solve_cpo.py <instance.sm> [--timeLimit 60] [--workers 8] [--output results.json]
-
-Structure:
-    1. PARSER SECTION - Parse instance files (replace for different problems)
-    2. MODEL SECTION - Build CP model (replace for different problems)  
-    3. SOLVER SECTION - Run solver and collect results (keep as-is)
+    python solve_cpo.py instance.sm --timeLimit 60 --workers 8
+    python solve_cpo.py instance.sm --SearchType DepthFirst --NoOverlapInferenceLevel Medium
 """
 
 import json
 import argparse
+import sys
+import os
+import time
 from pathlib import Path
 from datetime import datetime
 
-# IBM CP Optimizer Python API
 from docplex.cp.model import CpoModel
 
+# Import shared config
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from config import (DEFAULTS, CPO_PARAMS, CPO_LOG_LEVELS, add_common_args,
+                    add_solver_args, get_solver_params)
+
+
 # =============================================================================
-# PARSER SECTION - Replace this for different problem types
+# PARSER SECTION - Customize per problem
 # =============================================================================
 
 def parse_instance(filepath: str) -> dict:
-    """
-    Parses a .sm file (PSPLIB format for RCPSP with transfer times)
-    and returns a dictionary with the project data.
-    
-    Replace this function for different problem formats.
-    """
+    """Parse instance file. CUSTOMIZE THIS FOR YOUR PROBLEM."""
+    import re
     with open(filepath, 'r') as f:
         content = f.read()
-
-    import re
+    
     data = {}
     
     match = re.search(r'jobs \(incl\. supersource/sink \):\s*(\d+)', content)
@@ -45,330 +41,189 @@ def parse_instance(filepath: str) -> dict:
     match = re.search(r' - renewable\s*:\s*(\d+)', content)
     data['n_resources'] = int(match.group(1)) if match else 0
     
-    n_jobs = data['n_jobs']
-    n_res = data['n_resources']
-
-    # Parse precedence relations
     data['precedence_arcs'] = []
     prec_start = content.find('PRECEDENCE RELATIONS:')
     prec_end = content.find('****************', prec_start)
-    prec_section = content[prec_start:prec_end]
-    
-    for line in prec_section.splitlines()[2:]:
+    for line in content[prec_start:prec_end].splitlines()[2:]:
         if not line.strip():
             continue
         parts = [int(p) for p in line.strip().split()]
-        if len(parts) < 3:
-            continue
-        predecessor = parts[0]
-        successors = parts[3:]
-        for succ in successors:
-            data['precedence_arcs'].append((predecessor - 1, succ - 1))
-
-    # Parse durations and demands
-    data['durations'] = []
-    data['demands'] = []
+        if len(parts) >= 4:
+            for succ in parts[3:]:
+                data['precedence_arcs'].append((parts[0] - 1, succ - 1))
+    
+    data['durations'], data['demands'] = [], []
     req_start = content.find('REQUESTS/DURATIONS:')
     req_end = content.find('****************', req_start)
-    req_section = content[req_start:req_end]
-
-    for line in req_section.splitlines()[3:]:
+    for line in content[req_start:req_end].splitlines()[3:]:
         if not line.strip():
             continue
         parts = [int(p) for p in line.strip().split()]
-        if len(parts) < 3:
-            continue
-        data['durations'].append(parts[2])
-        data['demands'].append(parts[3:])
-
-    # Parse capacities
+        if len(parts) >= 3:
+            data['durations'].append(parts[2])
+            data['demands'].append(parts[3:])
+    
     cap_start = content.find('RESOURCEAVAILABILITIES:')
     cap_end = content.find('****************', cap_start)
-    cap_section = content[cap_start:cap_end]
-    cap_line = cap_section.splitlines()[2]
+    cap_line = content[cap_start:cap_end].splitlines()[2]
     data['capacities'] = [int(p) for p in cap_line.strip().split()]
-
-    # Parse transfer times
+    
     data['transfer_times'] = []
     current_pos = cap_end
-
-    for _ in range(n_res):
+    for _ in range(data['n_resources']):
         tt_start = content.find('TRANSFERTIMES', current_pos)
         if tt_start == -1:
             break
         tt_end = content.find('****************', tt_start)
-        tt_section = content[tt_start:tt_end]
-        
         matrix = []
-        lines = tt_section.splitlines()[3:]
-        
-        for i in range(n_jobs):
-            if i >= len(lines):
+        for i, line in enumerate(content[tt_start:tt_end].splitlines()[3:]):
+            if i >= data['n_jobs']:
                 break
-            line = lines[i]
             parts = [int(p) for p in line.strip().split()]
             matrix.append(parts[1:])
-            
         data['transfer_times'].append(matrix)
         current_pos = tt_end
-        
+    
     return data
 
 
 # =============================================================================
-# MODEL SECTION - Replace this for different problem types
+# MODEL SECTION - Customize per problem
 # =============================================================================
 
-def compute_transitive_closure(edges: list, n_jobs: int) -> list:
-    """Computes transitive closure using Floyd-Warshall."""
-    adj = [[False] * n_jobs for _ in range(n_jobs)]
+def compute_transitive_closure(edges, n):
+    adj = [[False] * n for _ in range(n)]
     for i, j in edges:
         adj[i][j] = True
-    for k in range(n_jobs):
-        for i in range(n_jobs):
-            for j in range(n_jobs):
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
                 adj[i][j] = adj[i][j] or (adj[i][k] and adj[k][j])
-    return [(i, j) for i in range(n_jobs) for j in range(n_jobs) if adj[i][j]]
+    return [(i, j) for i in range(n) for j in range(n) if adj[i][j]]
 
 
-def compute_possible_transfers(abs_A: int, abs_R: int, Q: list, C: list, E: list, 
-                                max_flow_limit: int = 1000) -> dict:
-    """Generates feasible transfers T and upper bounds U."""
-    T = {}
-    E_set = set(E)
-    for i in range(abs_A):
-        for j in range(abs_A):
+def compute_transfers(n_jobs, n_res, Q, C, E, limit=1000):
+    T, E_set = {}, set(E)
+    for i in range(n_jobs):
+        for j in range(n_jobs):
             if i == j or (j, i) in E_set:
                 continue
-            for r in range(abs_R):
-                source_has = (i == 0 or Q[i][r] > 0)
-                target_needs = (j == abs_A - 1 or Q[j][r] > 0)
-                if source_has and target_needs:
-                    max_flow = C[r] if i == 0 else min(Q[i][r], C[r])
-                    T[(i, j, r)] = min(max_flow, max_flow_limit)
+            for r in range(n_res):
+                src = (i == 0 or Q[i][r] > 0)
+                tgt = (j == n_jobs - 1 or Q[j][r] > 0)
+                if src and tgt:
+                    T[(i, j, r)] = min(C[r] if i == 0 else min(Q[i][r], C[r]), limit)
     return T
 
 
-class ModelInfo:
-    """Container for model statistics."""
-    def __init__(self):
-        self.nb_int_vars = 0
-        self.nb_interval_vars = 0
-        self.nb_constraints = 0
-
-
-def build_model(data: dict, model_name: str) -> tuple:
-    """
-    Build the RCPSP-TT model using IBM CP Optimizer (DOcplex).
+def build_model(data: dict, name: str) -> tuple:
+    """Build CP model. CUSTOMIZE THIS FOR YOUR PROBLEM. Returns (model, info)."""
+    n, n_res = data['n_jobs'], data['n_resources']
+    p, C = data['durations'], data['capacities']
+    Q = [row[:] for row in data['demands']]
+    Q[0], Q[n-1] = C[:], C[:]
+    E = compute_transitive_closure(data['precedence_arcs'], n)
+    Delta = [[[data['transfer_times'][r][i][j] for r in range(n_res)] 
+              for j in range(n)] for i in range(n)]
+    T = compute_transfers(n, n_res, Q, C, E)
     
-    Replace this function for different problem types.
-    Returns: (CpoModel, ModelInfo)
-    """
-    abs_A = data['n_jobs']
-    abs_R = data['n_resources']
-    p = data['durations']
-    C = data['capacities']
-    Q = [row[:] for row in data['demands']]  # Copy to avoid mutation
-    E = compute_transitive_closure(data['precedence_arcs'], abs_A)
-
-    # Enforce Q[0,r] = Cr and Q[last,r] = Cr
-    Q[0] = C[:]
-    Q[abs_A - 1] = C[:]
-
-    # Reorganize transfer times: Delta[i][j][r]
-    Delta = [[[data['transfer_times'][r][i][j] for r in range(abs_R)] 
-              for j in range(abs_A)] for i in range(abs_A)]
-
-    T = compute_possible_transfers(abs_A, abs_R, Q, C, E)
-
-    # Create model
-    mdl = CpoModel(name=model_name)
-    info = ModelInfo()
-
-    # =========================================================================
+    mdl = CpoModel(name=name)
+    info = {"nb_int_vars": 0, "nb_interval_vars": 0, "nb_constraints": 0}
+    
     # Variables
-    # =========================================================================
+    a = [mdl.interval_var(size=p[i], name=f'a_{i}') for i in range(n)]
+    info["nb_interval_vars"] += n
     
-    # (10a): a_i - mandatory interval variables for activities
-    a = [mdl.interval_var(size=p[i], name=f'a_{i}') for i in range(abs_A)]
-    info.nb_interval_vars += abs_A
-
-    # (10b): f_{i,j,r} - integer flow variables (non-optional for CPO compatibility)
-    f = {}
-    for (i, j, r), U_ijr in T.items():
-        f[(i, j, r)] = mdl.integer_var(min=0, max=U_ijr, name=f'f_{i}_{j}_{r}')
-        info.nb_int_vars += 1
-
-    # (10c): z_{i,j,r} - optional interval variables for transfers
-    z = {}
-    for (i, j, r) in T.keys():
-        z[(i, j, r)] = mdl.interval_var(size=Delta[i][j][r], optional=True,
-                                         name=f'z_{i}_{j}_{r}')
-        info.nb_interval_vars += 1
-
-    # Helper: pulse expressions for cumulative constraint
-    cumul_pulses = {}
-    for (i, j, r) in T.keys():
-        if Delta[i][j][r] > 0:
-            cumul_pulses[(i, j, r)] = mdl.pulse(z[(i, j, r)], (0, T[(i, j, r)]))
-
-    # =========================================================================
+    f = {k: mdl.integer_var(min=0, max=v, name=f'f_{k}') for k, v in T.items()}
+    info["nb_int_vars"] += len(f)
+    
+    z = {k: mdl.interval_var(size=Delta[k[0]][k[1]][k[2]], optional=True, name=f'z_{k}') 
+         for k in T}
+    info["nb_interval_vars"] += len(z)
+    
+    cumul_pulses = {k: mdl.pulse(z[k], (0, T[k])) for k in T if Delta[k[0]][k[1]][k[2]] > 0}
+    
+    # Objective
+    mdl.add(mdl.minimize(mdl.end_of(a[n-1])))
+    info["nb_constraints"] += 1
+    
     # Constraints
-    # =========================================================================
-
-    # (1) Objective: Minimize makespan
-    mdl.add(mdl.minimize(mdl.end_of(a[abs_A - 1])))
-    info.nb_constraints += 1
-
-    # (2) Precedence relations
-    for (i, j) in E:
+    for i, j in E:
         mdl.add(mdl.end_before_start(a[i], a[j]))
-        info.nb_constraints += 1
-
-    # (3) Source flow initialization
-    for r in range(abs_R):
-        outgoing = [f[(0, j, r)] for j in range(abs_A) if (0, j, r) in T]
-        if outgoing:
-            mdl.add(mdl.sum(outgoing) == C[r])
-            info.nb_constraints += 1
-
-    # (4) Presence synchronization (bidirectional for CPO)
-    for (i, j, r) in T.keys():
-        if Delta[i][j][r] == 0:
-            # Instantaneous transfers: use bidirectional implications
-            mdl.add(mdl.if_then(f[(i, j, r)] >= 1, mdl.presence_of(z[(i, j, r)])))
-            mdl.add(mdl.if_then(mdl.presence_of(z[(i, j, r)]), f[(i, j, r)] >= 1))
-            info.nb_constraints += 2
+        info["nb_constraints"] += 1
+    
+    for r in range(n_res):
+        out = [f[(0, j, r)] for j in range(n) if (0, j, r) in T]
+        if out:
+            mdl.add(mdl.sum(out) == C[r])
+            info["nb_constraints"] += 1
+    
+    for k in T:
+        if Delta[k[0]][k[1]][k[2]] == 0:
+            mdl.add(mdl.if_then(f[k] >= 1, mdl.presence_of(z[k])))
+            mdl.add(mdl.if_then(mdl.presence_of(z[k]), f[k] >= 1))
+            info["nb_constraints"] += 2
         else:
-            # Durative transfers: height_at_start links flow and presence
-            mdl.add(f[(i, j, r)] == mdl.height_at_start(z[(i, j, r)], cumul_pulses[(i, j, r)]))
-            info.nb_constraints += 1
-
-    # (5) Flow conservation (into activity)
-    for i in range(1, abs_A):
-        for r in range(abs_R):
+            mdl.add(f[k] == mdl.height_at_start(z[k], cumul_pulses[k]))
+            info["nb_constraints"] += 1
+    
+    for i in range(1, n):
+        for r in range(n_res):
             if Q[i][r] > 0:
-                incoming = [f[(j, i, r)] for j in range(abs_A) if (j, i, r) in T]
-                if incoming:
-                    mdl.add(mdl.sum(incoming) == Q[i][r])
-                    info.nb_constraints += 1
-
-    # (6) Flow conservation (out of activity)
-    for i in range(1, abs_A - 1):
-        for r in range(abs_R):
+                inc = [f[(j, i, r)] for j in range(n) if (j, i, r) in T]
+                if inc:
+                    mdl.add(mdl.sum(inc) == Q[i][r])
+                    info["nb_constraints"] += 1
+    
+    for i in range(1, n-1):
+        for r in range(n_res):
             if Q[i][r] > 0:
-                outgoing = [f[(i, j, r)] for j in range(abs_A) if (i, j, r) in T]
-                if outgoing:
-                    mdl.add(mdl.sum(outgoing) == Q[i][r])
-                    info.nb_constraints += 1
-
-    # (7) Temporal linking
-    for (i, j, r) in T.keys():
-        mdl.add(mdl.end_before_start(a[i], z[(i, j, r)]))
-        mdl.add(mdl.end_before_start(z[(i, j, r)], a[j]))
-        info.nb_constraints += 2
-
-    # (8) Resource capacity (cumulative constraint)
-    for r in range(abs_R):
-        pulses = []
-        # Activity contributions
-        for i in range(abs_A):
-            if Q[i][r] > 0:
-                pulses.append(mdl.pulse(a[i], Q[i][r]))
-        # Transfer contributions
-        for (i, j, res), pulse in cumul_pulses.items():
-            if res == r:
-                pulses.append(pulse)
+                out = [f[(i, j, r)] for j in range(n) if (i, j, r) in T]
+                if out:
+                    mdl.add(mdl.sum(out) == Q[i][r])
+                    info["nb_constraints"] += 1
+    
+    for k in T:
+        mdl.add(mdl.end_before_start(a[k[0]], z[k]))
+        mdl.add(mdl.end_before_start(z[k], a[k[1]]))
+        info["nb_constraints"] += 2
+    
+    for r in range(n_res):
+        pulses = [mdl.pulse(a[i], Q[i][r]) for i in range(n) if Q[i][r] > 0]
+        pulses += [cumul_pulses[k] for k in cumul_pulses if k[2] == r]
         if pulses:
             mdl.add(mdl.sum(pulses) <= C[r])
-            info.nb_constraints += 1
-
+            info["nb_constraints"] += 1
+    
     return mdl, info
 
 
 # =============================================================================
-# SOLVER SECTION - Keep this as-is for most problems
+# SOLVER SECTION - Generic, keep as-is
 # =============================================================================
 
-def get_solver_parameters(time_limit: int, workers: int, **kwargs) -> dict:
-    """
-    Returns solver parameters dict matching OptalCP configuration.
+def solve(filepath: str, time_limit: int, workers: int, log_level: str,
+          solver_params: dict) -> dict:
+    """Solve instance and return results."""
+    name = Path(filepath).stem
+    data = parse_instance(filepath)
+    mdl, info = build_model(data, name)
     
-    Parameter mapping (OptalCP → CPO):
-    - timeLimit → TimeLimit (seconds)
-    - nbWorkers → Workers
-    - searchType="FDSLB" → SearchType="Restart" + FailureDirectedSearch="On"
-    - noOverlapPropagationLevel=4 → NoOverlapInferenceLevel="Extended"
-    - cumulPropagationLevel=3 → CumulFunctionInferenceLevel="Extended"  
-    - reservoirPropagationLevel=2 → (no direct equivalent, handled internally)
-    - usePrecedenceEnergy=1 → PrecedenceInferenceLevel="Extended"
-    - logLevel → LogVerbosity
-    - logPeriod (seconds) → LogPeriod (branches, ~5000 for similar frequency)
-    """
-    # Map log level: OptalCP uses 0-3, CPO uses symbolic
-    log_level = kwargs.get('log_level', 2)
-    log_verbosity_map = {0: 'Quiet', 1: 'Terse', 2: 'Normal', 3: 'Verbose'}
-    log_verbosity = log_verbosity_map.get(log_level, 'Normal')
-    
-    return {
-        # Basic limits
+    params = {
         "TimeLimit": time_limit,
         "Workers": workers,
-        
-        # Search configuration (matching FDSLB behavior)
-        "SearchType": "Restart",
-        "FailureDirectedSearch": "On",
-        
-        # Inference levels (matching OptalCP propagation levels)
-        # OptalCP level 4 = highest → CPO "Extended"
-        # OptalCP level 3 = high → CPO "Extended" or "Medium"
-        # OptalCP level 2 = medium → CPO "Medium"
-        "NoOverlapInferenceLevel": "Extended",      # matches noOverlapPropagationLevel=4
-        "CumulFunctionInferenceLevel": "Extended",  # matches cumulPropagationLevel=3
-        "PrecedenceInferenceLevel": "Extended",     # matches usePrecedenceEnergy=1
-        
-        # Logging
-        "LogVerbosity": log_verbosity,
-        "LogPeriod": 5000,  # branches (OptalCP uses 5 seconds)
+        "LogVerbosity": log_level,
+        **solver_params
     }
-
-
-def solve_instance(filepath: str, time_limit: int = 60, workers: int = 8, 
-                   log_level: int = 2) -> dict:
-    """
-    Solve a single instance and return results in benchmark format.
-    """
-    import time
-    model_name = Path(filepath).stem
     
-    # Parse instance
-    data = parse_instance(filepath)
-    
-    # Build model
-    mdl, info = build_model(data, model_name)
-    
-    # Get parameters
-    params = get_solver_parameters(time_limit, workers, log_level=log_level)
-    
-    # Solve
-    start_time = time.time()
+    start = time.time()
     solution = mdl.solve(**params)
-    solve_time = time.time() - start_time
+    duration = time.time() - start
     
-    # Build output in benchmark format
     output = {
-        "modelName": model_name,
-        "duration": solve_time,
-        "solver": "IBM CP Optimizer (DOcplex)",
-        "nbWorkers": workers,
-        "objectiveSense": "minimize",
-        "nbIntVars": info.nb_int_vars,
-        "nbIntervalVars": info.nb_interval_vars,
-        "nbConstraints": info.nb_constraints,
-        "solveDate": datetime.now().isoformat() + "Z",
-        "parameters": params,
-        
-        # Initialize defaults
+        "modelName": name,
+        "duration": duration,
+        "solver": "IBM CP Optimizer",
         "objective": None,
         "lowerBound": None,
         "bestSolution": None,
@@ -381,41 +236,43 @@ def solve_instance(filepath: str, time_limit: int = 60, workers: int = 8,
         "nbLNSSteps": 0,
         "nbRestarts": 0,
         "memoryUsed": 0,
+        "nbIntVars": info["nb_int_vars"],
+        "nbIntervalVars": info["nb_interval_vars"],
+        "nbConstraints": info["nb_constraints"],
+        "nbWorkers": workers,
+        "objectiveSense": "minimize",
+        "solveDate": datetime.now().isoformat() + "Z",
+        "parameters": params,
         "objectiveHistory": [],
         "lowerBoundHistory": [],
     }
-
+    
     if solution:
-        solve_status = solution.get_solve_status()
-        obj_values = solution.get_objective_values()
+        status = solution.get_solve_status()
+        obj = solution.get_objective_values()
+        solver_info = solution.get_solver_infos()
         
-        if obj_values:
-            obj_value = int(obj_values[0])
-            output["objective"] = obj_value
-            output["bestSolution"] = obj_value
+        if obj:
+            output["objective"] = int(obj[0])
+            output["bestSolution"] = int(obj[0])
             output["nbSolutions"] = 1
             
-            # Get solver info
-            solver_info = solution.get_solver_infos()
             if solver_info:
                 output["nbBranches"] = solver_info.get('NumberOfBranches', 0)
                 output["nbFails"] = solver_info.get('NumberOfFails', 0)
                 output["nbRestarts"] = solver_info.get('NumberOfRestarts', 0)
                 output["memoryUsed"] = solver_info.get('MemoryUsage', 0)
-                output["bestSolutionTime"] = solver_info.get('SolveTime', solve_time)
-                nb_sol = solver_info.get('NumberOfSolutions', 1)
-                if nb_sol:
-                    output["nbSolutions"] = nb_sol
+                output["bestSolutionTime"] = solver_info.get('SolveTime', duration)
+                output["nbSolutions"] = solver_info.get('NumberOfSolutions', 1) or 1
             else:
-                output["bestSolutionTime"] = solve_time
+                output["bestSolutionTime"] = duration
             
             output["objectiveHistory"].append({
-                "objective": obj_value,
+                "objective": output["objective"],
                 "solveTime": output["bestSolutionTime"]
             })
         
-        # Check optimality
-        if solve_status == 'Optimal':
+        if status == 'Optimal':
             output["proof"] = True
             output["lowerBound"] = output["objective"]
             output["bestLBTime"] = output["bestSolutionTime"]
@@ -423,60 +280,46 @@ def solve_instance(filepath: str, time_limit: int = 60, workers: int = 8,
                 "value": output["objective"],
                 "solveTime": output["bestLBTime"]
             })
-        elif solve_status == 'Feasible':
-            output["proof"] = False
-            if solver_info:
-                lb = solver_info.get('BestBound')
-                if lb is not None:
-                    output["lowerBound"] = int(lb)
-                    output["lowerBoundHistory"].append({
-                        "value": int(lb),
-                        "solveTime": solve_time
-                    })
-        elif solve_status == 'Infeasible':
-            output["proof"] = "Infeasible"
+        elif status == 'Feasible' and solver_info:
+            lb = solver_info.get('BestBound')
+            if lb is not None:
+                output["lowerBound"] = int(lb)
+                output["lowerBoundHistory"].append({
+                    "value": int(lb),
+                    "solveTime": duration
+                })
     
     return output
 
 
 def main():
     parser = argparse.ArgumentParser(description='Solve with IBM CP Optimizer')
-    parser.add_argument('instances', nargs='+', help='Instance file(s)')
-    parser.add_argument('--timeLimit', type=int, default=60, help='Time limit in seconds')
-    parser.add_argument('--workers', type=int, default=8, help='Number of workers')
-    parser.add_argument('--output', type=str, help='Output JSON file')
-    parser.add_argument('--logLevel', type=str, default='Quiet', 
-                        choices=['Quiet', 'Terse', 'Normal', 'Verbose'],
-                        help='Log verbosity level')
-    
+    add_common_args(parser)
+    add_solver_args(parser, CPO_PARAMS)
     args = parser.parse_args()
     
+    # Convert log level
+    log_level = args.logLevel
+    if str(log_level).isdigit():
+        log_level = CPO_LOG_LEVELS.get(int(log_level), 'Quiet')
+    
+    solver_params = get_solver_params(args, CPO_PARAMS)
+    
     results = []
-    for instance in args.instances:
-        print(f"Solving {instance}...")
+    for inst in args.instances:
+        print(f"Solving {inst}...")
         try:
-            result = solve_instance(
-                instance, 
-                time_limit=args.timeLimit,
-                workers=args.workers,
-                log_level=args.logLevel
-            )
-            results.append(result)
-            status = "Optimal" if result.get('proof') == True else "Feasible" if result.get('objective') else "No solution"
-            print(f"  Objective: {result.get('objective', 'No solution')} ({status}) in {result['duration']:.3f}s")
+            r = solve(inst, args.timeLimit, args.workers, log_level, solver_params)
+            results.append(r)
+            status = "Optimal" if r.get('proof') else "Feasible" if r.get('objective') else "No solution"
+            print(f"  {r.get('objective', '-')} ({status}) in {r['duration']:.2f}s")
         except Exception as e:
             print(f"  Error: {e}")
-            import traceback
-            traceback.print_exc()
-            results.append({
-                "modelName": Path(instance).stem,
-                "error": str(e)
-            })
+            results.append({"modelName": Path(inst).stem, "error": str(e)})
     
     if args.output:
         with open(args.output, 'w') as f:
             json.dump(results, f, indent=2)
-        print(f"\nResults saved to {args.output}")
     else:
         print(json.dumps(results, indent=2))
 

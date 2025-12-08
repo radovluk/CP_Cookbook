@@ -1,0 +1,1142 @@
+[
+  {
+    "modelName": "aslib0_0a",
+    "duration": 0.06121087074279785,
+    "solver": "IBM CP Optimizer",
+    "objective": 100,
+    "lowerBound": 100,
+    "bestSolution": 100,
+    "bestSolutionTime": 0.03,
+    "bestLBTime": 0.03,
+    "proof": true,
+    "nbSolutions": 4,
+    "nbBranches": 8043,
+    "nbFails": 2035,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 10343290,
+    "nbIntVars": 0,
+    "nbIntervalVars": 122,
+    "nbConstraints": 348,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:44:11.030976Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 100,
+        "solveTime": 0.03
+      }
+    ],
+    "lowerBoundHistory": [
+      {
+        "value": 100,
+        "solveTime": 0.03
+      }
+    ]
+  },
+  {
+    "modelName": "aslib0_0b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_0b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10000a",
+    "duration": 60.02718949317932,
+    "solver": "IBM CP Optimizer",
+    "objective": 243,
+    "lowerBound": null,
+    "bestSolution": 243,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 3,
+    "nbBranches": 18875945,
+    "nbFails": 7752950,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15569530,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 330,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:45:11.065068Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 243,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10000b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10000b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10001a",
+    "duration": 60.032299518585205,
+    "solver": "IBM CP Optimizer",
+    "objective": 225,
+    "lowerBound": null,
+    "bestSolution": 225,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 6,
+    "nbBranches": 18031086,
+    "nbFails": 7437721,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15772250,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 355,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:46:11.114683Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 225,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10001b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10001b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10002a",
+    "duration": 60.031895875930786,
+    "solver": "IBM CP Optimizer",
+    "objective": 228,
+    "lowerBound": null,
+    "bestSolution": 228,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 8,
+    "nbBranches": 18144879,
+    "nbFails": 7491645,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15349010,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 338,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:47:11.194570Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 228,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10002b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10002b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10003a",
+    "duration": 60.032527685165405,
+    "solver": "IBM CP Optimizer",
+    "objective": 230,
+    "lowerBound": null,
+    "bestSolution": 230,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 2,
+    "nbBranches": 17781437,
+    "nbFails": 7418022,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15958474,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 346,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:48:11.244828Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 230,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10003b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10003b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10004a",
+    "duration": 60.03244757652283,
+    "solver": "IBM CP Optimizer",
+    "objective": 244,
+    "lowerBound": null,
+    "bestSolution": 244,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 3,
+    "nbBranches": 17441497,
+    "nbFails": 7264370,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15511730,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 339,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:49:11.294776Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 244,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10004b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10004b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10005a",
+    "duration": 60.02347922325134,
+    "solver": "IBM CP Optimizer",
+    "objective": 219,
+    "lowerBound": null,
+    "bestSolution": 219,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 2,
+    "nbBranches": 18873617,
+    "nbFails": 7804105,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15487818,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 339,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:50:11.325660Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 219,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10005b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10005b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10006a",
+    "duration": 60.03199791908264,
+    "solver": "IBM CP Optimizer",
+    "objective": 241,
+    "lowerBound": null,
+    "bestSolution": 241,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 5,
+    "nbBranches": 18087998,
+    "nbFails": 7434121,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15546050,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 349,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:51:11.364878Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 241,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10006b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10006b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10007a",
+    "duration": 60.032193422317505,
+    "solver": "IBM CP Optimizer",
+    "objective": 253,
+    "lowerBound": null,
+    "bestSolution": 253,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 2,
+    "nbBranches": 18586771,
+    "nbFails": 7596805,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15889434,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 361,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:52:11.404880Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 253,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10007b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10007b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10008a",
+    "duration": 60.03298830986023,
+    "solver": "IBM CP Optimizer",
+    "objective": 225,
+    "lowerBound": null,
+    "bestSolution": 225,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 2,
+    "nbBranches": 19016638,
+    "nbFails": 7818200,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15814418,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 364,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:53:11.445692Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 225,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10008b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10008b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10009a",
+    "duration": 60.033374309539795,
+    "solver": "IBM CP Optimizer",
+    "objective": 230,
+    "lowerBound": null,
+    "bestSolution": 230,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 3,
+    "nbBranches": 16839529,
+    "nbFails": 6976752,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15495394,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 362,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:54:11.904912Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 230,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10009b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10009b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_1000a",
+    "duration": 0.048075199127197266,
+    "solver": "IBM CP Optimizer",
+    "objective": 88,
+    "lowerBound": 88,
+    "bestSolution": 88,
+    "bestSolutionTime": 0.02,
+    "bestLBTime": 0.02,
+    "proof": true,
+    "nbSolutions": 3,
+    "nbBranches": 4458,
+    "nbFails": 565,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 10367130,
+    "nbIntVars": 0,
+    "nbIntervalVars": 122,
+    "nbConstraints": 354,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:54:11.960381Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 88,
+        "solveTime": 0.02
+      }
+    ],
+    "lowerBoundHistory": [
+      {
+        "value": 88,
+        "solveTime": 0.02
+      }
+    ]
+  },
+  {
+    "modelName": "aslib0_1000b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_1000b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10010a",
+    "duration": 60.03773617744446,
+    "solver": "IBM CP Optimizer",
+    "objective": 209,
+    "lowerBound": null,
+    "bestSolution": 209,
+    "bestSolutionTime": 60.02,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 4,
+    "nbBranches": 19104580,
+    "nbFails": 7734103,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15487266,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 349,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:55:12.005114Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 209,
+        "solveTime": 60.02
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10010b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10010b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10011a",
+    "duration": 60.03410053253174,
+    "solver": "IBM CP Optimizer",
+    "objective": 232,
+    "lowerBound": null,
+    "bestSolution": 232,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 5,
+    "nbBranches": 18409285,
+    "nbFails": 7534683,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15299970,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 343,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:56:12.045053Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 232,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10011b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10011b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10012a",
+    "duration": 60.03427982330322,
+    "solver": "IBM CP Optimizer",
+    "objective": 253,
+    "lowerBound": null,
+    "bestSolution": 253,
+    "bestSolutionTime": 60.02,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 3,
+    "nbBranches": 17737848,
+    "nbFails": 7270388,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15634082,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 359,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:57:12.085443Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 253,
+        "solveTime": 60.02
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10012b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10012b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10013a",
+    "duration": 60.03297781944275,
+    "solver": "IBM CP Optimizer",
+    "objective": 251,
+    "lowerBound": null,
+    "bestSolution": 251,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 5,
+    "nbBranches": 19876909,
+    "nbFails": 8185792,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15614130,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 350,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:58:12.125172Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 251,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10013b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10013b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10014a",
+    "duration": 60.03246307373047,
+    "solver": "IBM CP Optimizer",
+    "objective": 265,
+    "lowerBound": null,
+    "bestSolution": 265,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 2,
+    "nbBranches": 17364088,
+    "nbFails": 7150272,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15540138,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 363,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:59:12.165471Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 265,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10014b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10014b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10015a",
+    "duration": 60.035913705825806,
+    "solver": "IBM CP Optimizer",
+    "objective": 247,
+    "lowerBound": null,
+    "bestSolution": 247,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 3,
+    "nbBranches": 17838023,
+    "nbFails": 7244551,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 14890194,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 347,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T17:00:12.208615Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 247,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10015b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10015b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10016a",
+    "duration": 60.028235912323,
+    "solver": "IBM CP Optimizer",
+    "objective": 269,
+    "lowerBound": null,
+    "bestSolution": 269,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 1,
+    "nbBranches": 18680800,
+    "nbFails": 7574441,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15633266,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 365,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T17:01:12.244794Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 269,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10016b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10016b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10017a",
+    "duration": 60.03281879425049,
+    "solver": "IBM CP Optimizer",
+    "objective": 242,
+    "lowerBound": null,
+    "bestSolution": 242,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 7,
+    "nbBranches": 18819787,
+    "nbFails": 7708190,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15461466,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 349,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T17:02:12.284803Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 242,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10017b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10017b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10018a",
+    "duration": 60.029369592666626,
+    "solver": "IBM CP Optimizer",
+    "objective": 213,
+    "lowerBound": null,
+    "bestSolution": 213,
+    "bestSolutionTime": 60,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 6,
+    "nbBranches": 18516671,
+    "nbFails": 7649844,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 16022042,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 351,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T17:03:12.780357Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 213,
+        "solveTime": 60
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10018b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10018b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10019a",
+    "duration": 60.028300523757935,
+    "solver": "IBM CP Optimizer",
+    "objective": 223,
+    "lowerBound": null,
+    "bestSolution": 223,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 4,
+    "nbBranches": 19985548,
+    "nbFails": 8079418,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 16213586,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 348,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T17:04:12.814888Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 223,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10019b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10019b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_1001a",
+    "duration": 0.04670095443725586,
+    "solver": "IBM CP Optimizer",
+    "objective": 96,
+    "lowerBound": 96,
+    "bestSolution": 96,
+    "bestSolutionTime": 0.03,
+    "bestLBTime": 0.03,
+    "proof": true,
+    "nbSolutions": 2,
+    "nbBranches": 4989,
+    "nbFails": 1143,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 10410714,
+    "nbIntVars": 0,
+    "nbIntervalVars": 122,
+    "nbConstraints": 348,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T17:04:12.868252Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 96,
+        "solveTime": 0.03
+      }
+    ],
+    "lowerBoundHistory": [
+      {
+        "value": 96,
+        "solveTime": 0.03
+      }
+    ]
+  },
+  {
+    "modelName": "aslib0_1001b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_1001b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10020a",
+    "duration": 60.02886652946472,
+    "solver": "IBM CP Optimizer",
+    "objective": 208,
+    "lowerBound": null,
+    "bestSolution": 208,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 7,
+    "nbBranches": 16450122,
+    "nbFails": 6896750,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15307074,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 342,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T17:05:12.904720Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 208,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10020b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10020b.RCP, please provide it manually"
+  },
+  {
+    "modelName": "aslib0_10021a",
+    "duration": 60.024357318878174,
+    "solver": "IBM CP Optimizer",
+    "objective": 216,
+    "lowerBound": null,
+    "bestSolution": 216,
+    "bestSolutionTime": 60.01,
+    "bestLBTime": null,
+    "proof": false,
+    "nbSolutions": 3,
+    "nbBranches": 19129809,
+    "nbFails": 7937533,
+    "nbLNSSteps": 0,
+    "nbRestarts": 0,
+    "memoryUsed": 15791402,
+    "nbIntVars": 0,
+    "nbIntervalVars": 123,
+    "nbConstraints": 343,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T17:06:12.934846Z",
+    "parameters": {
+      "TimeLimit": 60,
+      "Workers": 8,
+      "LogVerbosity": "Quiet",
+      "SearchType": "Restart",
+      "FailureDirectedSearch": "On",
+      "NoOverlapInferenceLevel": "Extended",
+      "CumulFunctionInferenceLevel": "Extended",
+      "PrecedenceInferenceLevel": "Extended",
+      "LogPeriod": 5000
+    },
+    "objectiveHistory": [
+      {
+        "objective": 216,
+        "solveTime": 60.01
+      }
+    ],
+    "lowerBoundHistory": []
+  },
+  {
+    "modelName": "aslib0_10021b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/data/rcpspas/ASLIB/ASLIB0/aslib0_10021b.RCP, please provide it manually"
+  }
+]

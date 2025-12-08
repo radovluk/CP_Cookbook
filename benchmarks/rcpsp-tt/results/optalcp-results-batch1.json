@@ -1,0 +1,958 @@
+[
+  {
+    "modelName": "j12010_a",
+    "duration": 3.438252167,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 79.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 0.642423296,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 15093,
+    "nbFails": 2026,
+    "nbLNSSteps": 0,
+    "nbRestarts": 17,
+    "memoryUsed": 922684074,
+    "nbIntVars": 13514,
+    "nbIntervalVars": 13636,
+    "nbConstraints": 42465,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:07:09.591789Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 79.0,
+        "solveTime": 0.642423296
+      }
+    ]
+  },
+  {
+    "modelName": "j12010_b",
+    "duration": 60.00818038,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 95.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 0.693817381,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 346100,
+    "nbFails": 115761,
+    "nbLNSSteps": 0,
+    "nbRestarts": 176,
+    "memoryUsed": 939760742,
+    "nbIntVars": 13396,
+    "nbIntervalVars": 13518,
+    "nbConstraints": 42265,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:08:10.584604Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 95.0,
+        "solveTime": 0.693817381
+      }
+    ]
+  },
+  {
+    "modelName": "j12011_a",
+    "duration": 60.013095534,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 187.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 3.01300388,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 22275,
+    "nbFails": 5984,
+    "nbLNSSteps": 0,
+    "nbRestarts": 70,
+    "memoryUsed": 1491081218,
+    "nbIntVars": 29828,
+    "nbIntervalVars": 29950,
+    "nbConstraints": 91763,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:09:12.534945Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 182.0,
+        "solveTime": 1.88574059
+      },
+      {
+        "value": 183.0,
+        "solveTime": 2.149065473
+      },
+      {
+        "value": 184.0,
+        "solveTime": 2.415107654
+      },
+      {
+        "value": 185.0,
+        "solveTime": 2.462920766
+      },
+      {
+        "value": 186.0,
+        "solveTime": 2.966348496
+      },
+      {
+        "value": 187.0,
+        "solveTime": 3.01300388
+      }
+    ]
+  },
+  {
+    "modelName": "j12011_b",
+    "duration": 60.015334956,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 151.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 2.50438999,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 26222,
+    "nbFails": 5786,
+    "nbLNSSteps": 0,
+    "nbRestarts": 57,
+    "memoryUsed": 1491717918,
+    "nbIntVars": 29976,
+    "nbIntervalVars": 30098,
+    "nbConstraints": 92147,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:10:14.697460Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 147.0,
+        "solveTime": 1.785241405
+      },
+      {
+        "value": 148.0,
+        "solveTime": 2.106205902
+      },
+      {
+        "value": 150.0,
+        "solveTime": 2.232182199
+      },
+      {
+        "value": 151.0,
+        "solveTime": 2.50438999
+      }
+    ]
+  },
+  {
+    "modelName": "j12012_a",
+    "duration": 60.019335992,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 142.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 2.297053902,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 24465,
+    "nbFails": 4665,
+    "nbLNSSteps": 0,
+    "nbRestarts": 40,
+    "memoryUsed": 1490742022,
+    "nbIntVars": 29774,
+    "nbIntervalVars": 29896,
+    "nbConstraints": 91532,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:11:16.964612Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 141.0,
+        "solveTime": 1.915128618
+      },
+      {
+        "value": 142.0,
+        "solveTime": 2.297053902
+      }
+    ]
+  },
+  {
+    "modelName": "j12012_b",
+    "duration": 60.01892961,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 112.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 3.394783222,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 11223,
+    "nbFails": 2632,
+    "nbLNSSteps": 0,
+    "nbRestarts": 32,
+    "memoryUsed": 1491541754,
+    "nbIntVars": 30082,
+    "nbIntervalVars": 30204,
+    "nbConstraints": 92384,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:12:20.202779Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 109.0,
+        "solveTime": 2.53668389
+      },
+      {
+        "value": 110.0,
+        "solveTime": 2.833943902
+      },
+      {
+        "value": 111.0,
+        "solveTime": 3.13776481
+      },
+      {
+        "value": 112.0,
+        "solveTime": 3.394783222
+      }
+    ]
+  },
+  {
+    "modelName": "j12013_a",
+    "duration": 60.015641659,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 114.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 4.751195733,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 15269,
+    "nbFails": 3022,
+    "nbLNSSteps": 0,
+    "nbRestarts": 34,
+    "memoryUsed": 1826942690,
+    "nbIntVars": 30038,
+    "nbIntervalVars": 30160,
+    "nbConstraints": 92427,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:13:25.058281Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 112.0,
+        "solveTime": 3.572461907
+      },
+      {
+        "value": 113.0,
+        "solveTime": 4.094854554
+      },
+      {
+        "value": 114.0,
+        "solveTime": 4.751195733
+      }
+    ]
+  },
+  {
+    "modelName": "j12013_b",
+    "duration": 60.016144415,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 89.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 4.000657143,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 15572,
+    "nbFails": 2880,
+    "nbLNSSteps": 0,
+    "nbRestarts": 29,
+    "memoryUsed": 1845308014,
+    "nbIntVars": 30404,
+    "nbIntervalVars": 30526,
+    "nbConstraints": 93302,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:14:29.182162Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 86.0,
+        "solveTime": 3.383386299
+      },
+      {
+        "value": 87.0,
+        "solveTime": 3.671084273
+      },
+      {
+        "value": 89.0,
+        "solveTime": 4.000657143
+      }
+    ]
+  },
+  {
+    "modelName": "j12014_a",
+    "duration": 60.014830415,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 101.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 2.445726369,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 34612,
+    "nbFails": 4921,
+    "nbLNSSteps": 0,
+    "nbRestarts": 36,
+    "memoryUsed": 1826226486,
+    "nbIntVars": 29599,
+    "nbIntervalVars": 29721,
+    "nbConstraints": 91172,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:15:32.454478Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 101.0,
+        "solveTime": 2.445726369
+      }
+    ]
+  },
+  {
+    "modelName": "j12014_b",
+    "duration": 60.026388768,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 91.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 2.524121505,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 38044,
+    "nbFails": 5527,
+    "nbLNSSteps": 0,
+    "nbRestarts": 40,
+    "memoryUsed": 1826480722,
+    "nbIntVars": 29836,
+    "nbIntervalVars": 29958,
+    "nbConstraints": 91860,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:16:35.469310Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 91.0,
+        "solveTime": 2.524121505
+      }
+    ]
+  },
+  {
+    "modelName": "j12015_a",
+    "duration": 60.016950816,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 126.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 2.369729286,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 56285,
+    "nbFails": 4822,
+    "nbLNSSteps": 0,
+    "nbRestarts": 36,
+    "memoryUsed": 1506137858,
+    "nbIntVars": 29418,
+    "nbIntervalVars": 29540,
+    "nbConstraints": 90648,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:17:38.059818Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 126.0,
+        "solveTime": 2.369729286
+      }
+    ]
+  },
+  {
+    "modelName": "j12015_b",
+    "duration": 60.020950272,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 81.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 2.626726471,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 55266,
+    "nbFails": 6656,
+    "nbLNSSteps": 0,
+    "nbRestarts": 46,
+    "memoryUsed": 1861725934,
+    "nbIntVars": 30285,
+    "nbIntervalVars": 30407,
+    "nbConstraints": 92989,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:18:41.426902Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 81.0,
+        "solveTime": 2.626726471
+      }
+    ]
+  },
+  {
+    "modelName": "j12016_a",
+    "duration": 60.05761384,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 187.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 5.681127613,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 6022,
+    "nbFails": 1443,
+    "nbLNSSteps": 0,
+    "nbRestarts": 18,
+    "memoryUsed": 2543413214,
+    "nbIntVars": 53632,
+    "nbIntervalVars": 53754,
+    "nbConstraints": 163222,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:19:45.978047Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 186.0,
+        "solveTime": 5.154814704
+      },
+      {
+        "value": 187.0,
+        "solveTime": 5.681127613
+      }
+    ]
+  },
+  {
+    "modelName": "j12016_b",
+    "duration": 60.047245826,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 174.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 4.359627625,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 9798,
+    "nbFails": 2034,
+    "nbLNSSteps": 0,
+    "nbRestarts": 24,
+    "memoryUsed": 2541790822,
+    "nbIntVars": 53216,
+    "nbIntervalVars": 53338,
+    "nbConstraints": 162078,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:20:49.685690Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 172.0,
+        "solveTime": 3.528258143
+      },
+      {
+        "value": 173.0,
+        "solveTime": 3.742545228
+      },
+      {
+        "value": 174.0,
+        "solveTime": 4.359627625
+      }
+    ]
+  },
+  {
+    "modelName": "j12017_a",
+    "duration": 60.073646867,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 105.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 3.807211948,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 13200,
+    "nbFails": 2314,
+    "nbLNSSteps": 0,
+    "nbRestarts": 27,
+    "memoryUsed": 2877743762,
+    "nbIntVars": 53120,
+    "nbIntervalVars": 53242,
+    "nbConstraints": 161814,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:21:53.245738Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 102.0,
+        "solveTime": 3.528276397
+      },
+      {
+        "value": 103.0,
+        "solveTime": 3.576163357
+      },
+      {
+        "value": 105.0,
+        "solveTime": 3.807211948
+      }
+    ]
+  },
+  {
+    "modelName": "j12017_b",
+    "duration": 60.062149295,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 120.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 5.086749578,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 6461,
+    "nbFails": 1105,
+    "nbLNSSteps": 0,
+    "nbRestarts": 19,
+    "memoryUsed": 2879186178,
+    "nbIntVars": 53600,
+    "nbIntervalVars": 53722,
+    "nbConstraints": 163134,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:22:57.180935Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 117.0,
+        "solveTime": 3.614832633
+      },
+      {
+        "value": 118.0,
+        "solveTime": 4.643319661
+      },
+      {
+        "value": 120.0,
+        "solveTime": 5.086749578
+      }
+    ]
+  },
+  {
+    "modelName": "j12018_a",
+    "duration": 60.067005424,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 99.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 6.046454757,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 5963,
+    "nbFails": 850,
+    "nbLNSSteps": 0,
+    "nbRestarts": 16,
+    "memoryUsed": 2877307078,
+    "nbIntVars": 53212,
+    "nbIntervalVars": 53334,
+    "nbConstraints": 162067,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:24:02.926305Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 96.0,
+        "solveTime": 5.212810113
+      },
+      {
+        "value": 97.0,
+        "solveTime": 5.635491331
+      },
+      {
+        "value": 99.0,
+        "solveTime": 6.046454757
+      }
+    ]
+  },
+  {
+    "modelName": "j12018_b",
+    "duration": 60.042803447,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 137.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 6.776977853,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 6315,
+    "nbFails": 949,
+    "nbLNSSteps": 0,
+    "nbRestarts": 15,
+    "memoryUsed": 2875165970,
+    "nbIntVars": 52584,
+    "nbIntervalVars": 52706,
+    "nbConstraints": 160340,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:25:08.357181Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 135.0,
+        "solveTime": 5.666843374
+      },
+      {
+        "value": 136.0,
+        "solveTime": 5.952314876
+      },
+      {
+        "value": 137.0,
+        "solveTime": 6.776977853
+      }
+    ]
+  },
+  {
+    "modelName": "j12019_a",
+    "duration": 60.061747784,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 101.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 6.980116277,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 4754,
+    "nbFails": 907,
+    "nbLNSSteps": 0,
+    "nbRestarts": 16,
+    "memoryUsed": 2877775106,
+    "nbIntVars": 53324,
+    "nbIntervalVars": 53446,
+    "nbConstraints": 162375,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:26:14.234223Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 98.0,
+        "solveTime": 5.570221377
+      },
+      {
+        "value": 99.0,
+        "solveTime": 6.552522467
+      },
+      {
+        "value": 101.0,
+        "solveTime": 6.980116277
+      }
+    ]
+  },
+  {
+    "modelName": "j12019_b",
+    "duration": 60.054828927,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "objective": null,
+    "lowerBound": 93.0,
+    "bestSolution": null,
+    "bestSolutionTime": null,
+    "bestLBTime": 5.674729618,
+    "proof": false,
+    "nbSolutions": 0,
+    "nbBranches": 11793,
+    "nbFails": 1547,
+    "nbLNSSteps": 0,
+    "nbRestarts": 12,
+    "memoryUsed": 2874674062,
+    "nbIntVars": 52508,
+    "nbIntervalVars": 52630,
+    "nbConstraints": 160131,
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "solveDate": "2025-12-08T16:27:19.589565Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objectiveHistory": [],
+    "lowerBoundHistory": [
+      {
+        "value": 93.0,
+        "solveTime": 5.674729618
+      }
+    ]
+  }
+]

@@ -1,67 +1,109 @@
-# Benchmarks
+# CP Solver Benchmarks
 
-Benchmark suite for comparing **OptalCP** vs **IBM CP Optimizer** on constraint programming scheduling problems.
+Benchmark suite comparing **OptalCP** vs **IBM CP Optimizer** on constraint programming problems.
 
 ## Structure
 
 ```
-benchmarks/
-├── compare/          # Comparison report generator
-├── rcpsp-tt/         # RCPSP with Transfer Times
-└── rcpsp-as/         # RCPSP with Alternative Subgraphs
+.
+├── run.py              # Universal benchmark runner
+├── config.py           # Shared solver configuration
+├── compare/            # HTML report generator (Node.js)
+├── rcpsp-tt/           # RCPSP with Transfer Times
+│   ├── solve_optal.py
+│   └── solve_cpo.py
+├── rcpsp-as/           # RCPSP with Alternative Subgraphs
+│   ├── solve_optal.py
+│   └── solve_cpo.py
+└── data/               # Instance files (not tracked)
+```
+
+## Requirements
+
+```bash
+pip install optalcp docplex
 ```
 
 ## Quick Start
 
-### 1. Install dependencies
-
 ```bash
-# Compare tool (Node.js)
-cd compare && npm install
+# Run all instances for a problem
+python run.py rcpsp-tt
 
-# Python solvers
-pip install optalcp docplex
+# Test with limited instances
+python run.py rcpsp-tt --max 5
+
+# Custom time limit and workers
+python run.py rcpsp-as --timeLimit 120 --workers 4
+
+# Run single solver
+python run.py rcpsp-tt --solver optal
+python run.py rcpsp-tt --solver cpo
 ```
 
-### 2. Run benchmarks
+## Options
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `--max N` | all | Limit to N instances |
+| `--timeLimit T` | 60 | Seconds per instance |
+| `--workers W` | 8 | Parallel workers |
+| `--solver S` | both | `optal`, `cpo`, or `both` |
+| `--data PATH` | auto | Custom data directory |
+| `--output PATH` | auto | Custom results directory |
+| `--logLevel L` | 0 | Verbosity (0=quiet, 3=verbose) |
+| `--python PATH` | auto | Python interpreter |
+| `--no-compare` | false | Skip comparison report |
+
+## Solving Single Instances
 
 ```bash
-# RCPSP-TT: Test with 1 instance
+# Direct solver usage
 cd rcpsp-tt
-python run_benchmark_python.py --max 1
+python solve_optal.py instance.sm --timeLimit 60 --output result.json
+python solve_cpo.py instance.sm --timeLimit 60 --output result.json
 
-# RCPSP-AS: Test with 1 instance  
-cd rcpsp-as
-python run_benchmark_rcpspas.py --max 1
-
-# Full benchmark (all instances)
-python run_benchmark_python.py
+# Override any solver parameter
+python solve_optal.py instance.sm --searchType LNS --noOverlapPropagationLevel 3
+python solve_cpo.py instance.sm --SearchType DepthFirst --NoOverlapInferenceLevel Medium
 ```
 
-### 3. View results
+## Solver Parameters
 
-Open `results/comparison-report/main.html` in a browser.
+Edit `config.py` to change defaults, or pass via command line:
 
-## Problems
+**OptalCP** (`solve_optal.py`):
+- `--searchType` (FDSLB, LNS, FDS, SetTimes)
+- `--noOverlapPropagationLevel` (0-4)
+- `--cumulPropagationLevel` (0-4)
+- `--usePrecedenceEnergy` (0/1)
 
-| Problem | Description | Instances |
-|---------|-------------|-----------|
-| **RCPSP-TT** | Resource-Constrained Project Scheduling with Transfer Times | j30, j60, j90 (.sm) |
-| **RCPSP-AS** | Resource-Constrained Project Scheduling with Alternative Subgraphs | ASLIB (.rcp) |
-
-## Configuration
-
-Edit the `run_benchmark_*.py` files to configure:
-
-```python
-SOLVER_PYTHON = "/path/to/python"  # Python with optalcp & docplex
-TIME_LIMIT = 60                     # Seconds per instance
-WORKERS = 8                         # Parallel workers
-```
+**CPO** (`solve_cpo.py`):
+- `--SearchType` (Restart, DepthFirst, MultiPoint)
+- `--NoOverlapInferenceLevel` (Low, Medium, Extended)
+- `--CumulFunctionInferenceLevel` (Low, Medium, Extended)
+- `--FailureDirectedSearch` (On, Off)
 
 ## Output
 
-Each benchmark produces:
-- `results/optalcp-results-*.json` - OptalCP results
-- `results/cpo-results-*.json` - IBM CP Optimizer results  
-- `results/comparison-report/main.html` - Interactive comparison report
+Results saved to `<problem>/results/`:
+- `optalcp-results.json` - OptalCP results
+- `cpo-results.json` - CPO results  
+- `comparison/main.html` - Interactive comparison report
+
+## Adding New Problems
+
+1. Create directory: `mkdir my-problem`
+2. Copy solver templates: `cp solve_optal.py solve_cpo.py my-problem/`
+3. Customize `parse_instance()` and `build_model()` functions for your problem
+4. Update `PROBLEM_CONFIG` in `run.py` with data paths and file patterns
+5. Run: `python run.py my-problem`
+
+Solver scripts must accept:
+```
+python solve_X.py <instances...> --timeLimit T --workers W --output FILE --logLevel L
+```
+
+## Environment Variables
+
+- `SOLVER_PYTHON` - Default Python interpreter path
