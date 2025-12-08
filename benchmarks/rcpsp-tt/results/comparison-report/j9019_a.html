@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<head>
+  <style>
+   body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    table, th, td {
+      border: 1px solid #606060;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    table {
+      border: 2px solid black;
+    }
+    th {
+      background-color: #d8d8d8d8;
+    }
+  </style>
+</head>
+
+<body>
+<h1 id="ModelName"></h1>
+
+<div id="loader"><h2>Loading data...</h2></div>
+<div id="loadedContent" style="display:none;">
+
+  <div id="ObjectiveHistory"></div>
+
+  <h2>Statistics</h2>
+  <div id="Statistics"></div>
+
+  <h2>Parameters</h3>
+
+  <table id="Parameters">
+  </table>
+</div>
+
+<script src="instance.js" charset="utf8"></script>
+<script charset="utf8">window.scheduleopt.main({"a":{"modelName":"j9019_a","duration":20.002988023,"solver":"OptalCP 2025.11.1 [Academic]","nbWorkers":8,"objectiveSense":"minimize","nbIntVars":1818,"nbIntervalVars":1910,"nbConstraints":7073,"solveDate":"2025-12-05T19:57:59.748362Z","parameters":{"nbWorkers":8,"searchType":"FDSLB","logLevel":0,"logPeriod":5,"timeLimit":20,"noOverlapPropagationLevel":4,"cumulPropagationLevel":3,"reservoirPropagationLevel":2,"usePrecedenceEnergy":1,"fdsLBStrategy":"Split"},"objective":null,"lowerBound":91,"bestSolution":null,"bestSolutionTime":null,"bestLBTime":17.876076925,"proof":false,"nbSolutions":0,"nbBranches":1939762,"nbFails":839799,"nbLNSSteps":0,"nbRestarts":294,"memoryUsed":195274284,"objectiveHistory":[],"lowerBoundHistory":[{"value":89,"solveTime":0.054959906},{"value":90,"solveTime":3.401703716},{"value":91,"solveTime":17.876076925}]},"b":{"modelName":"j9019_a","duration":20.21847629547119,"solver":"IBM CP Optimizer (DOcplex)","nbWorkers":8,"objectiveSense":"minimize","nbIntVars":1818,"nbIntervalVars":1910,"nbConstraints":7324,"solveDate":"2025-12-05T21:30:53.422420Z","parameters":{"TimeLimit":20,"Workers":8,"SearchType":"Restart","FailureDirectedSearch":"On","NoOverlapInferenceLevel":"Extended","CumulFunctionInferenceLevel":"Extended","PrecedenceInferenceLevel":"Extended","LogVerbosity":"Normal","LogPeriod":5000},"objective":232,"lowerBound":null,"bestSolution":232,"bestSolutionTime":20.08,"bestLBTime":null,"proof":false,"nbSolutions":6,"nbBranches":124528,"nbFails":23062,"nbLNSSteps":0,"nbRestarts":0,"memoryUsed":124696005,"objectiveHistory":[{"objective":232,"solveTime":20.08}],"lowerBoundHistory":[]},"modelName":"j9019_a"}, ["OptalCP","IBM CP Optimizer"]);</script>
+<script>
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("loadedContent").style.display = "block";
+</script>
+
+</body>

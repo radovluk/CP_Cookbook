@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<head>
+  <style>
+   body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    table, th, td {
+      border: 1px solid #606060;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    table {
+      border: 2px solid black;
+    }
+    th {
+      background-color: #d8d8d8d8;
+    }
+  </style>
+</head>
+
+<body>
+<h1 id="ModelName"></h1>
+
+<div id="loader"><h2>Loading data...</h2></div>
+<div id="loadedContent" style="display:none;">
+
+  <div id="ObjectiveHistory"></div>
+
+  <h2>Statistics</h2>
+  <div id="Statistics"></div>
+
+  <h2>Parameters</h3>
+
+  <table id="Parameters">
+  </table>
+</div>
+
+<script src="instance.js" charset="utf8"></script>
+<script charset="utf8">window.scheduleopt.main({"a":{"modelName":"j3045_b","duration":20.003749943,"solver":"OptalCP 2025.11.1 [Academic]","nbWorkers":8,"objectiveSense":"minimize","nbIntVars":2736,"nbIntervalVars":2768,"nbConstraints":8768,"solveDate":"2025-12-05T19:17:12.267719Z","parameters":{"nbWorkers":8,"searchType":"FDSLB","logLevel":0,"logPeriod":5,"timeLimit":20,"noOverlapPropagationLevel":4,"cumulPropagationLevel":3,"reservoirPropagationLevel":2,"usePrecedenceEnergy":1,"fdsLBStrategy":"Split"},"objective":null,"lowerBound":117,"bestSolution":null,"bestSolutionTime":null,"bestLBTime":17.797140996,"proof":false,"nbSolutions":0,"nbBranches":335267,"nbFails":127233,"nbLNSSteps":0,"nbRestarts":288,"memoryUsed":240758924,"objectiveHistory":[],"lowerBoundHistory":[{"value":101,"solveTime":0.079520976},{"value":102,"solveTime":1.16854946},{"value":103,"solveTime":1.472306282},{"value":104,"solveTime":1.885336835},{"value":105,"solveTime":2.318533717},{"value":106,"solveTime":2.456615315},{"value":107,"solveTime":2.630873977},{"value":108,"solveTime":3.736641799},{"value":109,"solveTime":4.882465262},{"value":110,"solveTime":5.98301992},{"value":111,"solveTime":7.068664924},{"value":112,"solveTime":8.622405402},{"value":113,"solveTime":10.172963587},{"value":114,"solveTime":11.834826873},{"value":115,"solveTime":12.896632726},{"value":116,"solveTime":15.238998932},{"value":117,"solveTime":17.797140996}]},"b":{"modelName":"j3045_b","duration":20.36818242073059,"solver":"IBM CP Optimizer (DOcplex)","nbWorkers":8,"objectiveSense":"minimize","nbIntVars":2736,"nbIntervalVars":2768,"nbConstraints":9126,"solveDate":"2025-12-05T20:44:43.388689Z","parameters":{"TimeLimit":20,"Workers":8,"SearchType":"Restart","FailureDirectedSearch":"On","NoOverlapInferenceLevel":"Extended","CumulFunctionInferenceLevel":"Extended","PrecedenceInferenceLevel":"Extended","LogVerbosity":"Normal","LogPeriod":5000},"objective":null,"lowerBound":null,"bestSolution":null,"bestSolutionTime":null,"bestLBTime":null,"proof":false,"nbSolutions":0,"nbBranches":0,"nbFails":0,"nbLNSSteps":0,"nbRestarts":0,"memoryUsed":0,"objectiveHistory":[],"lowerBoundHistory":[]},"modelName":"j3045_b"}, ["OptalCP","IBM CP Optimizer"]);</script>
+<script>
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("loadedContent").style.display = "block";
+</script>
+
+</body>

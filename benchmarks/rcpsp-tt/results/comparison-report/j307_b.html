@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<head>
+  <style>
+   body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    table, th, td {
+      border: 1px solid #606060;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    table {
+      border: 2px solid black;
+    }
+    th {
+      background-color: #d8d8d8d8;
+    }
+  </style>
+</head>
+
+<body>
+<h1 id="ModelName"></h1>
+
+<div id="loader"><h2>Loading data...</h2></div>
+<div id="loadedContent" style="display:none;">
+
+  <div id="ObjectiveHistory"></div>
+
+  <h2>Statistics</h2>
+  <div id="Statistics"></div>
+
+  <h2>Parameters</h3>
+
+  <table id="Parameters">
+  </table>
+</div>
+
+<script src="instance.js" charset="utf8"></script>
+<script charset="utf8">window.scheduleopt.main({"a":{"modelName":"j307_b","duration":1.194726629,"solver":"OptalCP 2025.11.1 [Academic]","nbWorkers":8,"objectiveSense":"minimize","nbIntVars":881,"nbIntervalVars":913,"nbConstraints":2984,"solveDate":"2025-12-05T19:20:55.249331Z","parameters":{"nbWorkers":8,"searchType":"FDSLB","logLevel":0,"logPeriod":5,"timeLimit":20,"noOverlapPropagationLevel":4,"cumulPropagationLevel":3,"reservoirPropagationLevel":2,"usePrecedenceEnergy":1,"fdsLBStrategy":"Split"},"objective":55,"lowerBound":55,"bestSolution":55,"bestSolutionTime":1.189287794,"bestLBTime":0.03182939,"proof":true,"nbSolutions":1,"nbBranches":303099,"nbFails":124415,"nbLNSSteps":0,"nbRestarts":185,"memoryUsed":147394006,"objectiveHistory":[{"objective":55,"solveTime":1.189287794}],"lowerBoundHistory":[{"value":55,"solveTime":0.03182939}]},"b":{"modelName":"j307_b","duration":13.47122049331665,"solver":"IBM CP Optimizer (DOcplex)","nbWorkers":8,"objectiveSense":"minimize","nbIntVars":881,"nbIntervalVars":913,"nbConstraints":3139,"solveDate":"2025-12-05T20:48:45.145759Z","parameters":{"TimeLimit":20,"Workers":8,"SearchType":"Restart","FailureDirectedSearch":"On","NoOverlapInferenceLevel":"Extended","CumulFunctionInferenceLevel":"Extended","PrecedenceInferenceLevel":"Extended","LogVerbosity":"Normal","LogPeriod":5000},"objective":55,"lowerBound":55,"bestSolution":55,"bestSolutionTime":13.4,"bestLBTime":13.4,"proof":true,"nbSolutions":28,"nbBranches":1185497,"nbFails":384084,"nbLNSSteps":0,"nbRestarts":0,"memoryUsed":61062718,"objectiveHistory":[{"objective":55,"solveTime":13.4}],"lowerBoundHistory":[{"value":55,"solveTime":13.4}]},"modelName":"j307_b"}, ["OptalCP","IBM CP Optimizer"]);</script>
+<script>
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("loadedContent").style.display = "block";
+</script>
+
+</body>

@@ -1,0 +1,93 @@
+[
+  {
+    "modelName": "robot-example_a",
+    "duration": 0.023990252,
+    "solver": "OptalCP 2025.11.1 [Academic]",
+    "nbWorkers": 8,
+    "objectiveSense": "minimize",
+    "nbIntVars": 0,
+    "nbIntervalVars": 12,
+    "nbConstraints": 31,
+    "solveDate": "2025-12-08T11:12:27.752815Z",
+    "parameters": {
+      "nbWorkers": 8,
+      "searchType": "FDSLB",
+      "logLevel": 0,
+      "logPeriod": 5.0,
+      "timeLimit": 60,
+      "noOverlapPropagationLevel": 4,
+      "cumulPropagationLevel": 3,
+      "reservoirPropagationLevel": 2,
+      "usePrecedenceEnergy": 1,
+      "fdsLBStrategy": "Split"
+    },
+    "objective": 21.0,
+    "lowerBound": 21.0,
+    "bestSolution": 21.0,
+    "bestSolutionTime": 0.019820905,
+    "bestLBTime": 0.018913031,
+    "proof": true,
+    "nbSolutions": 1,
+    "nbBranches": 822,
+    "nbFails": 188,
+    "nbLNSSteps": 0,
+    "nbRestarts": 18,
+    "memoryUsed": 99260792,
+    "objectiveHistory": [
+      {
+        "objective": 21.0,
+        "solveTime": 0.019820905
+      }
+    ],
+    "lowerBoundHistory": [
+      {
+        "value": 11.0,
+        "solveTime": 0.012655389
+      },
+      {
+        "value": 12.0,
+        "solveTime": 0.018190835
+      },
+      {
+        "value": 13.0,
+        "solveTime": 0.018262496
+      },
+      {
+        "value": 14.0,
+        "solveTime": 0.018306817
+      },
+      {
+        "value": 15.0,
+        "solveTime": 0.01835259
+      },
+      {
+        "value": 16.0,
+        "solveTime": 0.018423539
+      },
+      {
+        "value": 17.0,
+        "solveTime": 0.018491233
+      },
+      {
+        "value": 18.0,
+        "solveTime": 0.018543297
+      },
+      {
+        "value": 19.0,
+        "solveTime": 0.018825812
+      },
+      {
+        "value": 20.0,
+        "solveTime": 0.018867118
+      },
+      {
+        "value": 21.0,
+        "solveTime": 0.018913031
+      }
+    ]
+  },
+  {
+    "modelName": "robot-example_b",
+    "error": "Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/benchmarks/rcpsp-as/../../data/rcpspas/robot-example/robot-example_b.rcp, please provide it manually"
+  }
+]

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<head>
+  <style>
+   body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    table, th, td {
+      border: 1px solid #606060;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    table {
+      border: 2px solid black;
+    }
+    th {
+      background-color: #d8d8d8d8;
+    }
+  </style>
+</head>
+
+<body>
+<h1 id="ModelName"></h1>
+
+<div id="loader"><h2>Loading data...</h2></div>
+<div id="loadedContent" style="display:none;">
+
+  <div id="ObjectiveHistory"></div>
+
+  <h2>Statistics</h2>
+  <div id="Statistics"></div>
+
+  <h2>Parameters</h3>
+
+  <table id="Parameters">
+  </table>
+</div>
+
+<script src="instance.js" charset="utf8"></script>
+<script charset="utf8">window.scheduleopt.main({"a":{"modelName":"j6034_b","duration":20.002670209,"solver":"OptalCP 2025.11.1 [Academic]","nbWorkers":8,"objectiveSense":"minimize","nbIntVars":789,"nbIntervalVars":851,"nbConstraints":3423,"solveDate":"2025-12-05T19:38:17.869388Z","parameters":{"nbWorkers":8,"searchType":"FDSLB","logLevel":0,"logPeriod":5,"timeLimit":20,"noOverlapPropagationLevel":4,"cumulPropagationLevel":3,"reservoirPropagationLevel":2,"usePrecedenceEnergy":1,"fdsLBStrategy":"Split"},"objective":null,"lowerBound":90,"bestSolution":null,"bestSolutionTime":null,"bestLBTime":11.846086166,"proof":false,"nbSolutions":0,"nbBranches":3687678,"nbFails":1630192,"nbLNSSteps":0,"nbRestarts":389,"memoryUsed":147519584,"objectiveHistory":[],"lowerBoundHistory":[{"value":77,"solveTime":0.032264805},{"value":78,"solveTime":0.038131291},{"value":80,"solveTime":0.039224786},{"value":82,"solveTime":0.04182451},{"value":83,"solveTime":0.098859388},{"value":84,"solveTime":0.1445443},{"value":85,"solveTime":0.27643102},{"value":86,"solveTime":0.694501425},{"value":87,"solveTime":1.308179886},{"value":88,"solveTime":2.266546861},{"value":89,"solveTime":3.565792923},{"value":90,"solveTime":11.846086166}]},"b":{"modelName":"j6034_b","duration":20.109483242034912,"solver":"IBM CP Optimizer (DOcplex)","nbWorkers":8,"objectiveSense":"minimize","nbIntVars":789,"nbIntervalVars":851,"nbConstraints":3574,"solveDate":"2025-12-05T21:08:52.420313Z","parameters":{"TimeLimit":20,"Workers":8,"SearchType":"Restart","FailureDirectedSearch":"On","NoOverlapInferenceLevel":"Extended","CumulFunctionInferenceLevel":"Extended","PrecedenceInferenceLevel":"Extended","LogVerbosity":"Normal","LogPeriod":5000},"objective":129,"lowerBound":null,"bestSolution":129,"bestSolutionTime":20.05,"bestLBTime":null,"proof":false,"nbSolutions":25,"nbBranches":416968,"nbFails":129437,"nbLNSSteps":0,"nbRestarts":0,"memoryUsed":56959311,"objectiveHistory":[{"objective":129,"solveTime":20.05}],"lowerBoundHistory":[]},"modelName":"j6034_b"}, ["OptalCP","IBM CP Optimizer"]);</script>
+<script>
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("loadedContent").style.display = "block";
+</script>
+
+</body>

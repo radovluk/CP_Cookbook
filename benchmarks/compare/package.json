@@ -1,0 +1,24 @@
+{
+  "name": "optal-benchmark-compare",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "private": true,
+  "devDependencies": {
+    "@observablehq/plot": "^0.6.17",
+    "@tsconfig/node20": "^20.1.5",
+    "@types/d3": "^7.4.3",
+    "@types/webpack-dev-server": "^4.7.2",
+    "d3": "^7.9.0",
+    "sortable-tablesort": "^4.0.1",
+    "ts-loader": "^9.5.2",
+    "webpack": "^5.99.6",
+    "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "open": "^10.1.1"
+  }
+}

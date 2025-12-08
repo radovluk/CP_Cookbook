@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<head>
+  <style>
+   body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    table, th, td {
+      border: 1px solid #606060;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    table {
+      border: 2px solid black;
+    }
+    th {
+      background-color: #d8d8d8d8;
+    }
+  </style>
+</head>
+
+<body>
+<h1 id="ModelName"></h1>
+
+<div id="loader"><h2>Loading data...</h2></div>
+<div id="loadedContent" style="display:none;">
+
+  <div id="ObjectiveHistory"></div>
+
+  <h2>Statistics</h2>
+  <div id="Statistics"></div>
+
+  <h2>Parameters</h3>
+
+  <table id="Parameters">
+  </table>
+</div>
+
+<script src="instance.js" charset="utf8"></script>
+<script charset="utf8">window.scheduleopt.main({"a":{"modelName":"j3023_a","duration":20.002544683,"solver":"OptalCP 2025.11.1 [Academic]","nbWorkers":8,"objectiveSense":"minimize","nbIntVars":807,"nbIntervalVars":839,"nbConstraints":2806,"solveDate":"2025-12-05T19:05:50.573928Z","parameters":{"nbWorkers":8,"searchType":"FDSLB","logLevel":0,"logPeriod":5,"timeLimit":20,"noOverlapPropagationLevel":4,"cumulPropagationLevel":3,"reservoirPropagationLevel":2,"usePrecedenceEnergy":1,"fdsLBStrategy":"Split"},"objective":null,"lowerBound":51,"bestSolution":null,"bestSolutionTime":null,"bestLBTime":3.013447209,"proof":false,"nbSolutions":0,"nbBranches":3430289,"nbFails":1517819,"nbLNSSteps":0,"nbRestarts":340,"memoryUsed":147028340,"objectiveHistory":[],"lowerBoundHistory":[{"value":47,"solveTime":0.030626939},{"value":48,"solveTime":0.033730005},{"value":49,"solveTime":0.034416349},{"value":50,"solveTime":0.106070285},{"value":51,"solveTime":3.013447209}]},"b":{"modelName":"j3023_a","duration":20.10129976272583,"solver":"IBM CP Optimizer (DOcplex)","nbWorkers":8,"objectiveSense":"minimize","nbIntVars":807,"nbIntervalVars":839,"nbConstraints":2956,"solveDate":"2025-12-05T20:31:00.674324Z","parameters":{"TimeLimit":20,"Workers":8,"SearchType":"Restart","FailureDirectedSearch":"On","NoOverlapInferenceLevel":"Extended","CumulFunctionInferenceLevel":"Extended","PrecedenceInferenceLevel":"Extended","LogVerbosity":"Normal","LogPeriod":5000},"objective":62,"lowerBound":null,"bestSolution":62,"bestSolutionTime":20.03,"bestLBTime":null,"proof":false,"nbSolutions":34,"nbBranches":1553443,"nbFails":450792,"nbLNSSteps":0,"nbRestarts":0,"memoryUsed":57047141,"objectiveHistory":[{"objective":62,"solveTime":20.03}],"lowerBoundHistory":[]},"modelName":"j3023_a"}, ["OptalCP","IBM CP Optimizer"]);</script>
+<script>
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("loadedContent").style.display = "block";
+</script>
+
+</body>

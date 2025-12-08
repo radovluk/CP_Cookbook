@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<head>
+  <!-- Style for sortable npm package: -->
+  <link href="style.css" rel="stylesheet" type="text/css">
+  <style>
+   body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    *:not(li)>ul {
+      /* Top level ul */
+      margin-bottom: 2em;
+    }
+    h2 {
+      margin-top: 2em;
+    }
+    table, th, td {
+      /* border: 1px solid #606060; */
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    table {
+      border: 2px solid black;
+    }
+    #SummaryTable table, #SummaryTable th, #SummaryTable td {
+      border: 1px solid #606060;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    #SummaryTable table {
+      border: 2px solid black;
+    }
+    #SummaryTable th {
+      background: #d8d8d8d8;
+    }
+    #DetailedTable th {
+      /* background: #c8c8c8c8; */
+      background: #bbb;
+      /* border: 1px solid black; */
+      color: black;
+      font-weight: bold;
+      opacity: 1;
+    }
+    #DetailedTable tr:nth-child(even) {
+      background: #d8d8d8;
+    }
+    table td + td { border-left:1px solid #c0c0c0; }
+    /* Scrollable table inspired by https://stackoverflow.com/questions/21168521/table-fixed-header-and-scrollable-body */
+    .tableFixHead {
+      overflow: auto; /* make the table scrollable if height is more than 200 px  */
+      max-height: 65vh; /* gives an initial height in percentage of viewport height */
+    }
+    .tableFixHead thead th {
+      position: sticky; /* make the table heads sticky */
+      top: 0px; /* table head will be placed from the top of the table and sticks to it */
+      z-index: 1;
+    }
+    .twoColumns {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 100px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>RCPSP-AS Benchmark</h1>
+
+<div id="loader"><h2>Loading data...</h2></div>
+<div id="loadedContent" style="display:none;">
+
+  <div id="Errors"></div>
+
+  <h2>Summary</h2>
+  <div id="Summary"></div>
+
+  <h2>Objective progress chart</h2>
+  <div>
+    <p>
+    The following chart shows the evolution of the average solution quality and lower-bound quality over time.
+    </p><p>
+    The <i>quality</i> is the objective value divided by the best solution value (found by any of the compared solvers at any time).
+    The chart takes into account only instances where both solvers found a solution.
+    </p><p>
+    The first 1s of the chart are not shown as the values are usually very high or low and would skew the chart.
+    </p>
+  </div>
+  <div id="ObjectiveHistory"></div>
+
+  <div class="twoColumns">
+    <div>
+      <h2>Objective values</h2>
+      <div id="ObjectiveDiff"></div>
+    </div>
+    <div>
+      <h2>Relative objective values</h2>
+      <div id="ObjectiveRelativeDiff"></div>
+    </div>
+  </div>
+
+  <div class="twoColumns">
+    <div>
+      <h2>Total duration</h2>
+      <div id="DurationDiff"></div>
+    </div>
+    <div>
+      <h2>Relative duration</h2>
+      <div id="DurationRelativeDiff"></div>
+    </div>
+  </div>
+
+  <h2>Detailed comparison</h2>
+  <div id="DetailedTable" class="tableFixHead"></div>
+
+  <div class="twoColumns">
+    <div>
+      <h2>Number of branches</h2>
+      <div id="BranchesDiff"></div>
+    </div>
+    <div>
+      <h2>Relative number of branches</h2>
+      <div id="BranchesRelativeDiff"></div>
+    </div>
+  </div>
+
+  <div class="twoColumns">
+    <div>
+      <h2>Number of branches per second</h2>
+      <div id="BranchesPerSecDiff"></div>
+    </div>
+    <div>
+      <h2>Relative number of branches per second</h2>
+      <div id="BranchesPerSecRelativeDiff"></div>
+    </div>
+  </div>
+
+  <div id="LNSStepsDiv" class="twoColumns">
+    <div>
+      <h2>LNS steps</h2>
+      <div id="LNSStepsDiff"></div>
+    </div>
+    <div>
+      <h2>Relative LNS steps</h2>
+      <div id="LNSStepsRelativeDiff"></div>
+    </div>
+  </div>
+
+  <div id="RestartsDiv" class="twoColumns">
+    <div>
+      <h2>Restarts</h2>
+      <div id="RestartsDiff"></div>
+    </div>
+    <div>
+      <h2>Relative restarts</h2>
+      <div id="RestartsRelativeDiff"></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="main.js" charset="utf8"></script>
+<script charset="utf8">window.scheduleopt.main([{"a":{"modelName":"robot-example_a","duration":0.023990252,"solver":"OptalCP 2025.11.1 [Academic]","nbWorkers":8,"objectiveSense":"minimize","nbIntVars":0,"nbIntervalVars":12,"nbConstraints":31,"solveDate":"2025-12-08T11:12:27.752815Z","parameters":{"nbWorkers":8,"searchType":"FDSLB","logLevel":0,"logPeriod":5,"timeLimit":60,"noOverlapPropagationLevel":4,"cumulPropagationLevel":3,"reservoirPropagationLevel":2,"usePrecedenceEnergy":1,"fdsLBStrategy":"Split"},"objective":21,"lowerBound":21,"bestSolutionTime":0.019820905,"bestLBTime":0.018913031,"proof":true,"nbSolutions":1,"nbBranches":822,"nbFails":188,"nbLNSSteps":0,"nbRestarts":18,"memoryUsed":99260792},"b":{"modelName":"robot-example_a","duration":0.03112030029296875,"solver":"IBM CP Optimizer (DOcplex)","nbWorkers":8,"objectiveSense":"minimize","nbIntVars":0,"nbIntervalVars":12,"nbConstraints":32,"solveDate":"2025-12-08T11:12:28.146004Z","parameters":{"TimeLimit":60,"Workers":8,"SearchType":"Restart","FailureDirectedSearch":"On","NoOverlapInferenceLevel":"Extended","CumulFunctionInferenceLevel":"Extended","PrecedenceInferenceLevel":"Extended","LogVerbosity":"Quiet","LogPeriod":5000},"objective":21,"lowerBound":21,"bestSolutionTime":0.02,"bestLBTime":0.02,"proof":true,"nbSolutions":2,"nbBranches":5553,"nbFails":2392,"nbLNSSteps":0,"nbRestarts":0,"memoryUsed":4561466},"modelName":"robot-example_a"}], ["OptalCP","IBM CP Optimizer"], {"objectiveA":[],"objectiveB":[],"lowerBoundA":[],"lowerBoundB":[]}, [{"modelName":"robot-example_b","error":"Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/benchmarks/rcpsp-as/../../data/rcpspas/robot-example/robot-example_b.rcp, please provide it manually"}], [{"modelName":"robot-example_b","error":"Cannot automatically find path to file b of file /home/lukas/Desktop/CIIRC/CP_Cookbook/benchmarks/rcpsp-as/../../data/rcpspas/robot-example/robot-example_b.rcp, please provide it manually"}]);</script>
+<script>
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("loadedContent").style.display = "block";
+</script>
+
+</body>
