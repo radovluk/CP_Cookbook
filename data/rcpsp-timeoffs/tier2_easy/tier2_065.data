@@ -1,0 +1,82 @@
+# Tier 2 (Easy) - Instance 65
+# Generated with config: N=10, K=2, topology=random_dag, calendar=uniform
+
+# HEADER: <num_tasks> <num_types> <num_units>
+12 2 4
+
+# RESOURCE TYPES
+# Format: <type_id> <num_units> <unit_id1> <unit_id2> ...
+0 2 0 1
+1 2 2 3
+
+# RESOURCE UNITS (Calendars)
+# Format: <unit_id> <num_steps> <t1> <v1> <t2> <v2> ...
+0 6 0 100 36 0 44 100 72 0 81 100 110 0
+1 6 0 100 36 0 44 100 72 0 79 100 110 0
+2 6 0 100 36 0 45 100 72 0 76 100 110 0
+3 6 0 100 36 0 41 100 72 0 78 100 110 0
+
+# TASKS
+# Format: <task_id> <size> <num_reqs>
+# Then for each requirement: <type_id> <qty>
+0 0 2
+ 0 0
+ 1 0
+1 7 2
+ 0 1
+ 1 1
+2 2 2
+ 0 2
+ 1 2
+3 6 2
+ 0 1
+ 1 1
+4 3 2
+ 0 1
+ 1 1
+5 6 2
+ 0 0
+ 1 2
+6 4 2
+ 0 1
+ 1 0
+7 3 2
+ 0 0
+ 1 1
+8 6 2
+ 0 2
+ 1 1
+9 3 2
+ 0 1
+ 1 1
+10 2 2
+ 0 2
+ 1 2
+11 0 2
+ 0 0
+ 1 0
+
+# PRECEDENCES
+22
+0 2
+0 5
+9 11
+0 8
+2 11
+6 11
+4 11
+8 11
+0 1
+0 7
+9 10
+10 11
+0 4
+0 10
+1 11
+3 11
+5 11
+0 3
+0 9
+0 6
+2 6
+7 11

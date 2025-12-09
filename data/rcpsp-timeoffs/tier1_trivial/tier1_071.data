@@ -1,0 +1,38 @@
+# Tier 1 (Trivial) - Instance 71
+# Generated with config: N=3, K=1, topology=parallel, calendar=uniform
+
+# HEADER: <num_tasks> <num_types> <num_units>
+5 1 3
+
+# RESOURCE TYPES
+# Format: <type_id> <num_units> <unit_id1> <unit_id2> ...
+0 3 0 1 2
+
+# RESOURCE UNITS (Calendars)
+# Format: <unit_id> <num_steps> <t1> <v1> <t2> <v2> ...
+0 4 0 100 27 0 33 100 55 0
+1 4 0 100 27 0 33 100 55 0
+2 4 0 100 27 0 32 100 55 0
+
+# TASKS
+# Format: <task_id> <size> <num_reqs>
+# Then for each requirement: <type_id> <qty>
+0 0 1
+ 0 0
+1 2 1
+ 0 2
+2 2 1
+ 0 1
+3 5 1
+ 0 2
+4 0 1
+ 0 0
+
+# PRECEDENCES
+6
+0 1
+2 4
+3 4
+0 3
+1 4
+0 2

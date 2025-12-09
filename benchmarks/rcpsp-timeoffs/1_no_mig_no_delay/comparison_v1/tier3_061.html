@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<head>
+  <style>
+   body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    table, th, td {
+      border: 1px solid #606060;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    table {
+      border: 2px solid black;
+    }
+    th {
+      background-color: #d8d8d8d8;
+    }
+  </style>
+</head>
+
+<body>
+<h1 id="ModelName"></h1>
+
+<div id="loader"><h2>Loading data...</h2></div>
+<div id="loadedContent" style="display:none;">
+
+  <div id="ObjectiveHistory"></div>
+
+  <h2>Statistics</h2>
+  <div id="Statistics"></div>
+
+  <h2>Parameters</h3>
+
+  <table id="Parameters">
+  </table>
+</div>
+
+<script src="instance.js" charset="utf8"></script>
+<script charset="utf8">window.scheduleopt.main({"a":{"modelName":"tier3_061","variant":"no_mig_no_delay","duration":0.035613653,"solver":"OptalCP 2025.11.1 [Academic]","objective":61,"lowerBound":61,"bestSolution":61,"bestSolutionTime":0.033855045,"bestLBTime":0.03156889,"proof":true,"nbSolutions":1,"nbBranches":26694,"nbFails":6192,"nbLNSSteps":0,"nbRestarts":76,"memoryUsed":103950050,"nbIntVars":0,"nbIntervalVars":170,"nbConstraints":420,"nbWorkers":8,"objectiveSense":"minimize","solveDate":"2025-12-09T14:54:50.437269Z","parameters":{"nbWorkers":8,"searchType":"FDSLB","logLevel":0,"logPeriod":5,"timeLimit":20,"noOverlapPropagationLevel":4,"cumulPropagationLevel":3,"reservoirPropagationLevel":2,"usePrecedenceEnergy":1,"fdsLBStrategy":"Split"},"objectiveHistory":[{"objective":61,"solveTime":0.033855045}],"lowerBoundHistory":[{"value":53,"solveTime":0.016670141},{"value":54,"solveTime":0.019234967},{"value":56,"solveTime":0.019245246},{"value":57,"solveTime":0.019320657},{"value":58,"solveTime":0.02673979},{"value":59,"solveTime":0.028958268},{"value":60,"solveTime":0.030120902},{"value":61,"solveTime":0.03156889}]},"b":{"modelName":"tier3_061","variant":"no_mig_no_delay","duration":20.01574683189392,"solver":"IBM CP Optimizer","objective":61,"lowerBound":null,"bestSolution":61,"bestSolutionTime":20,"bestLBTime":null,"proof":false,"nbSolutions":12,"nbBranches":5171099,"nbFails":2152758,"nbLNSSteps":0,"nbRestarts":0,"memoryUsed":13326074,"nbIntVars":0,"nbIntervalVars":170,"nbConstraints":215,"nbWorkers":8,"objectiveSense":"minimize","solveDate":"2025-12-09T15:12:04.494845Z","parameters":{"TimeLimit":20,"Workers":8,"LogVerbosity":"Quiet","SearchType":"Restart","FailureDirectedSearch":"On","NoOverlapInferenceLevel":"Extended","CumulFunctionInferenceLevel":"Extended","PrecedenceInferenceLevel":"Extended","LogPeriod":5000},"objectiveHistory":[{"objective":61,"solveTime":20}],"lowerBoundHistory":[]},"modelName":"tier3_061"}, ["OptalCP","IBM CP Optimizer"]);</script>
+<script>
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("loadedContent").style.display = "block";
+</script>
+
+</body>

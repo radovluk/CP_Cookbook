@@ -8,6 +8,7 @@ Automatically discovers problem directories and their solver scripts.
 Usage:
     python run.py rcpsp-tt                          # Run all instances
     python run.py rcpsp-tt --max 5                  # Run 5 instances
+    python run.py rcpsp-timeoffs --variant 1        # Run specific variant
     python run.py rcpsp-as --timeLimit 120          # 2 min per instance
     python run.py rcpsp-tt --solver optal           # Only OptalCP
     python run.py rcpsp-tt --data /path/to/data     # Custom data path
@@ -45,11 +46,30 @@ PROBLEM_CONFIG = {
     "rcpsp-as": {
         "data_paths": [
             "../../data/rcpspas/ASLIB/ASLIB0",
+            "../data/rcpspas/ASLIB/ASLIB0",
             "../data/rcpspas",
             "data/rcpspas",
         ],
-        "patterns": ["*.rcp", "*/*.rcp", "*/*/*.rcp", "*.RCP", "*/*.RCP", "*/*/*.RCP"],
-        "extension": ".RCP",
+        "patterns": ["*a.rcp", "*/*a.rcp", "*a.RCP", "*/*a.RCP"],
+        "extension": None,
+        "exclude_pattern": "b.rcp",
+    },
+    "rcpsp-timeoffs": {
+        "data_paths": [
+            "../../data/rcpsp-timeoffs/",
+        ],
+        "patterns": ["*.data", "*/*.data"],
+        "extension": ".data",
+        "has_variants": True,
+        "variants": ['1', '2', '3', '4', '5', '6'],
+        "variant_names": {
+            '1': 'no_mig_no_delay',
+            '2': 'mig_no_delay',
+            '3': 'no_mig_delay_block',
+            '4': 'mig_delay',
+            '5': 'heterogeneous',
+            '6': 'no_mig_delay_rel',
+        },
     },
 }
 
@@ -98,25 +118,31 @@ def find_data_dir(problem_dir, config, custom_path=None):
 def collect_instances(data_dir, config):
     """Collect instances based on problem configuration."""
     instances = []
-    patterns = config.get("patterns", ["*" + config.get("extension", "")])
+    ext = config.get("extension") or ""
+    patterns = config.get("patterns", ["*" + ext])
     
     for pattern in patterns:
         found = glob.glob(os.path.join(data_dir, pattern), recursive=True)
         instances.extend(found)
     
-    # Also walk directory for extension
-    ext = config.get("extension")
+    # Also walk directory for extension (if specified)
     if ext:
         for root, _, files in os.walk(data_dir):
             for f in files:
                 if f.endswith(ext):
                     instances.append(os.path.join(root, f))
     
+    # Apply exclusion pattern if specified
+    exclude = config.get("exclude_pattern")
+    if exclude:
+        instances = [i for i in instances if exclude.lower() not in i.lower()]
+    
     return sorted(set(instances))
 
 
 def run_solver_batched(solver_script, instances, results_file, python_path,
-                       time_limit, workers, log_level, solver_name, batch_size=20):
+                       time_limit, workers, log_level, solver_name, 
+                       variant=None, batch_size=20):
     """Run solver on instances in batches."""
     all_results = []
     total_batches = (len(instances) + batch_size - 1) // batch_size
@@ -141,6 +167,10 @@ def run_solver_batched(solver_script, instances, results_file, python_path,
         cmd = (f'{python_path} "{solver_script}" {instance_args} '
                f'--timeLimit {time_limit} --workers {workers} '
                f'--output "{batch_output}" --logLevel {log_arg}')
+        
+        # Add variant if specified
+        if variant:
+            cmd += f' --variant {variant}'
         
         try:
             run_command(cmd, timeout=batch_timeout)
@@ -192,16 +222,26 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python run.py rcpsp-tt                     # Run all RCPSP-TT instances
-  python run.py rcpsp-as --max 10            # Run first 10 RCPSP-AS instances
-  python run.py rcpsp-tt --solver optal      # Run only OptalCP
-  python run.py rcpsp-tt --timeLimit 120     # 2 minutes per instance
-  python run.py rcpsp-tt --data /path/data   # Custom data directory
+  python run.py rcpsp-tt                        # Run all RCPSP-TT instances
+  python run.py rcpsp-as --max 10               # Run first 10 RCPSP-AS instances
+  python run.py rcpsp-timeoffs --variant 1      # Run RCPSP-TimeOffs variant 1
+  python run.py rcpsp-timeoffs --variant all    # Run all 6 variants
+  python run.py rcpsp-tt --solver optal         # Run only OptalCP
+  python run.py rcpsp-tt --timeLimit 120        # 2 minutes per instance
+  python run.py rcpsp-tt --data /path/data      # Custom data directory
+
+RCPSP-TimeOffs Variants:
+  1. no_mig_no_delay    - No Migration | No Delays
+  2. mig_no_delay       - Migration | No Delays
+  3. no_mig_delay_block - No Migration | Delays | Blocked
+  4. mig_delay          - Migration | Delays
+  5. heterogeneous      - Multi-Resource Heterogeneous Policy
+  6. no_mig_delay_rel   - No Migration | Delays | Released
         """
     )
     
     # Required
-    parser.add_argument('problem', help='Problem directory name (e.g., rcpsp-tt, rcpsp-as)')
+    parser.add_argument('problem', help='Problem directory name (e.g., rcpsp-tt, rcpsp-as, rcpsp-timeoffs)')
     
     # Optional
     parser.add_argument('--max', type=int, default=None,
@@ -222,6 +262,8 @@ Examples:
                         help='Custom output directory (default: <problem>/results)')
     parser.add_argument('--no-compare', action='store_true',
                         help='Skip comparison report generation')
+    parser.add_argument('--variant', type=str, default=None,
+                        help='Problem variant (for rcpsp-timeoffs: 1-6 or "all")')
     
     args = parser.parse_args()
     
@@ -241,6 +283,18 @@ Examples:
         "patterns": ["*.*"],
         "extension": None,
     })
+    
+    # Handle variants for problems that support them
+    variants_to_run = [None]  # Default: no variant
+    if config.get("has_variants"):
+        if args.variant == 'all':
+            variants_to_run = config.get('variants', ['1'])
+        elif args.variant:
+            variants_to_run = [args.variant]
+        else:
+            # Default to variant 1 for problems with variants
+            variants_to_run = ['1']
+            print(f"Note: Using default variant 1. Use --variant to specify (1-6 or 'all')")
     
     # Find data directory
     data_dir = find_data_dir(problem_dir, config, args.data)
@@ -289,82 +343,106 @@ Examples:
     print(f"  Workers:    {args.workers}")
     print(f"  Instances:  {len(instances)}" + (f" (of {total_available})" if args.max else ""))
     print(f"  Solvers:    {args.solver}")
+    if config.get("has_variants"):
+        variant_names = config.get('variant_names', {})
+        var_str = ", ".join(f"{v}={variant_names.get(v, v)}" for v in variants_to_run)
+        print(f"  Variants:   {var_str}")
     
-    estimated = len(instances) * args.timeLimit * (2 if args.solver == 'both' else 1) / 60
+    num_variants = len(variants_to_run)
+    estimated = len(instances) * args.timeLimit * (2 if args.solver == 'both' else 1) * num_variants / 60
     print(f"  Est. time:  ~{estimated:.1f} min (worst case)")
     print("=" * 70)
     
-    optal_results = []
-    cpo_results = []
-    
-    # Run OptalCP
-    if args.solver in ('optal', 'both') and has_optal:
-        print(f"\n{'=' * 70}")
-        print("Running OptalCP")
-        print("=" * 70)
+    # Run for each variant
+    for variant in variants_to_run:
+        variant_suffix = f"_v{variant}" if variant else ""
+        variant_name = config.get('variant_names', {}).get(variant, variant) if variant else ""
         
-        optal_file = os.path.join(results_dir, "optalcp-results.json")
-        optal_results = run_solver_batched(
-            solve_optal, instances, optal_file,
-            args.python, args.timeLimit, args.workers, args.logLevel, "optal"
-        )
+        if variant:
+            print(f"\n{'#' * 70}")
+            print(f"# VARIANT {variant}: {variant_name}")
+            print(f"{'#' * 70}")
         
-        with open(optal_file, 'w') as f:
-            json.dump(optal_results, f, indent=2)
-        print(f"\nSaved: {optal_file}")
-    
-    # Run CPO
-    if args.solver in ('cpo', 'both') and has_cpo:
-        print(f"\n{'=' * 70}")
-        print("Running IBM CP Optimizer")
-        print("=" * 70)
+        optal_results = []
+        cpo_results = []
         
-        cpo_file = os.path.join(results_dir, "cpo-results.json")
-        cpo_results = run_solver_batched(
-            solve_cpo, instances, cpo_file,
-            args.python, args.timeLimit, args.workers, args.logLevel, "cpo"
-        )
-        
-        with open(cpo_file, 'w') as f:
-            json.dump(cpo_results, f, indent=2)
-        print(f"\nSaved: {cpo_file}")
-    
-    # Generate comparison
-    if not args.no_compare and optal_results and cpo_results:
-        print(f"\n{'=' * 70}")
-        print("Generating Comparison Report")
-        print("=" * 70)
-        
-        compare_tool = os.path.join(base_dir, "compare/compare.mjs")
-        comparison_dir = os.path.join(results_dir, "comparison")
-        
-        if os.path.exists(compare_tool):
-            optal_file = os.path.join(results_dir, "optalcp-results.json")
-            cpo_file = os.path.join(results_dir, "cpo-results.json")
+        # Run OptalCP
+        if args.solver in ('optal', 'both') and has_optal:
+            print(f"\n{'=' * 70}")
+            print(f"Running OptalCP{f' (variant {variant})' if variant else ''}")
+            print("=" * 70)
             
-            cmd = (f'node "{compare_tool}" "{args.problem.upper()} Benchmark" '
-                   f'"OptalCP" "{optal_file}" '
-                   f'"IBM CP Optimizer" "{cpo_file}" '
-                   f'"{comparison_dir}"')
+            optal_file = os.path.join(results_dir, f"optalcp-results{variant_suffix}.json")
+            optal_results = run_solver_batched(
+                solve_optal, instances, optal_file,
+                args.python, args.timeLimit, args.workers, args.logLevel, "optal",
+                variant=variant
+            )
             
-            try:
-                run_command(cmd, cwd=base_dir)
-                print(f"Report: {comparison_dir}/main.html")
-            except Exception as e:
-                print(f"Comparison failed: {e}")
-        else:
-            print(f"Compare tool not found: {compare_tool}")
+            with open(optal_file, 'w') as f:
+                json.dump(optal_results, f, indent=2)
+            print(f"\nSaved: {optal_file}")
+        
+        # Run CPO
+        if args.solver in ('cpo', 'both') and has_cpo:
+            print(f"\n{'=' * 70}")
+            print(f"Running IBM CP Optimizer{f' (variant {variant})' if variant else ''}")
+            print("=" * 70)
+            
+            cpo_file = os.path.join(results_dir, f"cpo-results{variant_suffix}.json")
+            cpo_results = run_solver_batched(
+                solve_cpo, instances, cpo_file,
+                args.python, args.timeLimit, args.workers, args.logLevel, "cpo",
+                variant=variant
+            )
+            
+            with open(cpo_file, 'w') as f:
+                json.dump(cpo_results, f, indent=2)
+            print(f"\nSaved: {cpo_file}")
+        
+        # Generate comparison for this variant
+        if not args.no_compare and optal_results and cpo_results:
+            print(f"\n{'=' * 70}")
+            print(f"Generating Comparison Report{f' (variant {variant})' if variant else ''}")
+            print("=" * 70)
+            
+            compare_tool = os.path.join(base_dir, "compare/compare.mjs")
+            comparison_dir = os.path.join(results_dir, f"comparison{variant_suffix}")
+            
+            if os.path.exists(compare_tool):
+                optal_file = os.path.join(results_dir, f"optalcp-results{variant_suffix}.json")
+                cpo_file = os.path.join(results_dir, f"cpo-results{variant_suffix}.json")
+                
+                title = f"{args.problem.upper()} Benchmark"
+                if variant:
+                    title += f" - Variant {variant}: {variant_name}"
+                
+                cmd = (f'node "{compare_tool}" "{title}" '
+                       f'"OptalCP" "{optal_file}" '
+                       f'"IBM CP Optimizer" "{cpo_file}" '
+                       f'"{comparison_dir}"')
+                
+                try:
+                    run_command(cmd, cwd=base_dir)
+                    print(f"Report: {comparison_dir}/main.html")
+                except Exception as e:
+                    print(f"Comparison failed: {e}")
+            else:
+                print(f"Compare tool not found: {compare_tool}")
+        
+        # Summary for this variant
+        if variant:
+            print(f"\n--- Variant {variant} Summary ---")
+        if optal_results:
+            print_summary(optal_results, "OptalCP")
+        if cpo_results:
+            print_summary(cpo_results, "IBM CP Optimizer")
     
-    # Summary
+    # Final summary
     elapsed = time_module.time() - start_time
     print(f"\n{'=' * 70}")
     print(f"Complete! ({elapsed/60:.1f} min)")
     print("=" * 70)
-    
-    if optal_results:
-        print_summary(optal_results, "OptalCP")
-    if cpo_results:
-        print_summary(cpo_results, "IBM CP Optimizer")
     
     return 0
 
