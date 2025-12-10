@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<head>
+  <style>
+   body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    table, th, td {
+      border: 1px solid #606060;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    table {
+      border: 2px solid black;
+    }
+    th {
+      background-color: #d8d8d8d8;
+    }
+  </style>
+</head>
+
+<body>
+<h1 id="ModelName"></h1>
+
+<div id="loader"><h2>Loading data...</h2></div>
+<div id="loadedContent" style="display:none;">
+
+  <div id="ObjectiveHistory"></div>
+
+  <h2>Statistics</h2>
+  <div id="Statistics"></div>
+
+  <h2>Parameters</h3>
+
+  <table id="Parameters">
+  </table>
+</div>
+
+<script src="instance.js" charset="utf8"></script>
+<script charset="utf8">window.scheduleopt.main({"a":{"modelName":"tier3_029","variant":"no_mig_delay_rel","duration":30.003058719,"solver":"OptalCP 2025.11.1 [Academic]","objective":null,"lowerBound":52,"bestSolution":null,"bestSolutionTime":null,"bestLBTime":22.269738013,"proof":false,"nbSolutions":0,"nbBranches":5253058,"nbFails":2405588,"nbLNSSteps":0,"nbRestarts":542,"memoryUsed":152274028,"nbIntVars":0,"nbIntervalVars":3086,"nbConstraints":461,"nbWorkers":8,"objectiveSense":"minimize","solveDate":"2025-12-09T20:49:24.316070Z","parameters":{"nbWorkers":8,"searchType":"FDSLB","logLevel":0,"logPeriod":5,"timeLimit":30,"noOverlapPropagationLevel":4,"cumulPropagationLevel":3,"reservoirPropagationLevel":2,"usePrecedenceEnergy":1,"fdsLBStrategy":"Split"},"objectiveHistory":[],"lowerBoundHistory":[{"value":1,"solveTime":0.052416154},{"value":2,"solveTime":0.054650405},{"value":4,"solveTime":0.055743536},{"value":7,"solveTime":0.056571172},{"value":12,"solveTime":0.057663421},{"value":17,"solveTime":0.059595588},{"value":19,"solveTime":0.060240442},{"value":20,"solveTime":0.070751858},{"value":21,"solveTime":0.078913827},{"value":22,"solveTime":0.084096814},{"value":23,"solveTime":0.089023572},{"value":24,"solveTime":0.093953827},{"value":25,"solveTime":0.097319712},{"value":26,"solveTime":0.101177324},{"value":27,"solveTime":0.118706001},{"value":28,"solveTime":0.138424517},{"value":29,"solveTime":0.142197301},{"value":30,"solveTime":0.145466334},{"value":31,"solveTime":0.148886189},{"value":32,"solveTime":0.152333426},{"value":33,"solveTime":0.155995773},{"value":34,"solveTime":0.159156344},{"value":35,"solveTime":0.208082492},{"value":36,"solveTime":0.262939013},{"value":37,"solveTime":0.322955537},{"value":38,"solveTime":0.396669585},{"value":39,"solveTime":0.444504226},{"value":40,"solveTime":0.511545536},{"value":41,"solveTime":0.580550211},{"value":42,"solveTime":0.677445671},{"value":43,"solveTime":0.795959934},{"value":44,"solveTime":0.949467672},{"value":45,"solveTime":1.106973635},{"value":46,"solveTime":1.402524676},{"value":47,"solveTime":1.702888914},{"value":48,"solveTime":2.146591162},{"value":49,"solveTime":2.933345699},{"value":50,"solveTime":4.932688711},{"value":51,"solveTime":9.635826686},{"value":52,"solveTime":22.269738013}]},"b":{"modelName":"tier3_029","variant":"no_mig_delay_rel","duration":30.417933225631714,"solver":"IBM CP Optimizer","objective":90,"lowerBound":null,"bestSolution":90,"bestSolutionTime":30.2,"bestLBTime":null,"proof":false,"nbSolutions":34,"nbBranches":672754,"nbFails":319489,"nbLNSSteps":0,"nbRestarts":0,"memoryUsed":197194450,"nbIntVars":0,"nbIntervalVars":3086,"nbConstraints":462,"nbWorkers":8,"objectiveSense":"minimize","solveDate":"2025-12-09T21:35:39.489496Z","parameters":{"TimeLimit":30,"Workers":8,"LogVerbosity":"Quiet","SearchType":"Restart","FailureDirectedSearch":"On","NoOverlapInferenceLevel":"Extended","CumulFunctionInferenceLevel":"Extended","PrecedenceInferenceLevel":"Extended","LogPeriod":5000},"objectiveHistory":[{"objective":90,"solveTime":30.2}],"lowerBoundHistory":[]},"modelName":"tier3_029"}, ["OptalCP","IBM CP Optimizer"]);</script>
+<script>
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("loadedContent").style.display = "block";
+</script>
+
+</body>

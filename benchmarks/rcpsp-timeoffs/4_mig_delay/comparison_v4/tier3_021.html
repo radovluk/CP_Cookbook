@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<head>
+  <style>
+   body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    table, th, td {
+      border: 1px solid #606060;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    table {
+      border: 2px solid black;
+    }
+    th {
+      background-color: #d8d8d8d8;
+    }
+  </style>
+</head>
+
+<body>
+<h1 id="ModelName"></h1>
+
+<div id="loader"><h2>Loading data...</h2></div>
+<div id="loadedContent" style="display:none;">
+
+  <div id="ObjectiveHistory"></div>
+
+  <h2>Statistics</h2>
+  <div id="Statistics"></div>
+
+  <h2>Parameters</h3>
+
+  <table id="Parameters">
+  </table>
+</div>
+
+<script src="instance.js" charset="utf8"></script>
+<script charset="utf8">window.scheduleopt.main({"a":{"modelName":"tier3_021","variant":"mig_delay","duration":0.473810071,"solver":"OptalCP 2025.11.1 [Academic]","objective":56,"lowerBound":56,"bestSolution":56,"bestSolutionTime":0.471289736,"bestLBTime":0.454848328,"proof":true,"nbSolutions":1,"nbBranches":262713,"nbFails":88716,"nbLNSSteps":0,"nbRestarts":310,"memoryUsed":103733325,"nbIntVars":0,"nbIntervalVars":93,"nbConstraints":48,"nbWorkers":8,"objectiveSense":"minimize","solveDate":"2025-12-09T19:39:19.922115Z","parameters":{"nbWorkers":8,"searchType":"FDSLB","logLevel":0,"logPeriod":5,"timeLimit":30,"noOverlapPropagationLevel":4,"cumulPropagationLevel":3,"reservoirPropagationLevel":2,"usePrecedenceEnergy":1,"fdsLBStrategy":"Split"},"objectiveHistory":[{"objective":56,"solveTime":0.471289736}],"lowerBoundHistory":[{"value":13,"solveTime":0.013681274},{"value":14,"solveTime":0.017411388},{"value":15,"solveTime":0.017464177},{"value":16,"solveTime":0.017516655},{"value":17,"solveTime":0.017566217},{"value":18,"solveTime":0.01761605},{"value":19,"solveTime":0.017676383},{"value":20,"solveTime":0.017724302},{"value":21,"solveTime":0.017775518},{"value":22,"solveTime":0.017824028},{"value":23,"solveTime":0.017876797},{"value":24,"solveTime":0.017924566},{"value":25,"solveTime":0.017976172},{"value":26,"solveTime":0.018023511},{"value":27,"solveTime":0.018072122},{"value":28,"solveTime":0.018125151},{"value":29,"solveTime":0.018201353},{"value":30,"solveTime":0.018262798},{"value":31,"solveTime":0.018319433},{"value":32,"solveTime":0.018372873},{"value":33,"solveTime":0.018425722},{"value":34,"solveTime":0.019488185},{"value":35,"solveTime":0.020642641},{"value":36,"solveTime":0.020968569},{"value":37,"solveTime":0.021099073},{"value":38,"solveTime":0.0216332},{"value":39,"solveTime":0.021762752},{"value":40,"solveTime":0.021898636},{"value":41,"solveTime":0.022375346},{"value":42,"solveTime":0.022588564},{"value":43,"solveTime":0.023071406},{"value":44,"solveTime":0.024646526},{"value":45,"solveTime":0.027214451},{"value":46,"solveTime":0.02944208},{"value":47,"solveTime":0.032286821},{"value":48,"solveTime":0.037431988},{"value":49,"solveTime":0.040939897},{"value":50,"solveTime":0.047783464},{"value":51,"solveTime":0.059343698},{"value":52,"solveTime":0.073951582},{"value":53,"solveTime":0.118706953},{"value":54,"solveTime":0.177856969},{"value":55,"solveTime":0.302927964},{"value":56,"solveTime":0.454848328}]},"b":{"modelName":"tier3_021","variant":"mig_delay","duration":2.835521936416626,"solver":"IBM CP Optimizer","objective":56,"lowerBound":56,"bestSolution":56,"bestSolutionTime":2.82,"bestLBTime":2.82,"proof":true,"nbSolutions":14,"nbBranches":664873,"nbFails":335390,"nbLNSSteps":0,"nbRestarts":0,"memoryUsed":7558242,"nbIntVars":0,"nbIntervalVars":55,"nbConstraints":49,"nbWorkers":8,"objectiveSense":"minimize","solveDate":"2025-12-09T19:43:45.585650Z","parameters":{"TimeLimit":30,"Workers":8,"LogVerbosity":"Quiet","SearchType":"Restart","FailureDirectedSearch":"On","NoOverlapInferenceLevel":"Extended","CumulFunctionInferenceLevel":"Extended","PrecedenceInferenceLevel":"Extended","LogPeriod":5000},"objectiveHistory":[{"objective":56,"solveTime":2.82}],"lowerBoundHistory":[{"value":56,"solveTime":2.82}]},"modelName":"tier3_021"}, ["OptalCP","IBM CP Optimizer"]);</script>
+<script>
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("loadedContent").style.display = "block";
+</script>
+
+</body>

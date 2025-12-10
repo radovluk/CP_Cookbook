@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<head>
+  <style>
+   body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    table, th, td {
+      border: 1px solid #606060;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    table {
+      border: 2px solid black;
+    }
+    th {
+      background-color: #d8d8d8d8;
+    }
+  </style>
+</head>
+
+<body>
+<h1 id="ModelName"></h1>
+
+<div id="loader"><h2>Loading data...</h2></div>
+<div id="loadedContent" style="display:none;">
+
+  <div id="ObjectiveHistory"></div>
+
+  <h2>Statistics</h2>
+  <div id="Statistics"></div>
+
+  <h2>Parameters</h3>
+
+  <table id="Parameters">
+  </table>
+</div>
+
+<script src="instance.js" charset="utf8"></script>
+<script charset="utf8">window.scheduleopt.main({"a":{"modelName":"tier3_082","variant":"no_mig_delay_rel","duration":30.002356095,"solver":"OptalCP 2025.11.1 [Academic]","objective":null,"lowerBound":50,"bestSolution":null,"bestSolutionTime":null,"bestLBTime":19.791553007,"proof":false,"nbSolutions":0,"nbBranches":10127837,"nbFails":4742326,"nbLNSSteps":0,"nbRestarts":603,"memoryUsed":125073354,"nbIntVars":0,"nbIntervalVars":1013,"nbConstraints":275,"nbWorkers":8,"objectiveSense":"minimize","solveDate":"2025-12-09T21:06:11.440677Z","parameters":{"nbWorkers":8,"searchType":"FDSLB","logLevel":0,"logPeriod":5,"timeLimit":30,"noOverlapPropagationLevel":4,"cumulPropagationLevel":3,"reservoirPropagationLevel":2,"usePrecedenceEnergy":1,"fdsLBStrategy":"Split"},"objectiveHistory":[],"lowerBoundHistory":[{"value":1,"solveTime":0.026545403},{"value":2,"solveTime":0.027609049},{"value":4,"solveTime":0.027759772},{"value":7,"solveTime":0.027896086},{"value":12,"solveTime":0.02803196},{"value":13,"solveTime":0.02899447},{"value":14,"solveTime":0.035445681},{"value":15,"solveTime":0.037894127},{"value":16,"solveTime":0.039864624},{"value":17,"solveTime":0.043640989},{"value":18,"solveTime":0.045197543},{"value":19,"solveTime":0.047156288},{"value":20,"solveTime":0.049275955},{"value":21,"solveTime":0.051650567},{"value":22,"solveTime":0.053045868},{"value":23,"solveTime":0.054437851},{"value":24,"solveTime":0.056026347},{"value":25,"solveTime":0.064624568},{"value":26,"solveTime":0.066752211},{"value":27,"solveTime":0.068946273},{"value":28,"solveTime":0.070819341},{"value":29,"solveTime":0.072925913},{"value":30,"solveTime":0.075168138},{"value":31,"solveTime":0.077505518},{"value":32,"solveTime":0.079822208},{"value":33,"solveTime":0.088342829},{"value":34,"solveTime":0.102730506},{"value":35,"solveTime":0.112749176},{"value":36,"solveTime":0.137257482},{"value":37,"solveTime":0.14027343},{"value":38,"solveTime":0.143358582},{"value":39,"solveTime":0.159082465},{"value":40,"solveTime":0.230123977},{"value":41,"solveTime":0.327541943},{"value":42,"solveTime":0.486650318},{"value":43,"solveTime":0.639716526},{"value":44,"solveTime":0.873387552},{"value":45,"solveTime":1.137083384},{"value":46,"solveTime":1.624299098},{"value":47,"solveTime":2.431901955},{"value":48,"solveTime":4.532112089},{"value":49,"solveTime":10.098485006},{"value":50,"solveTime":19.791553007}]},"b":{"modelName":"tier3_082","variant":"no_mig_delay_rel","duration":30.09951424598694,"solver":"IBM CP Optimizer","objective":51,"lowerBound":null,"bestSolution":51,"bestSolutionTime":30.05,"bestLBTime":null,"proof":false,"nbSolutions":32,"nbBranches":860132,"nbFails":435873,"nbLNSSteps":0,"nbRestarts":0,"memoryUsed":68048042,"nbIntVars":0,"nbIntervalVars":1013,"nbConstraints":276,"nbWorkers":8,"objectiveSense":"minimize","solveDate":"2025-12-09T22:02:05.557890Z","parameters":{"TimeLimit":30,"Workers":8,"LogVerbosity":"Quiet","SearchType":"Restart","FailureDirectedSearch":"On","NoOverlapInferenceLevel":"Extended","CumulFunctionInferenceLevel":"Extended","PrecedenceInferenceLevel":"Extended","LogPeriod":5000},"objectiveHistory":[{"objective":51,"solveTime":30.05}],"lowerBoundHistory":[]},"modelName":"tier3_082"}, ["OptalCP","IBM CP Optimizer"]);</script>
+<script>
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("loadedContent").style.display = "block";
+</script>
+
+</body>

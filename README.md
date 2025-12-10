@@ -1,6 +1,6 @@
 # Constrained Programming Cookbook
 
-This repository contains Jupyter notebooks for defining, learning and experimenting with scheduling problems using Constraint Programming with IBM’s CP Optimizer via the [`docplex.cp`](https://ibmdecisionoptimization.github.io/docplex-doc/cp/refman.html) Python API. 
+This repository contains Jupyter notebooks for defining, learning and experimenting with scheduling problems using Constraint Programming with IBM’s CP Optimizer via the [docplex.cp](https://ibmdecisionoptimization.github.io/docplex-doc/cp/refman.html) Python API, and subsequently solving the problems in [OptalCP](https://optalcp.com/) via the OptalCP [Python API](https://github.com/ScheduleOpt/optalcp-py).
 
 
 ---
@@ -19,13 +19,14 @@ This repository contains Jupyter notebooks for defining, learning and experiment
 
 
 
-
-
 ---
 
 ## 📂 Data
 
 All input files for the notebooks are in the [`data/`](data/) folder.
+
+
+[`benchmarks/`](benchmarks/) - Runner, generator, and validator for comparing OptalCP vs CP Optimizer across RCPSP variants. Run with `python run.py <problem> --compare` inside the benchmarks folder.
 
 ---
 
@@ -67,18 +68,17 @@ All input files for the notebooks are in the [`data/`](data/) folder.
 
 - [PSPLIB datasets](https://www.om-db.wi.tum.de/psplib/data.html) - Standard benchmark library for project scheduling problems (JSSP, RCPSP, MRCPSP).
 
-- [OR&S project database datasets](https://www.projectmanagement.ugent.be/research/data) 
+- [OR&S project database datasets (ASLIB)](https://www.projectmanagement.ugent.be/research/data) 
 ---
 
-## 🚀 How to run locally
-
-Install dependencies via Conda:
-
-```bash
-conda env create -f environment.yml
-conda activate scheduling
-jupyter notebook
-```
-> **Note:** These notebooks use IBM **CP Optimizer** (part of CPLEX Optimization Studio).  
-> Please make sure CP Optimizer is installed and available to `docplex.cp` before running:
-> https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-cp-optimizer
+> **Note:** These notebooks use two constraint programming solvers. You need to install both solver binaries and both Python libraries to run the notebooks.
+>
+> **IBM CP Optimizer** (part of CPLEX Optimization Studio)  
+> - Download: https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-cp-optimizer  
+> - Students/academics: Install the [full version](https://community.ibm.com/community/user/blogs/xavier-nodet1/2020/07/09/cplex-free-for-students?CommunityKey=ab7de0fd-6f43-47a9-8261-33578a231bb7&tab=) (the non-academic version has model size limits). First go to https://academic.ibm.com/ and sign in using your academic credentials, then head to [Software Download](https://www-50.ibm.com/isc/esd/dswdown/home?ticket=Xa.2%2FXb.Z7LJBh8BR1y_8GJfWb7o2cPx%2FXc.%2FXd.%2FXf.%2FXg.13644878%2FXi.%2FXY.scholars%2FXZ.-kBhtbT2hb6gvZkPbx3wu8EkYQLEXkiw&partNumber=G0798ML) page, pick download method HTTP and select binary for your OS. The website is absolutely terrible so be prepared. 
+> - Python API: `pip install docplex` ([PyPI](https://pypi.org/project/docplex/))
+>
+> **OptalCP**  
+> - Website: https://optalcp.com/  
+> - Students/academics: Install the [academic version](https://github.com/ScheduleOpt/optalcp-py-bin-academic) (the standard version doesn't show concrete variable assignments)  
+> - Python API: ([GitHub](https://github.com/ScheduleOpt/optalcp-py))

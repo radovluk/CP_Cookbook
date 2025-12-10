@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<head>
+  <style>
+   body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    table, th, td {
+      border: 1px solid #606060;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    table {
+      border: 2px solid black;
+    }
+    th {
+      background-color: #d8d8d8d8;
+    }
+  </style>
+</head>
+
+<body>
+<h1 id="ModelName"></h1>
+
+<div id="loader"><h2>Loading data...</h2></div>
+<div id="loadedContent" style="display:none;">
+
+  <div id="ObjectiveHistory"></div>
+
+  <h2>Statistics</h2>
+  <div id="Statistics"></div>
+
+  <h2>Parameters</h3>
+
+  <table id="Parameters">
+  </table>
+</div>
+
+<script src="instance.js" charset="utf8"></script>
+<script charset="utf8">window.scheduleopt.main({"a":{"modelName":"tier3_091","variant":"no_mig_delay_rel","duration":3.533926708,"solver":"OptalCP 2025.11.1 [Academic]","objective":56,"lowerBound":56,"bestSolution":56,"bestSolutionTime":3.526461823,"bestLBTime":3.472597836,"proof":true,"nbSolutions":1,"nbBranches":583378,"nbFails":244012,"nbLNSSteps":0,"nbRestarts":403,"memoryUsed":193449451,"nbIntVars":0,"nbIntervalVars":2898,"nbConstraints":773,"nbWorkers":8,"objectiveSense":"minimize","solveDate":"2025-12-09T21:08:35.701134Z","parameters":{"nbWorkers":8,"searchType":"FDSLB","logLevel":0,"logPeriod":5,"timeLimit":30,"noOverlapPropagationLevel":4,"cumulPropagationLevel":3,"reservoirPropagationLevel":2,"usePrecedenceEnergy":1,"fdsLBStrategy":"Split"},"objectiveHistory":[{"objective":56,"solveTime":3.526461823}],"lowerBoundHistory":[{"value":1,"solveTime":0.049199033},{"value":2,"solveTime":0.050422469},{"value":4,"solveTime":0.050774928},{"value":7,"solveTime":0.051222169},{"value":12,"solveTime":0.051974548},{"value":13,"solveTime":0.055677179},{"value":14,"solveTime":0.086246754},{"value":15,"solveTime":0.102464979},{"value":16,"solveTime":0.110653579},{"value":17,"solveTime":0.117596381},{"value":18,"solveTime":0.125107496},{"value":19,"solveTime":0.165481904},{"value":20,"solveTime":0.171197933},{"value":21,"solveTime":0.177408344},{"value":22,"solveTime":0.183275573},{"value":23,"solveTime":0.188928861},{"value":24,"solveTime":0.194611836},{"value":25,"solveTime":0.200231299},{"value":26,"solveTime":0.257013817},{"value":27,"solveTime":0.263491442},{"value":28,"solveTime":0.268420085},{"value":29,"solveTime":0.273461163},{"value":30,"solveTime":0.27892195},{"value":31,"solveTime":0.307954805},{"value":32,"solveTime":0.320245196},{"value":33,"solveTime":0.333486347},{"value":34,"solveTime":0.339354028},{"value":35,"solveTime":0.345522758},{"value":36,"solveTime":0.351485341},{"value":37,"solveTime":0.486171245},{"value":38,"solveTime":0.498481273},{"value":39,"solveTime":0.516245967},{"value":40,"solveTime":0.524132095},{"value":41,"solveTime":0.531520544},{"value":42,"solveTime":0.538636078},{"value":43,"solveTime":0.559304284},{"value":44,"solveTime":0.576115891},{"value":45,"solveTime":0.592535965},{"value":46,"solveTime":0.609655927},{"value":47,"solveTime":0.624162876},{"value":48,"solveTime":0.638722547},{"value":49,"solveTime":0.663411566},{"value":50,"solveTime":0.744944511},{"value":51,"solveTime":0.816087186},{"value":52,"solveTime":0.824288171},{"value":53,"solveTime":1.085098463},{"value":54,"solveTime":1.48754259},{"value":55,"solveTime":2.371732081},{"value":56,"solveTime":3.472597836}]},"b":{"modelName":"tier3_091","variant":"no_mig_delay_rel","duration":30.265692710876465,"solver":"IBM CP Optimizer","objective":57,"lowerBound":null,"bestSolution":57,"bestSolutionTime":30.16,"bestLBTime":null,"proof":false,"nbSolutions":13,"nbBranches":97998,"nbFails":46891,"nbLNSSteps":0,"nbRestarts":0,"memoryUsed":194148818,"nbIntVars":0,"nbIntervalVars":2898,"nbConstraints":774,"nbWorkers":8,"objectiveSense":"minimize","solveDate":"2025-12-09T22:06:41.693429Z","parameters":{"TimeLimit":30,"Workers":8,"LogVerbosity":"Quiet","SearchType":"Restart","FailureDirectedSearch":"On","NoOverlapInferenceLevel":"Extended","CumulFunctionInferenceLevel":"Extended","PrecedenceInferenceLevel":"Extended","LogPeriod":5000},"objectiveHistory":[{"objective":57,"solveTime":30.16}],"lowerBoundHistory":[]},"modelName":"tier3_091"}, ["OptalCP","IBM CP Optimizer"]);</script>
+<script>
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("loadedContent").style.display = "block";
+</script>
+
+</body>

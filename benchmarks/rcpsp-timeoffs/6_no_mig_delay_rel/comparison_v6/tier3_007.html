@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<head>
+  <style>
+   body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    table, th, td {
+      border: 1px solid #606060;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    table {
+      border: 2px solid black;
+    }
+    th {
+      background-color: #d8d8d8d8;
+    }
+  </style>
+</head>
+
+<body>
+<h1 id="ModelName"></h1>
+
+<div id="loader"><h2>Loading data...</h2></div>
+<div id="loadedContent" style="display:none;">
+
+  <div id="ObjectiveHistory"></div>
+
+  <h2>Statistics</h2>
+  <div id="Statistics"></div>
+
+  <h2>Parameters</h3>
+
+  <table id="Parameters">
+  </table>
+</div>
+
+<script src="instance.js" charset="utf8"></script>
+<script charset="utf8">window.scheduleopt.main({"a":{"modelName":"tier3_007","variant":"no_mig_delay_rel","duration":30.006659652,"solver":"OptalCP 2025.11.1 [Academic]","objective":null,"lowerBound":51,"bestSolution":null,"bestSolutionTime":null,"bestLBTime":29.712456236,"proof":false,"nbSolutions":0,"nbBranches":117796,"nbFails":40496,"nbLNSSteps":0,"nbRestarts":244,"memoryUsed":772703858,"nbIntVars":0,"nbIntervalVars":27924,"nbConstraints":3994,"nbWorkers":8,"objectiveSense":"minimize","solveDate":"2025-12-09T20:41:31.244720Z","parameters":{"nbWorkers":8,"searchType":"FDSLB","logLevel":0,"logPeriod":5,"timeLimit":30,"noOverlapPropagationLevel":4,"cumulPropagationLevel":3,"reservoirPropagationLevel":2,"usePrecedenceEnergy":1,"fdsLBStrategy":"Split"},"objectiveHistory":[],"lowerBoundHistory":[{"value":1,"solveTime":2.501966278},{"value":2,"solveTime":2.536668179},{"value":4,"solveTime":2.550093585},{"value":7,"solveTime":2.562781434},{"value":12,"solveTime":2.576691485},{"value":13,"solveTime":2.631617785},{"value":14,"solveTime":2.674754484},{"value":15,"solveTime":2.714882836},{"value":16,"solveTime":2.784573913},{"value":17,"solveTime":2.82341408},{"value":18,"solveTime":2.868570911},{"value":19,"solveTime":2.930485539},{"value":20,"solveTime":2.9819844},{"value":21,"solveTime":3.024918331},{"value":22,"solveTime":3.072917297},{"value":23,"solveTime":3.115628852},{"value":24,"solveTime":3.156021788},{"value":25,"solveTime":3.193039142},{"value":26,"solveTime":3.231987821},{"value":27,"solveTime":4.376133409},{"value":28,"solveTime":4.531221217},{"value":29,"solveTime":4.671537395},{"value":30,"solveTime":4.789754193},{"value":31,"solveTime":4.936499125},{"value":32,"solveTime":5.524891418},{"value":33,"solveTime":7.048332672},{"value":34,"solveTime":7.458913471},{"value":35,"solveTime":7.555832955},{"value":36,"solveTime":7.966259906},{"value":37,"solveTime":8.14784701},{"value":38,"solveTime":8.40108462},{"value":39,"solveTime":8.90222048},{"value":40,"solveTime":9.591835562},{"value":41,"solveTime":11.698270991},{"value":42,"solveTime":12.631924848},{"value":43,"solveTime":13.528235322},{"value":44,"solveTime":16.328462181},{"value":45,"solveTime":18.137134549},{"value":46,"solveTime":18.897696493},{"value":47,"solveTime":21.853925076},{"value":48,"solveTime":25.098706253},{"value":49,"solveTime":27.38722895},{"value":50,"solveTime":28.655791251},{"value":51,"solveTime":29.712456236}]},"b":{"modelName":"tier3_007","variant":"no_mig_delay_rel","duration":99.39443778991699,"solver":"IBM CP Optimizer","objective":null,"lowerBound":null,"bestSolution":null,"bestSolutionTime":null,"bestLBTime":null,"proof":false,"nbSolutions":0,"nbBranches":0,"nbFails":0,"nbLNSSteps":0,"nbRestarts":0,"memoryUsed":0,"nbIntVars":0,"nbIntervalVars":27924,"nbConstraints":3995,"nbWorkers":8,"objectiveSense":"minimize","solveDate":"2025-12-09T21:23:44.931285Z","parameters":{"TimeLimit":30,"Workers":8,"LogVerbosity":"Quiet","SearchType":"Restart","FailureDirectedSearch":"On","NoOverlapInferenceLevel":"Extended","CumulFunctionInferenceLevel":"Extended","PrecedenceInferenceLevel":"Extended","LogPeriod":5000},"objectiveHistory":[],"lowerBoundHistory":[]},"modelName":"tier3_007"}, ["OptalCP","IBM CP Optimizer"]);</script>
+<script>
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("loadedContent").style.display = "block";
+</script>
+
+</body>
