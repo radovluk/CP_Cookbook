@@ -17,8 +17,7 @@ DEFAULTS = {
 
 # OptalCP parameters (name: default_value)
 OPTAL_PARAMS = {
-    "searchType": "FDSLB",
-    "fdsLBStrategy": "Split",
+    "searchType": "FDSDual",
     "noOverlapPropagationLevel": 4,
     "cumulPropagationLevel": 3,
     "reservoirPropagationLevel": 2,

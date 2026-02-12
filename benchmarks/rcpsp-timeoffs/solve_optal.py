@@ -198,27 +198,27 @@ def build_model_v1_no_mig_no_delay(data: dict, name: str) -> tuple:
     mdl.minimize(mdl.max([T[i].end() for i in T]))
     
     # Precedences
-    mdl.add([T[i].end_before_start(T[j]) for i, j in PRECEDENCES])
+    mdl.enforce([T[i].end_before_start(T[j]) for i, j in PRECEDENCES])
     
     # Alternative with cardinality (decomposed)
     for i, size, reqs in TASKS:
         for type_id, qty in reqs:
             if qty > 0 and (candidates := TYPE_MAP.get(type_id, [])):
                 candidate_intervals = [O[(i, r)] for r in candidates]
-                mdl.add(mdl.sum([itv.presence() for itv in candidate_intervals]) == qty)
-                mdl.add([T[i].start_at_start(itv) for itv in candidate_intervals])
-                mdl.add([T[i].end_at_end(itv) for itv in candidate_intervals])
+                mdl.enforce(mdl.sum([itv.presence() for itv in candidate_intervals]) == qty)
+                mdl.enforce([T[i].start_at_start(itv) for itv in candidate_intervals])
+                mdl.enforce([T[i].end_at_end(itv) for itv in candidate_intervals])
     
     # NoOverlap per unit
     for r in range(M):
         intervals = [itv for (i, uid), itv in O.items() if uid == r]
         if intervals:
-            mdl.add(mdl.no_overlap(intervals))
+            mdl.enforce(mdl.no_overlap(intervals))
     
     # Calendar compliance
     for (i, r), itv in O.items():
         if r in res_availability:
-            mdl.add(itv.forbid_extent(res_availability[r]))
+            mdl.enforce(itv.forbid_extent(res_availability[r]))
     
     return mdl, {'T': T, 'O': O}
 
@@ -240,7 +240,7 @@ def build_model_v2_mig_no_delay(data: dict, name: str) -> tuple:
     mdl.minimize(mdl.max([T[i].end() for i in range(N)]))
     
     # Precedences
-    mdl.add([T[i].end_before_start(T[j]) for i, j in PRECEDENCES])
+    mdl.enforce([T[i].end_before_start(T[j]) for i, j in PRECEDENCES])
     
     # Capacity constraints: usage + breaks <= capacity
     for type_id, rtype in res_types.items():
@@ -248,7 +248,7 @@ def build_model_v2_mig_no_delay(data: dict, name: str) -> tuple:
                         for req_type, qty in reqs if req_type == type_id and qty > 0])
         breaks = mdl.sum([mdl.pulse(mdl.interval_var(start=(s, s), end=(s+d, s+d)), 1)
                          for u in rtype["units"] if u in res_breaks for s, d in res_breaks[u]])
-        mdl.add(usage + breaks <= rtype["capacity"])
+        mdl.enforce(usage + breaks <= rtype["capacity"])
     
     return mdl, {'T': T}
 
@@ -282,32 +282,32 @@ def build_model_v3_no_mig_delay_block(data: dict, name: str) -> tuple:
     mdl.minimize(mdl.max([T[i].end() for i in range(N)]))
     
     # Precedences
-    mdl.add([T[i].end_before_start(T[j]) for i, j in PRECEDENCES])
+    mdl.enforce([T[i].end_before_start(T[j]) for i, j in PRECEDENCES])
     
     # Alternative: mode selection
     for i in T:
         modes_for_task = [O[(i, m)] for m in task_modes[i]]
         if modes_for_task:
-            mdl.add(mdl.alternative(T[i], modes_for_task))
+            mdl.enforce(mdl.alternative(T[i], modes_for_task))
     
     # NoOverlap per resource
     for r in range(M):
         intervals = [O[(i, m)] for (i, m) in O if r in m]
         if intervals:
-            mdl.add(mdl.no_overlap(intervals))
+            mdl.enforce(mdl.no_overlap(intervals))
     
     # Work content: size = integral of intensity
     for i, size, _ in TASKS:
         if size > 0:
             for m in task_modes[i]:
                 if (i, m) in joint_intensities:
-                    work = mdl.step_function_sum(joint_intensities[(i, m)], O[(i, m)])
-                    mdl.add(work.guard(size) == size)
+                    work = mdl.integral(joint_intensities[(i, m)], O[(i, m)])
+                    mdl.enforce(mdl.guard(work, size) == size)
     
     # Forbid start during unavailability
     for (i, m), itv in O.items():
         if (i, m) in joint_intensities and m:
-            mdl.add(itv.forbid_start(joint_intensities[(i, m)]))
+            mdl.enforce(itv.forbid_start(joint_intensities[(i, m)]))
     
     return mdl, {'T': T, 'O': O, 'task_modes': task_modes}
 
@@ -336,18 +336,18 @@ def build_model_v4_mig_delay(data: dict, name: str) -> tuple:
     mdl.minimize(mdl.max([T[i].end() for i in T]))
     
     # Precedences
-    mdl.add([T[i].end_before_start(T[j]) for i, j in PRECEDENCES])
+    mdl.enforce([T[i].end_before_start(T[j]) for i, j in PRECEDENCES])
     
     # Span
     for i, _, _ in TASKS:
         segs = [S[(i, w)] for w in range(len(task_windows[i]))]
         if segs:
-            mdl.add(mdl.span(T[i], segs))
+            mdl.enforce(mdl.span(T[i], segs))
     
     # Work content
     for i, size, _ in TASKS:
         if size > 0:
-            mdl.add(mdl.sum([S[(i, w)].length().guard(0) for w in range(len(task_windows[i]))]) == size)
+            mdl.enforce(mdl.sum([S[(i, w)].length().guard(0) for w in range(len(task_windows[i]))]) == size)
     
     # Capacity on segments
     for type_id, rtype in res_types.items():
@@ -356,7 +356,7 @@ def build_model_v4_mig_delay(data: dict, name: str) -> tuple:
                         for w in range(len(task_windows[i]))])
         breaks = mdl.sum([mdl.pulse(mdl.interval_var(start=(s, s), end=(s+d, s+d)), 1)
                          for u in rtype["units"] if u in res_breaks for s, d in res_breaks[u]])
-        mdl.add(usage + breaks <= rtype["capacity"])
+        mdl.enforce(usage + breaks <= rtype["capacity"])
     
     return mdl, {'T': T, 'S': S, 'task_windows': task_windows}
 
@@ -394,7 +394,7 @@ def build_model_v5_heterogeneous(data: dict, name: str, fixed_types=None, migrat
     mdl.minimize(mdl.max([T[i].end() for i in T]))
     
     # Precedences
-    mdl.add([T[i].end_before_start(T[j]) for i, j in PRECEDENCES])
+    mdl.enforce([T[i].end_before_start(T[j]) for i, j in PRECEDENCES])
     
     # Fixed types: select units with cardinality + synchronization
     for i, size, reqs in TASKS:
@@ -402,21 +402,21 @@ def build_model_v5_heterogeneous(data: dict, name: str, fixed_types=None, migrat
             if k in fixed_types and q > 0:
                 candidates = [O[(i, r)] for r in TYPE_MAP.get(k, [])]
                 if candidates:
-                    mdl.add(mdl.sum([itv.presence() for itv in candidates]) == q)
-                    mdl.add([T[i].start_at_start(itv) for itv in candidates])
-                    mdl.add([T[i].end_at_end(itv) for itv in candidates])
+                    mdl.enforce(mdl.sum([itv.presence() for itv in candidates]) == q)
+                    mdl.enforce([T[i].start_at_start(itv) for itv in candidates])
+                    mdl.enforce([T[i].end_at_end(itv) for itv in candidates])
     
     # NoOverlap per unit for fixed types
     for k in fixed_types:
         for r in TYPE_MAP.get(k, []):
             intervals = [O[(i, r)] for (i, uid) in O if uid == r]
             if intervals:
-                mdl.add(mdl.no_overlap(intervals))
+                mdl.enforce(mdl.no_overlap(intervals))
     
     # Calendar for fixed types
     for (i, r), itv in O.items():
         if r in res_availability:
-            mdl.add(itv.forbid_extent(res_availability[r]))
+            mdl.enforce(itv.forbid_extent(res_availability[r]))
     
     # Capacity for migration types
     for k in migration_types:
@@ -426,7 +426,7 @@ def build_model_v5_heterogeneous(data: dict, name: str, fixed_types=None, migrat
         usage = mdl.sum([mdl.pulse(T[i], q) for i, _, reqs in TASKS for rk, q in reqs if rk == k and q > 0])
         breaks = mdl.sum([mdl.pulse(mdl.interval_var(start=(s, s), end=(s+d, s+d)), 1)
                          for u in rtype["units"] if u in res_breaks for s, d in res_breaks[u]])
-        mdl.add(usage + breaks <= rtype["capacity"])
+        mdl.enforce(usage + breaks <= rtype["capacity"])
     
     return mdl, {'T': T, 'O': O, 'fixed_types': fixed_types, 'migration_types': migration_types}
 
@@ -459,32 +459,32 @@ def build_model_v6_no_mig_delay_rel(data: dict, name: str) -> tuple:
     mdl.minimize(mdl.max([T[i].end() for i in T]))
     
     # Precedences
-    mdl.add([T[i].end_before_start(T[j]) for i, j in PRECEDENCES])
+    mdl.enforce([T[i].end_before_start(T[j]) for i, j in PRECEDENCES])
     
     # Mode selection
     for i, _, _ in TASKS:
         modes = [M_var[(i, m)] for m in task_modes[i]]
         if modes:
-            mdl.add(mdl.alternative(T[i], modes))
+            mdl.enforce(mdl.alternative(T[i], modes))
     
     # Span: mode spans segments
     for (i, m), windows in work_windows.items():
         segs = [S[(i, m, w)] for w in range(len(windows))]
         if segs:
-            mdl.add(mdl.span(M_var[(i, m)], segs))
+            mdl.enforce(mdl.span(M_var[(i, m)], segs))
     
     # Work content
     for i, size, _ in TASKS:
         if size > 0:
             for m in task_modes[i]:
                 seg_sum = mdl.sum([S[(i, m, w)].length().guard(0) for w in range(len(work_windows[(i, m)]))])
-                mdl.add(mdl.implies(M_var[(i, m)].presence(), seg_sum == size))
+                mdl.enforce(mdl.implies(M_var[(i, m)].presence(), seg_sum == size))
     
     # NoOverlap on segments per resource
     for r in range(M):
         segs = [S[(i, m, w)] for (i, m, w) in S if r in m]
         if segs:
-            mdl.add(mdl.no_overlap(segs))
+            mdl.enforce(mdl.no_overlap(segs))
     
     return mdl, {'T': T, 'M': M_var, 'S': S, 'task_modes': task_modes, 'work_windows': work_windows}
 
@@ -530,18 +530,18 @@ def solve(filepath: str, time_limit: int, workers: int, log_level: int,
         **solver_params
     )
     
-    result = mdl.solve(params=params)
+    result = mdl.solve(params)
     
     output = {
         "modelName": name,
         "variant": VARIANT_NAMES.get(variant, variant),
         "duration": result.duration,
         "solver": result.solver,
-        "objective": result.objective_value,
-        "lowerBound": result.lower_bound,
-        "bestSolution": result.objective_value,
+        "objective": result.objective,
+        "lowerBound": result.objective_bound,
+        "bestSolution": result.objective,
         "bestSolutionTime": result.solution_time,
-        "bestLBTime": result.best_lb_time,
+        "bestLBTime": result.bound_time,
         "proof": result.proof,
         "nbSolutions": result.nb_solutions,
         "nbBranches": result.nb_branches,
@@ -555,25 +555,25 @@ def solve(filepath: str, time_limit: int, workers: int, log_level: int,
         "nbWorkers": workers,
         "objectiveSense": "minimize",
         "solveDate": datetime.now().isoformat() + "Z",
-        "parameters": params._to_dict() if hasattr(params, '_to_dict') else {},
+        "parameters": dict(params),
         "objectiveHistory": [],
         "lowerBoundHistory": [],
     }
     
     # Build history
-    if hasattr(result, 'objective_history') and result.objective_history:
-        output["objectiveHistory"] = [{"objective": h['objective'], "solveTime": h['solveTime']} 
+    if result.objective_history:
+        output["objectiveHistory"] = [{"objective": h.objective, "solveTime": h.solve_time}
                                        for h in result.objective_history]
-    elif result.objective_value is not None:
-        output["objectiveHistory"] = [{"objective": result.objective_value, 
+    elif result.objective is not None:
+        output["objectiveHistory"] = [{"objective": result.objective,
                                         "solveTime": result.solution_time or result.duration}]
-    
-    if hasattr(result, 'lower_bound_history') and result.lower_bound_history:
-        output["lowerBoundHistory"] = [{"value": h['value'], "solveTime": h['solveTime']} 
-                                        for h in result.lower_bound_history]
-    elif result.lower_bound is not None:
-        output["lowerBoundHistory"] = [{"value": result.lower_bound, 
-                                         "solveTime": result.best_lb_time or result.duration}]
+
+    if result.objective_bound_history:
+        output["lowerBoundHistory"] = [{"value": h.value, "solveTime": h.solve_time}
+                                        for h in result.objective_bound_history]
+    elif result.objective_bound is not None:
+        output["lowerBoundHistory"] = [{"value": result.objective_bound,
+                                         "solveTime": result.bound_time or result.duration}]
     
     return output
 
