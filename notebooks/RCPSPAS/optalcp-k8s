@@ -1,0 +1,3 @@
+#!/bin/sh
+export KUBECONFIG="$0.kubeconfig"
+exec kubectl exec -n optalcp -q -i deploy/optalcp -- optalcp "$@"

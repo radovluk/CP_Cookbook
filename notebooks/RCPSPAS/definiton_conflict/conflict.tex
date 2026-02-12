@@ -1,0 +1,388 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[czech]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{parskip}
+\usepackage{hyperref}
+
+\title{\textbf{Analýza matematické formulace RCPSP-AS}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+%===============================================================================
+\section{Notace}
+%===============================================================================
+
+\subsection*{Množiny a indexy}
+
+\begin{tabular}{@{}cl@{}}
+\toprule
+\textbf{Symbol} & \textbf{Význam} \\
+\midrule
+$i, j$ & Indexy aktivit \\
+$l$ & Index alternativního podgrafu \\
+$k$ & Index alternativní větve \\
+$N$ & Množina všech aktivit \\
+$N^a$ & Množina alternativních aktivit \\
+$N^f$ & Množina fixních aktivit \\
+$L$ & Množina alternativních podgrafů \\
+$K_{p_l}$ & Množina alternativních větví v podgrafu $l$ \\
+$N_{b_k}$ & Množina aktivit v alternativní větvi $k$ \\
+$A$ & Množina precedenčních vztahů \\
+\bottomrule
+\end{tabular}
+
+\subsection*{Parametry}
+
+\begin{tabular}{@{}cl@{}}
+\toprule
+\textbf{Symbol} & \textbf{Význam} \\
+\midrule
+$p_l$ & Principální aktivita podgrafu $l$ \\
+$t_l$ & Terminální aktivita podgrafu $l$ \\
+$b_k$ & Větvící aktivita větve $k$ \\
+$\eta_{b_{k'},p_l} = 1$ & Podgraf $l$ je vnořen do větve $k'$ \\
+$\kappa_{i,j} = 1$ & Aktivita $i$ je propojena s aktivitou $j$ v jiné větvi \\
+\bottomrule
+\end{tabular}
+
+\subsection*{Rozhodovací proměnné}
+
+\begin{align*}
+x_{i,t} &\in \{0, 1\} && x_{i,t} = 1 \text{ pokud aktivita } i \text{ začíná v čase } t \\
+y_i &\in \{0, 1\} && y_i = 1 \text{ pokud je aktivita } i \text{ vybrána}
+\end{align*}
+
+%===============================================================================
+\section{Originální příklad z článku}
+%===============================================================================
+
+Pro lepší pochopení notace používáme originální příklad z článku (Fig. 1, Table 4).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{example_original.png}
+\caption{Originální ilustrativní příklad z článku Servranckx et al. (2024). Projektová síť obsahuje dva alternativní podgrafy, vnořování a propojení (linking).}
+\label{fig:original}
+\end{figure}
+
+\subsection*{Základní množiny}
+
+\textbf{Množina všech aktivit $N$:} Projekt obsahuje $|N| = 19$ aktivit:
+$$N = \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19\}$$
+
+\textbf{Fixní aktivity $N^f$:} Aktivity, které musí být vždy vybrány bez ohledu na volbu alternativ. V tomto příkladu:
+$$N^f = \{1, 17, 18, 19\}$$
+Aktivita 1 je principální aktivita prvního podgrafu, aktivity 17, 18, 19 jsou koncové/fixní aktivity projektu.
+
+\textbf{Alternativní aktivity $N^a$:} Aktivity, které mohou, ale nemusí být vybrány v závislosti na zvolených alternativních větvích:
+$$N^a = \{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16\}$$
+
+Platí: $N = N^f \cup N^a$ a $N^f \cap N^a = \emptyset$.
+
+\subsection*{Alternativní podgrafy $L$}
+
+\textbf{Množina alternativních podgrafů:} $L = \{1, 2\}$
+
+Každý alternativní podgraf představuje místo v projektu, kde existuje volba mezi několika alternativními cestami (větvemi).
+
+\subsection*{Principální a terminální aktivity ($p_l$, $t_l$)}
+
+\textbf{Principální aktivita $p_l$:} Aktivita, která „spouští" rozhodování mezi alternativami v podgrafu $l$. Je to aktivita bezprostředně před rozvětvením.
+
+\textbf{Terminální aktivita $t_l$:} Aktivita, kde se alternativní větve opět spojují.
+
+V našem příkladu:
+\begin{itemize}
+    \item Podgraf $l = 1$: $p_1 = 1$ (principální), $t_1 = 17$ (terminální)
+    \item Podgraf $l = 2$: $p_2 = 4$ (principální), $t_2 = 17$ (terminální)
+\end{itemize}
+
+\subsection*{Množiny alternativních větví $K_{p_l}$}
+
+\textbf{Definice:} $K_{p_l}$ je množina alternativních větví v podgrafu s principální aktivitou $p_l$. Prvky této množiny jsou \textbf{větvící aktivity} $b_k$ -- první aktivity každé alternativní cesty.
+
+V našem příkladu:
+\begin{itemize}
+    \item \textbf{Podgraf 1} ($p_1 = 1$): Má tři alternativní větve, $|K_1| = 3$
+    $$K_1 = \{2, 5, 8\}$$
+    To znamená volbu mezi větvícími aktivitami $b_1 = 2$, $b_2 = 5$, $b_3 = 8$.
+    
+    \item \textbf{Podgraf 2} ($p_2 = 4$): Má dvě alternativní větve, $|K_4| = 2$
+    $$K_4 = \{11, 14\}$$
+    To znamená volbu mezi větvícími aktivitami $b_4 = 11$, $b_5 = 14$.
+\end{itemize}
+
+\textbf{Poznámka k indexování:} Index množiny $K$ odpovídá principální aktivitě, tedy $K_1$ pro podgraf s $p_1 = 1$ a $K_4$ pro podgraf s $p_2 = 4$.
+
+\subsection*{Množiny aktivit v alternativních větvích $N_{b_k}$}
+
+\textbf{Definice:} $N_{b_k}$ je množina všech aktivit patřících do alternativní větve s větvící aktivitou $b_k$. Zahrnuje větvící aktivitu a všechny její tranzitivní následníky až po terminální aktivitu.
+
+V našem příkladu:
+\begin{itemize}
+    \item $N_2 = \{2, 3, 4\}$ -- větev začínající aktivitou 2
+    \item $N_5 = \{5, 6, 7\}$ -- větev začínající aktivitou 5
+    \item $N_8 = \{8, 9, 10\}$ -- větev začínající aktivitou 8
+    \item $N_{11} = \{11, 12, 13\}$ -- větev začínající aktivitou 11
+    \item $N_{14} = \{14, 15, 16\}$ -- větev začínající aktivitou 14
+\end{itemize}
+
+\textbf{Důležité:} Index množiny $N_{b_k}$ odpovídá větvící aktivitě, např. $N_2$ obsahuje aktivity větve, která začíná aktivitou 2.
+
+\subsection*{Vnořování (Nesting) -- parametr $\eta_{b_{k'},p_l}$}
+
+\textbf{Definice:} Parametr $\eta_{b_{k'},p_l} = 1$ indikuje, že alternativní podgraf s principální aktivitou $p_l$ je \textbf{vnořen} do alternativní větve s větvící aktivitou $b_{k'}$. To znamená, že podgraf $l$ se aktivuje pouze tehdy, když je vybrána větev $k'$.
+
+V našem příkladu:
+$$\eta_{2,4} = 1$$
+
+Toto znamená: Podgraf 2 (s principální aktivitou $p_2 = 4$) je vnořen do větve s větvící aktivitou $b_1 = 2$. Jinými slovy, volba mezi větvemi 11 a 14 existuje pouze tehdy, pokud jsme v podgrafu 1 vybrali větev 2.
+
+Pokud vybereme větev 5 nebo 8 v podgrafu 1, podgraf 2 se vůbec neaktivuje a žádná z jeho aktivit (11-16) nebude vybrána.
+
+\subsection*{Propojení (Linking) -- parametr $\kappa_{i,j}$}
+
+\textbf{Definice:} Parametr $\kappa_{i,j} = 1$ indikuje, že aktivita $i$ v jedné větvi je \textbf{propojena} s aktivitou $j$ v jiné větvi. Výběr aktivity $i$ pak vynucuje výběr aktivity $j$, i když patří do různých alternativních větví.
+
+V našem příkladu:
+$$\kappa_{12,15} = 1$$
+
+Toto znamená: Aktivita 12 (ve větvi $N_{11}$) je propojena s aktivitou 15 (ve větvi $N_{14}$). Hrana mezi 12 a 15 indikuje, že informace o dokončení aktivity 12 je potřebná pro úspěšné zahájení aktivity 15.
+
+Z praktického hlediska propojení modeluje možný překryv mezi různými alternativními větvemi -- část jedné větve může být potřebná i pro druhou větev.
+
+\subsection*{Přípustná řešení}
+
+Na základě struktury projektu jsou přípustné následující kombinace vybraných aktivit:
+
+\begin{enumerate}
+    \item $N_2 \cup N_{11} \cup \{15, 16\} \cup N^f = \{1,2,3,4,11,12,13,15,16,17,18,19\}$
+    
+    Vybrána větev 2 v podgrafu 1, větev 11 v podgrafu 2, plus propojené aktivity 15, 16.
+    
+    \item $N_2 \cup N_{14} \cup N^f = \{1,2,3,4,14,15,16,17,18,19\}$
+    
+    Vybrána větev 2 v podgrafu 1, větev 14 v podgrafu 2.
+    
+    \item $N_5 \cup N^f = \{1,5,6,7,17,18,19\}$
+    
+    Vybrána větev 5 v podgrafu 1. Podgraf 2 se neaktivuje (je vnořen ve větvi 2).
+    
+    \item $N_8 \cup N^f = \{1,8,9,10,17,18,19\}$
+    
+    Vybrána větev 8 v podgrafu 1. Podgraf 2 se neaktivuje.
+\end{enumerate}
+
+\subsection*{Zdrojové parametry}
+
+Pro úplnost uvádíme i zdrojové parametry z příkladu:
+
+\begin{itemize}
+    \item Jeden obnovitelný zdroj: $R = \{1\}$
+    \item Dostupnost zdroje: $a_1 = 10$ jednotek
+    \item Doby trvání aktivit: $d_i = \{0,0,3,0,0,6,0,0,6,0,0,1,0,0,2,0,0,1,0\}$
+    \item Požadavky na zdroj: $r_{i,1} = \{0,0,3,0,0,2,0,0,1,0,0,7,0,0,5,0,0,6,0\}$
+\end{itemize}
+
+Nulové doby trvání a požadavky odpovídají dummy aktivitám (rozvětvení a spojení).
+
+%===============================================================================
+\section{Matematická formulace}
+%===============================================================================
+
+\subsection*{Eq. (1) -- Účelová funkce}
+
+\begin{equation}
+\text{Min} \sum_{t=es_{n+1}}^{ls_{n+1}} t \cdot x_{n+1,t}
+\tag{1}
+\end{equation}
+
+Cílem je minimalizovat celkovou dobu trvání projektu (makespan). Aktivita $n+1$ je fiktivní koncová aktivita s nulovou dobou trvání, která nemá žádné následníky. Její čas zahájení tedy odpovídá času dokončení celého projektu. Suma přes všechny možné časy $t$ vynásobené binární proměnnou $x_{n+1,t}$ vrací právě ten čas, kdy koncová aktivita začíná (a tedy kdy projekt končí).
+
+\subsection*{Eq. (2) -- Precedenční vztahy}
+
+\begin{equation}
+\sum_{t=es_i}^{ls_i} (t + d_i) x_{i,t} - M(1 - y_i) \leq \sum_{t=es_j}^{ls_j} t \cdot x_{j,t} + M(1 - y_j) \quad \forall (i,j) \in A
+\tag{2}
+\end{equation}
+
+Toto omezení zajišťuje dodržení precedenčních vztahů mezi aktivitami. Pokud existuje hrana $(i,j) \in A$, pak aktivita $j$ nesmí začít dříve, než skončí aktivita $i$. Levá strana představuje čas dokončení aktivity $i$ (začátek plus doba trvání $d_i$), pravá strana představuje čas začátku aktivity $j$. 
+
+Členy $M(1-y_i)$ a $M(1-y_j)$ slouží jako „big-M" relaxace: pokud některá z aktivit není vybrána ($y_i = 0$ nebo $y_j = 0$), omezení se stává triviálně splněným a precedenční vztah se neuplatňuje. Omezení je tedy aktivní pouze pro vybrané aktivity.
+
+\subsection*{Eq. (3) -- Jednoznačný začátek aktivity}
+
+\begin{equation}
+\sum_{t=es_i}^{ls_i} x_{i,t} = y_i \quad \forall i \in N
+\tag{3}
+\end{equation}
+
+Toto omezení propojuje rozhodnutí o výběru aktivity s jejím naplánováním. Suma přes všechny možné časy zahájení (od nejdříve možného $es_i$ po nejpozději možný $ls_i$) musí být rovna $y_i$. To znamená:
+\begin{itemize}
+    \item Pokud je aktivita vybrána ($y_i = 1$), musí začít právě v jednom časovém okamžiku.
+    \item Pokud aktivita není vybrána ($y_i = 0$), nesmí začít v žádném čase.
+\end{itemize}
+
+\subsection*{Eq. (4) -- Výběr alternativní větve}
+
+\begin{equation}
+\sum_{k=1}^{|K_{p_l}|} y_{b_k} = 1 - \eta_{b_{k'},p_l} \cdot (1 - y_{p_l}) \quad \forall k' \in K_{p_{l'}}; \forall l, l' \in L
+\tag{4}
+\end{equation}
+
+Toto omezení řídí výběr alternativních větví v každém podgrafu. Suma $\sum y_{b_k}$ sčítá výběrové proměnné větvících aktivit všech větví v podgrafu $l$. Pravá strana závisí na tom, zda je podgraf vnořený:
+
+\begin{itemize}
+    \item \textbf{Nevnořený podgraf} ($\eta_{b_{k'},p_l} = 0$): Pravá strana je rovna 1, tedy musíme vybrat právě jednu větev z podgrafu.
+    \item \textbf{Vnořený podgraf} ($\eta_{b_{k'},p_l} = 1$): Pravá strana je rovna $y_{p_l}$, tedy vybereme větev pouze pokud je aktivní principální aktivita nadřazeného podgrafu. Pokud $y_{p_l} = 0$, nevybíráme žádnou větev.
+\end{itemize}
+
+\subsection*{Eq. (5) -- Propagace výběru v rámci větve}
+
+\begin{equation}
+y_j \geq y_i \quad \forall (i,j) \in A; \forall i,j \in N_{b_k}; \forall k \in K_{p_l}; \forall l \in L
+\tag{5}
+\end{equation}
+
+Toto omezení zajišťuje, že pokud vybereme aktivitu $i$, musíme vybrat i její následníka $j$ podle precedenčního grafu. Klíčová podmínka je, že \textbf{obě aktivity musí patřit do stejné alternativní větve} $N_{b_k}$. 
+
+Účelem je propagovat výběr větvící aktivity $b_k$ na všechny její následníky v rámci dané větve. Pokud vybereme větvící aktivitu, postupně se vyberou všechny aktivity v dané větvi, které jsou s ní spojeny precedenčními hranami.
+
+\subsection*{Eq. (6) -- Propojené větve (linking)}
+
+\begin{equation}
+y_j \geq y_i \cdot \kappa_{i,j} \quad \forall (i,j) \in A; \forall i \in N_{b_k}; \forall j \in N_{b_{k'}}; k \neq k'
+\tag{6}
+\end{equation}
+
+Toto omezení modeluje propojení (linking) mezi různými alternativními větvemi. Parametr $\kappa_{i,j} = 1$ indikuje, že aktivita $i$ v jedné větvi je propojena s aktivitou $j$ v jiné větvi. V takovém případě výběr aktivity $i$ automaticky vynucuje výběr aktivity $j$.
+
+Propojení se používá pro modelování situací, kdy informace nebo výstup z jedné alternativní cesty je potřebný pro jinou alternativní cestu, i když tyto cesty patří do různých větví. Pokud $\kappa_{i,j} = 0$, omezení je triviálně splněno a žádné propojení neexistuje.
+
+\subsection*{Eq. (7) -- Fixní aktivity}
+
+\begin{equation}
+y_i = 1 \quad \forall i \in N^f
+\tag{7}
+\end{equation}
+
+Fixní aktivity musí být vždy vybrány bez ohledu na volbu alternativních větví. Množina $N^f$ typicky obsahuje:
+\begin{itemize}
+    \item Fiktivní startovní aktivitu (dummy start)
+    \item Fiktivní koncovou aktivitu (dummy end)
+    \item Případné další aktivity, které jsou povinné pro každou variantu projektu
+\end{itemize}
+
+Toto omezení zajišťuje, že tyto aktivity budou vždy součástí výsledného rozvrhu.
+
+%===============================================================================
+\section{Náš ilustrativní příklad pro demonstraci nekonzistencí}
+%===============================================================================
+
+Pro demonstraci identifikovaných nekonzistencí používáme jednodušší příklad s vnořeným podgrafem.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{example.jpeg}
+\caption{Zjednodušená projektová síť s dvěma alternativními podgrafy, kde Subgraph 2 je vnořen do větve 5.}
+\label{fig:example}
+\end{figure}
+
+Parametry tohoto příkladu:
+\begin{itemize}
+    \item $N = \{0, 1, \ldots, 12\}$, $N^f = \{0, 12\}$, $N^a = \{1, \ldots, 11\}$
+    \item $L = \{1, 2\}$ -- dva alternativní podgrafy
+    \item Subgraph 1: $p_1 = 0$, $K_0 = \{1, 5\}$, $N_1 = \{1, 2, 3, 4\}$, $N_5 = \{5, 6, 7, 10, 11\}$
+    \item Subgraph 2: $p_2 = 7$, $K_7 = \{8, 9\}$, $N_8 = \{8\}$, $N_9 = \{9\}$
+    \item Vnořování: $\eta_{5,7} = 1$, $\eta_{1,7} = 0$
+\end{itemize}
+
+%===============================================================================
+\section{Identifikované nekonzistence}
+%===============================================================================
+
+\subsection{Nekonzistence 1: Rovnice (4)}
+
+Rovnice (4) se generuje pro všechny kombinace indexů $k'$, $l$ a $l'$, což vede k vzájemně si odporujícím omezením pro vnořené podgrafy.
+
+Pro Subgraph 2 ($l = 2$, $p_2 = 7$) dostáváme:
+
+\begin{tabular}{@{}ccc@{}}
+\toprule
+Volba $k'$ & $\eta_{b_{k'},7}$ & Výsledná rovnice \\
+\midrule
+$k' = 1$ & $\eta_{1,7} = 0$ & $y_8 + y_9 = 1$ \\
+$k' = 5$ & $\eta_{5,7} = 1$ & $y_8 + y_9 = y_7$ \\
+\bottomrule
+\end{tabular}
+
+\bigskip
+
+Pokud vybereme větev 1 (ne větev 5), pak $y_7 = 0$. Z první rovnice dostáváme $y_8 + y_9 = 1$, z druhé $y_8 + y_9 = 0$. Tento systém je neřešitelný -- máme logický rozpor.
+
+Jediné řešení je vynutit $y_7 = 1$, což znamená, že větev 5 musí být vždy vybrána. Tím se ztrácí smysl alternativních větví.
+
+\subsection{Nekonzistence 2: Rovnice (5) a (6)}
+
+Rovnice (5) propaguje výběr pouze mezi aktivitami ve stejné větvi. Rovnice (6) se aplikuje pouze při explicitním propojení ($\kappa_{i,j} = 1$). To vede k situacím, kdy aktivity patřící do vybrané větve nemusí být vybrány.
+
+Analýza pro větev 5:
+
+\begin{tabular}{@{}cccl@{}}
+\toprule
+Hrana $(i,j)$ & $i$ ve větvi & $j$ ve větvi & Eq. (5)? \\
+\midrule
+$(5, 6)$ & $N_5$ & $N_5$ & Ano \\
+$(6, 7)$ & $N_5$ & $N_5$ & Ano \\
+$(7, 8)$ & $N_5$ & $N_8$ & Ne -- různé větve \\
+$(7, 9)$ & $N_5$ & $N_9$ & Ne -- různé větve \\
+$(8, 10)$ & $N_8$ & $N_5$ & Ne -- různé větve \\
+$(9, 10)$ & $N_9$ & $N_5$ & Ne -- různé větve \\
+$(10, 11)$ & $N_5$ & $N_5$ & Ano \\
+\bottomrule
+\end{tabular}
+
+\bigskip
+
+Při výběru větve 5 ($y_5 = 1$):
+\begin{itemize}
+    \item Eq. (5) dává: $y_6 \geq y_5 = 1$, $y_7 \geq y_6 = 1$
+    \item Pro hrany $(7,8)$, $(7,9)$, $(8,10)$, $(9,10)$ se Eq. (5) neaplikuje (různé větve)
+    \item Eq. (6) se neaplikuje ($\kappa_{8,10} = \kappa_{9,10} = 0$)
+\end{itemize}
+
+Aktivita 10 má jako předchůdce pouze aktivity 8 a 9, které patří do jiných větví. Neexistuje žádné omezení, které by vynutilo $y_{10} = 1$, přestože aktivita 10 patří do větve 5. Stejný problém platí pro aktivitu 11.
+
+%===============================================================================
+\section{Shrnutí}
+%===============================================================================
+
+\begin{tabular}{@{}lll@{}}
+\toprule
+Problém & Popis & Důsledek \\
+\midrule
+Eq. (4) & Generuje se pro všechny $k'$ & Konfliktní omezení \\
+Eq. (5)--(6) & Propagace jen v rámci větve & Aktivity nemusí být vybrány \\
+\bottomrule
+\end{tabular}
+
+\bigskip
+
+Autoři možná testovali implementaci, která tyto problémy řešila odlišně (např. v SAT klauzulích v sekci 4.3), ale matematická formulace v sekci 3 má tyto nekonzistence.
+
+\end{document}

@@ -1,0 +1,35 @@
+\babel@toc {czech}{}\relax 
+\contentsline {section}{\numberline {1}Úvod do problému RCPSP-AS}{2}{section.1}%
+\contentsline {section}{\numberline {2}Základní notace a terminologie}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Množiny a indexy}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Klíčové parametry}{2}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Parametry pro rozšíření}{3}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Rozhodovací proměnné}{3}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Matematická formulace}{3}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Účelová funkce}{3}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Omezení}{3}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Precedenční vztahy (Eq. 2)}{3}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Jednoznačný začátek (Eq. 3)}{3}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}Výběr alternativní větve (Eq. 4)}{3}{subsubsection.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.4}Propagace výběru v rámci větve (Eq. 5)}{4}{subsubsection.3.2.4}%
+\contentsline {subsubsection}{\numberline {3.2.5}Propojené větve (Eq. 6)}{4}{subsubsection.3.2.5}%
+\contentsline {subsubsection}{\numberline {3.2.6}Fixní aktivity (Eq. 7)}{4}{subsubsection.3.2.6}%
+\contentsline {subsubsection}{\numberline {3.2.7}Kapacitní omezení zdrojů (Eq. 8)}{4}{subsubsection.3.2.7}%
+\contentsline {subsubsection}{\numberline {3.2.8}Binarita proměnných (Eq. 9)}{4}{subsubsection.3.2.8}%
+\contentsline {section}{\numberline {4}Ilustrativní příklad}{4}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Parametry příkladu}{5}{subsection.4.1}%
+\contentsline {section}{\numberline {5}Identifikované nekonzistence}{6}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Nekonzistence 1: Chybná formulace rovnice (4)}{6}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {5.1.1}Podrobný rozbor problému}{6}{subsubsection.5.1.1}%
+\contentsline {subsubsection}{\numberline {5.1.2}Aplikace na příklad}{6}{subsubsection.5.1.2}%
+\contentsline {subsubsection}{\numberline {5.1.3}Demonstrace konfliktu}{6}{subsubsection.5.1.3}%
+\contentsline {subsubsection}{\numberline {5.1.4}Navrhovaná oprava}{7}{subsubsection.5.1.4}%
+\contentsline {subsection}{\numberline {5.2}Nekonzistence 2: Nedostatečná propagace výběru aktivit}{7}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}Podrobný rozbor problému}{7}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}Aplikace na příklad}{7}{subsubsection.5.2.2}%
+\contentsline {subsubsection}{\numberline {5.2.3}Demonstrace problému}{8}{subsubsection.5.2.3}%
+\contentsline {subsubsection}{\numberline {5.2.4}Důsledky problému}{8}{subsubsection.5.2.4}%
+\contentsline {subsubsection}{\numberline {5.2.5}Navrhovaná oprava}{8}{subsubsection.5.2.5}%
+\contentsline {section}{\numberline {6}Shrnutí a závěry}{9}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Možná vysvětlení}{9}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Doporučení}{9}{subsection.6.2}%

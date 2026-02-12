@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+
+\title{Resource-Constrained Project Scheduling Problem \\ with Alternative Subgraphs (RCPSP-AS)}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Problem Definition}
+
+\noindent A project is represented as a directed acyclic graph $G = (N, A)$ of non-preemptive activities with fixed durations and precedence constraints. A set of renewable resources with limited capacities constrains which activities can run simultaneously. RCPSP-AS extends the standard RCPSP by introducing alternative subgraphs, each with a principal activity $p_l$ whose immediate successors represent mutually exclusive branches---exactly one branch must be selected from each subgraph. The set of non-branching arcs is $A_{\text{prop}} = A \setminus \{(p_l, j) \in A : l \in L\}$. Activity $0$ is the source and activity $n$ is the sink.
+
+\begin{align}
+\min \quad & S_n + d_n \\[2mm]
+\text{s.t.} \quad & x_0 = 1 \\
+& x_i \leq x_j & \forall (i,j) \in A_{\text{prop}} \\
+& \sum_{j:\, (p_l, j) \in A} x_j = x_{p_l} & \forall l \in L \\
+& S_i + d_i \leq S_j + M(2 - x_i - x_j) & \forall (i,j) \in A \\
+& \sum_{\substack{i \in N:\\ S_i \leq t < S_i + d_i}} r_{i,k} \cdot x_i \leq R_k & \forall k \in R,\; \forall t \in \mathcal{T} \\
+& x_i \in \{0, 1\} & \forall i \in N
+\end{align}
+
+where $M$ is a sufficiently large constant and $\mathcal{T} = \{0, 1, \dots, T_{\max}\}$ is the planning horizon.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}cl@{}}
+\toprule
+\textbf{Symbol} & \textbf{Description} \\
+\midrule
+$N = \{0, \ldots, n\}$ & Set of activities (topologically ordered) \\
+$A \subseteq N \times N$ & Set of precedence arcs \\
+$A_{\text{prop}}$ & Non-branching arcs \\
+$L$ & Set of alternative subgraphs \\
+$R$ & Set of renewable resources \\
+$d_i$ & Duration of activity $i$ \\
+$r_{i,k}$ & Demand of activity $i$ for resource $k$ \\
+$R_k$ & Capacity of resource $k$ \\
+$p_l$ & Principal activity of subgraph $l$ \\
+$x_i \in \{0, 1\}$ & 1 if activity $i$ is selected, 0 otherwise \\
+$S_i \in \mathbb{Z}_{\geq 0}$ & Start time of activity $i$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{enumerate}
+\item Minimize the makespan (completion time of the sink activity).
+\item The source activity is always selected.
+\item If activity $i$ is selected and $(i,j)$ is a non-branching arc, then $j$ must be selected.
+\item Exactly one branch is selected from each alternative subgraph iff its principal activity is selected.
+\item If both activities $i$ and $j$ are selected and $(i,j) \in A$, then $i$ must finish before $j$ starts.
+\item The total resource demand at any time must not exceed capacity.
+\item Decision variables: $x_i \in \{0,1\}$ (activity selection) and $S_i \in \mathbb{Z}_{\geq 0}$ (start times).
+\end{enumerate}
+
+\section{References}
+
+Servranckx, T., \& Vanhoucke, M. (2019). A tabu search procedure for the resource-constrained project scheduling problem with alternative subgraphs. \textit{European Journal of Operational Research}, 273(3), 841--860.
+
+\end{document}
