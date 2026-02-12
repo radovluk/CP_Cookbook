@@ -45,3 +45,8 @@ wheels/
 .idea/
 .vscode/
 *.swp
+
+
+# Ignore these extensions anywhere in the project
+*.aux
+*.log
