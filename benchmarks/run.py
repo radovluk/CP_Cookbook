@@ -29,7 +29,7 @@ from pathlib import Path
 
 DEFAULT_PYTHON = os.environ.get("SOLVER_PYTHON", sys.executable)
 DEFAULT_TIME_LIMIT = 60
-DEFAULT_WORKERS = 8
+DEFAULT_WORKERS = 16
 DEFAULT_LOG_LEVEL = 0
 
 # Problem-specific data patterns and paths (relative to script or problem dir)
@@ -78,15 +78,16 @@ PROBLEM_CONFIG = {
 # UTILITY FUNCTIONS
 # =============================================================================
 
-def run_command(cmd, cwd=None, timeout=None, quiet=False):
+def run_command(cmd, cwd=None, timeout=None, quiet=False, env=None):
     """Run a shell command and return the result."""
     if not quiet:
         cmd_display = cmd[:100] + "..." if len(cmd) > 100 else cmd
         print(f"  Running: {cmd_display}")
-    
+
     try:
         result = subprocess.run(
-            cmd, shell=True, cwd=cwd, capture_output=True, text=True, timeout=timeout
+            cmd, shell=True, cwd=cwd, capture_output=True, text=True,
+            timeout=timeout, env=env
         )
         if result.returncode != 0:
             if not quiet:
@@ -140,9 +141,26 @@ def collect_instances(data_dir, config):
     return sorted(set(instances))
 
 
+def group_by_category(instances, data_dir):
+    """Group instances by their parent subdirectory (category).
+
+    Instances directly in data_dir go into a 'root' category.
+    Returns ordered dict: {category_name: [instance_paths]}.
+    """
+    from collections import OrderedDict
+    groups = {}
+    for inst in instances:
+        rel = os.path.relpath(inst, data_dir)
+        parts = rel.split(os.sep)
+        category = parts[0] if len(parts) > 1 else "root"
+        groups.setdefault(category, []).append(inst)
+    # Sort categories alphabetically, each group internally sorted
+    return OrderedDict((k, sorted(groups[k])) for k in sorted(groups))
+
+
 def run_solver_batched(solver_script, instances, results_file, python_path,
-                       time_limit, workers, log_level, solver_name, 
-                       variant=None, batch_size=20):
+                       time_limit, workers, log_level, solver_name,
+                       variant=None, batch_size=20, env=None):
     """Run solver on instances in batches."""
     all_results = []
     total_batches = (len(instances) + batch_size - 1) // batch_size
@@ -162,7 +180,7 @@ def run_solver_batched(solver_script, instances, results_file, python_path,
         
         instance_args = ' '.join(f'"{inst}"' for inst in batch)
         batch_output = results_file.replace('.json', f'-batch{batch_num}.json')
-        batch_timeout = len(batch) * (time_limit + 10) + 60
+        batch_timeout = len(batch) * (time_limit + 30) + 120
         
         cmd = (f'{python_path} "{solver_script}" {instance_args} '
                f'--timeLimit {time_limit} --workers {workers} '
@@ -173,7 +191,7 @@ def run_solver_batched(solver_script, instances, results_file, python_path,
             cmd += f' --variant {variant}'
         
         try:
-            run_command(cmd, timeout=batch_timeout)
+            run_command(cmd, timeout=batch_timeout, env=env)
             if os.path.exists(batch_output):
                 with open(batch_output, 'r') as f:
                     batch_results = json.load(f)
@@ -264,7 +282,9 @@ RCPSP-TimeOffs Variants:
                         help='Skip comparison report generation')
     parser.add_argument('--variant', type=str, default=None,
                         help='Problem variant (for rcpsp-timeoffs: 1-6 or "all")')
-    
+    parser.add_argument('--optalcp-solver', type=str, default=None,
+                        help='Path to OptalCP solver binary (e.g., ./optalcp-k8s for K8s cluster)')
+
     args = parser.parse_args()
     
     start_time = time_module.time()
@@ -353,6 +373,13 @@ RCPSP-TimeOffs Variants:
     print(f"  Est. time:  ~{estimated:.1f} min (worst case)")
     print("=" * 70)
     
+    # Build environment for OptalCP (with optional remote solver)
+    optal_env = None
+    if getattr(args, 'optalcp_solver', None):
+        optal_env = os.environ.copy()
+        optal_env["OPTALCP_SOLVER"] = os.path.abspath(args.optalcp_solver)
+        print(f"  OptalCP solver: {optal_env['OPTALCP_SOLVER']}")
+
     # Run for each variant
     for variant in variants_to_run:
         variant_suffix = f"_v{variant}" if variant else ""
@@ -365,39 +392,60 @@ RCPSP-TimeOffs Variants:
         
         optal_results = []
         cpo_results = []
-        
+
+        # Group instances by category for incremental saves
+        categories = group_by_category(instances, data_dir)
+
         # Run OptalCP
         if args.solver in ('optal', 'both') and has_optal:
             print(f"\n{'=' * 70}")
             print(f"Running OptalCP{f' (variant {variant})' if variant else ''}")
             print("=" * 70)
-            
+
             optal_file = os.path.join(results_dir, f"optalcp-results{variant_suffix}.json")
-            optal_results = run_solver_batched(
-                solve_optal, instances, optal_file,
-                args.python, args.timeLimit, args.workers, args.logLevel, "optal",
-                variant=variant
-            )
-            
-            with open(optal_file, 'w') as f:
-                json.dump(optal_results, f, indent=2)
+
+            for cat_idx, (category, cat_instances) in enumerate(categories.items(), 1):
+                print(f"\n  --- Category {cat_idx}/{len(categories)}: {category} ({len(cat_instances)} instances) ---")
+                cat_results = run_solver_batched(
+                    solve_optal, cat_instances, optal_file,
+                    args.python, args.timeLimit, args.workers, args.logLevel, "optal",
+                    variant=variant, env=optal_env
+                )
+                optal_results.extend(cat_results)
+
+                # Save after every category
+                with open(optal_file, 'w') as f:
+                    json.dump(optal_results, f, indent=2)
+
+                solved = sum(1 for r in cat_results if r.get('objective') is not None)
+                print(f"  --- {category}: {solved}/{len(cat_instances)} solved, cumulative: {len(optal_results)} results saved ---")
+
             print(f"\nSaved: {optal_file}")
-        
+
         # Run CPO
         if args.solver in ('cpo', 'both') and has_cpo:
             print(f"\n{'=' * 70}")
             print(f"Running IBM CP Optimizer{f' (variant {variant})' if variant else ''}")
             print("=" * 70)
-            
+
             cpo_file = os.path.join(results_dir, f"cpo-results{variant_suffix}.json")
-            cpo_results = run_solver_batched(
-                solve_cpo, instances, cpo_file,
-                args.python, args.timeLimit, args.workers, args.logLevel, "cpo",
-                variant=variant
-            )
-            
-            with open(cpo_file, 'w') as f:
-                json.dump(cpo_results, f, indent=2)
+
+            for cat_idx, (category, cat_instances) in enumerate(categories.items(), 1):
+                print(f"\n  --- Category {cat_idx}/{len(categories)}: {category} ({len(cat_instances)} instances) ---")
+                cat_results = run_solver_batched(
+                    solve_cpo, cat_instances, cpo_file,
+                    args.python, args.timeLimit, args.workers, args.logLevel, "cpo",
+                    variant=variant
+                )
+                cpo_results.extend(cat_results)
+
+                # Save after every category
+                with open(cpo_file, 'w') as f:
+                    json.dump(cpo_results, f, indent=2)
+
+                solved = sum(1 for r in cat_results if r.get('objective') is not None)
+                print(f"  --- {category}: {solved}/{len(cat_instances)} solved, cumulative: {len(cpo_results)} results saved ---")
+
             print(f"\nSaved: {cpo_file}")
         
         # Generate comparison for this variant

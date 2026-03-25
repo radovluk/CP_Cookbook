@@ -50,3 +50,14 @@ wheels/
 # Ignore these extensions anywhere in the project
 *.aux
 *.log
+
+# --- Large binary files (too big for GitHub) ---
+docker/optalcp-solver.tar.gz
+docker/build-context/cpoptimizer
+
+data/rcpsp-timeoffs/special_dense_large/
+data/rcpsp-timeoffs/special_many_resources/
+data/rcpsp-timeoffs/tier10_massive/
+data/rcpsp-timeoffs/tier7_industrial/
+data/rcpsp-timeoffs/tier8_mega/
+data/rcpsp-timeoffs/tier9_extreme/

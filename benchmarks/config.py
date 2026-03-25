@@ -11,28 +11,28 @@ Import this in solve_optal.py and solve_cpo.py.
 
 DEFAULTS = {
     "timeLimit": 60,
-    "workers": 8,
+    "workers": 16,
     "logLevel": 0,
 }
 
 # OptalCP parameters (name: default_value)
 OPTAL_PARAMS = {
-    "searchType": "FDSDual",
-    "noOverlapPropagationLevel": 4,
-    "cumulPropagationLevel": 3,
-    "reservoirPropagationLevel": 2,
-    "usePrecedenceEnergy": 1,
-    "logPeriod": 5.0,
+    # "searchType": "FDSDual",
+    # "noOverlapPropagationLevel": 4,
+    # "cumulPropagationLevel": 3,
+    # "reservoirPropagationLevel": 2,
+    # "usePrecedenceEnergy": 1,
+    # "logPeriod": 5.0,
 }
 
 # CPO parameters (name: default_value)
 CPO_PARAMS = {
-    "SearchType": "Restart",
-    "FailureDirectedSearch": "On",
-    "NoOverlapInferenceLevel": "Extended",
-    "CumulFunctionInferenceLevel": "Extended",
-    "PrecedenceInferenceLevel": "Extended",
-    "LogPeriod": 5000,
+    # "SearchType": "Restart",
+    # "FailureDirectedSearch": "On",
+    # "NoOverlapInferenceLevel": "Extended",
+    # "CumulFunctionInferenceLevel": "Extended",
+    # "PrecedenceInferenceLevel": "Extended",
+    # "LogPeriod": 5000,
 }
 
 # CPO log level mapping (numeric -> string)

@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "optalcp-bin-academic"
+version = "2026.1.0"
+description = "OptalCP solver binaries - Academic edition"
+requires-python = ">=3.11"
+dependencies = ["optalcp"]
+
+[tool.setuptools.packages.find]
+include = ["optalcp_bin_academic*"]
+
+[tool.setuptools.package-data]
+optalcp_bin_academic = ["bin/linux-x64/*"]

@@ -1,7 +1,6 @@
 \documentclass{article}
 \usepackage[margin=2.5cm]{geometry}
-\usepackage{amsmath}
-\usepackage{amssymb}
+\usepackage{amsmath,amssymb}
 \usepackage{booktabs}
 
 \title{Resource-Constrained Project Scheduling Problem \\ with Alternative Subgraphs (RCPSP-AS)}
@@ -14,53 +13,189 @@
 
 \section{Problem Definition}
 
-\noindent A project is represented as a directed acyclic graph $G = (N, A)$ of non-preemptive activities with fixed durations and precedence constraints. A set of renewable resources with limited capacities constrains which activities can run simultaneously. RCPSP-AS extends the standard RCPSP by introducing alternative subgraphs, each with a principal activity $p_l$ whose immediate successors represent mutually exclusive branches---exactly one branch must be selected from each subgraph. The set of non-branching arcs is $A_{\text{prop}} = A \setminus \{(p_l, j) \in A : l \in L\}$. Activity $0$ is the source and activity $n$ is the sink.
+A project is represented as a directed acyclic graph $G = (N, A)$ where $N = \{0, \ldots, n\}$ is a set of non-preemptive, topologically ordered activities and $A \subset N \times N$ is a set of end--start precedence arcs. Each activity~$i$ has a fixed duration~$d_i$ and demands $r_{i,v}$ units of each renewable resource $v \in R$, which has limited capacity~$a_v$. Activity~$0$ is the unique source and activity~$n$ the unique sink.
 
-\begin{align}
-\min \quad & S_n + d_n \\[2mm]
-\text{s.t.} \quad & x_0 = 1 \\
-& x_i \leq x_j & \forall (i,j) \in A_{\text{prop}} \\
-& \sum_{j:\, (p_l, j) \in A} x_j = x_{p_l} & \forall l \in L \\
-& S_i + d_i \leq S_j + M(2 - x_i - x_j) & \forall (i,j) \in A \\
-& \sum_{\substack{i \in N:\\ S_i \leq t < S_i + d_i}} r_{i,k} \cdot x_i \leq R_k & \forall k \in R,\; \forall t \in \mathcal{T} \\
-& x_i \in \{0, 1\} & \forall i \in N
-\end{align}
+RCPSP-AS extends RCPSP with a set of \emph{alternative subgraphs}~$L$. Each subgraph $l \in L$ has a principal activity~$p_l$ (source of the subgraph), a terminal activity~$t_l$ (sink), and a set of branches~$K_{p_l}$. Each branch $k \in K_{p_l}$ starts from a \emph{branching activity}~$b_k$, an immediate successor of~$p_l$, and contains activities $N_{b_k} \subset N$ with $b_k \in N_{b_k}$, $p_l \notin N_{b_k}$, and $t_l \notin N_{b_k}$. Activities belonging to at least one branch form the \emph{alternative} set $N^a = \bigcup_k N_{b_k}$; the rest are \emph{fixed}: $N^f = N \setminus N^a$. Exactly one branch must be selected from each subgraph whose principal activity is scheduled.
 
-where $M$ is a sufficiently large constant and $\mathcal{T} = \{0, 1, \dots, T_{\max}\}$ is the planning horizon.
+Two extensions are supported: \emph{nested subgraphs} (a subgraph placed inside another's branch) and \emph{linked branches}, indicated by $\kappa_{i,j} = 1$ when activity $i \in N_{b_k}$ links to $j \in N_{b_{k'}}$ ($k \neq k'$), causing the selection of~$i$ to imply the selection of~$j$ and its successors in branch~$k'$.
+
+The objective is to minimize the makespan $C_{\max} = s_n + d_n$.
+
+\section{Notation}
 
 \begin{table}[h]
 \centering
+\small
 \begin{tabular}{@{}cl@{}}
 \toprule
 \textbf{Symbol} & \textbf{Description} \\
 \midrule
-$N = \{0, \ldots, n\}$ & Set of activities (topologically ordered) \\
-$A \subseteq N \times N$ & Set of precedence arcs \\
-$A_{\text{prop}}$ & Non-branching arcs \\
-$L$ & Set of alternative subgraphs \\
-$R$ & Set of renewable resources \\
+\multicolumn{2}{@{}l}{\textit{Sets and indices}} \\[2pt]
+$N = \{0, \ldots, n\}$ & Activities (topologically ordered); $0$ = source, $n$ = sink \\
+$A \subset N \times N$ & Precedence arcs \\
+$A_{\mathrm{prop}} = A \setminus \{(p_l, j) : l \in L\}$ & Non-branching arcs (simplified formulation) \\
+$L$ & Alternative subgraphs \\
+$K_{p_l}$ & Branches of subgraph $l$ \\
+$N_{b_k} \subset N$ & Activities in branch $k$ \\
+$N^a = \bigcup_k N_{b_k}$ & Alternative activities \\
+$N^f = N \setminus N^a$ & Fixed activities \\
+$R$ & Renewable resources \\
+$\mathcal{T} = \{0, \ldots, T_{\max}\}$ & Planning horizon (ILP) \\
+$K = \{k^*\} \cup \bigcup_{l} K_{p_l}$ & All branches including dummy $k^*$ (original CP) \\
+$B_i = \{k \in K \mid i \in N_{b_k}\}$ & Branches containing activity $i$ (original CP) \\[2pt]
+\midrule
+\multicolumn{2}{@{}l}{\textit{Parameters}} \\[2pt]
 $d_i$ & Duration of activity $i$ \\
-$r_{i,k}$ & Demand of activity $i$ for resource $k$ \\
-$R_k$ & Capacity of resource $k$ \\
+$r_{i,v}$ & Demand of activity $i$ for resource $v$ \\
+$a_v$ & Capacity of resource $v$ \\
 $p_l$ & Principal activity of subgraph $l$ \\
-$x_i \in \{0, 1\}$ & 1 if activity $i$ is selected, 0 otherwise \\
-$S_i \in \mathbb{Z}_{\geq 0}$ & Start time of activity $i$ \\
+$t_l$ & Terminal activity of subgraph $l$ \\
+$b_k$ & Branching activity of branch $k$ \\
+$\kappa_{i,j} \in \{0,1\}$ & Link indicator: 1 if $i$ in branch $k$ links to $j$ in branch $k' \neq k$ \\
+$M$ & Sufficiently large constant (ILP) \\[2pt]
+\midrule
+\multicolumn{2}{@{}l}{\textit{Decision variables --- ILP}} \\[2pt]
+$x_i \in \{0, 1\}$ & 1 if activity $i$ is selected \\
+$s_i \in \mathbb{Z}_{\ge 0}$ & Start time of activity $i$ \\[2pt]
+\midrule
+\multicolumn{2}{@{}l}{\textit{Decision variables --- CP}} \\[2pt]
+$\mathsf{x}_i$ & Optional interval variable for activity $i$, size $d_i$ \\
+$\mathrm{presenceOf}(\mathsf{x}_i)$ & 1 if interval $\mathsf{x}_i$ is present, 0 otherwise \\
+$\mathrm{startOf}(\mathsf{x}_i)$ & Start time of interval $\mathsf{x}_i$ \\
+$\mathrm{endOf}(\mathsf{x}_i)$ & End time of interval $\mathsf{x}_i$ \\
+$\mathrm{pulse}(\mathsf{x}_i, h)$ & Contributes $h$ to a cumulative function while $\mathsf{x}_i$ is present \\
 \bottomrule
 \end{tabular}
 \end{table}
 
+
+%% ============================================================================
+\section{Original Formulation}
+%% ============================================================================
+
+This formulation, following Servranckx \& Vanhoucke (2019), distinguishes fixed and alternative activities explicitly and uses dedicated constraints for branch successor implications and inter-branch links.
+
+\subsection{ILP}
+
+\begin{align}
+\min \quad & s_n + d_n \label{eq:o-obj} \\[2mm]
+\text{s.t.} \quad
+& x_i = 1
+    && \forall i \in N^f \label{eq:o-fixed} \\
+& \sum_{k \in K_{p_l}} x_{b_k} = x_{p_l}
+    && \forall l \in L \label{eq:o-branch} \\
+& x_{p_l} \le x_{t_l}
+    && \forall l \in L \label{eq:o-terminal} \\
+& x_i \le x_j
+    && \forall l \in L,\; k \in K_{p_l},\; (i,j) \in (N_{b_k} \!\times\! N_{b_k}) \cap A \label{eq:o-succ} \\
+& x_i \le x_j
+    && \forall (i,j) :\, \kappa_{i,j} = 1 \label{eq:o-link} \\
+& s_i + d_i \le s_j + M(2 - x_i - x_j)
+    && \forall (i,j) \in A \label{eq:o-prec} \\
+& \sum_{\substack{i \in N:\\ s_i \le t < s_i\!+\!d_i}} r_{i,v} \cdot x_i \le a_v
+    && \forall v \in R,\; t \in \mathcal{T} \label{eq:o-res} \\
+& x_i \in \{0,1\},\;\; s_i \in \mathbb{Z}_{\ge 0}
+    && \forall i \in N \label{eq:o-var}
+\end{align}
+
+\noindent
+\textbf{\eqref{eq:o-fixed}} All fixed activities are always selected.
+\textbf{\eqref{eq:o-branch}} Exactly one branch is chosen per active subgraph.
+\textbf{\eqref{eq:o-terminal}} If the principal activity is selected, so is the terminal.
+\textbf{\eqref{eq:o-succ}} Within a branch, selection propagates along precedence arcs.
+\textbf{\eqref{eq:o-link}} Linked activities propagate selection across branches.
+\textbf{\eqref{eq:o-prec}} Big-$M$ linearization of precedence: if both $i,j$ are selected, $i$ finishes before $j$ starts.
+\textbf{\eqref{eq:o-res}} Resource capacity is respected at every time point.
+
+
+\subsection{CP}
+
+Before building the model, a preprocessing step eliminates linked branches and unifies activity selection:
+%
 \begin{enumerate}
-\item Minimize the makespan (completion time of the sink activity).
-\item The source activity is always selected.
-\item If activity $i$ is selected and $(i,j)$ is a non-branching arc, then $j$ must be selected.
-\item Exactly one branch is selected from each alternative subgraph iff its principal activity is selected.
-\item If both activities $i$ and $j$ are selected and $(i,j) \in A$, then $i$ must finish before $j$ starts.
-\item The total resource demand at any time must not exceed capacity.
-\item Decision variables: $x_i \in \{0,1\}$ (activity selection) and $S_i \in \mathbb{Z}_{\geq 0}$ (start times).
+    \item \textbf{Eliminate links.} For each $\kappa_{i,j} = 1$ between branches $k$ and $k'$, extend $N_{b_k} \leftarrow N_{b_k} \cup \bigl(S^*_j \cap N_{b_{k'}}\bigr)$, where $S^*_j$ denotes the transitive successors of~$j$.
+    \item \textbf{Dummy branch.} Introduce $k^*$ with $b_{k^*} = 0$ and $N_{b_{k^*}} = N^f$.
+    \item \textbf{Derived sets.} $K = \{k^*\} \cup \bigcup_{l \in L} K_{p_l}$ \;\; and \;\; $B_i = \{k \in K \mid i \in N_{b_k}\}$.
 \end{enumerate}
+
+\begin{align}
+\min \quad & \mathrm{endOf}(\mathsf{x}_n) \label{eq:ocp-obj} \\[2mm]
+\text{s.t.} \quad
+& \mathrm{presenceOf}(\mathsf{x}_0) = 1
+    \label{eq:ocp-source} \\
+& \mathrm{presenceOf}(\mathsf{x}_i) \;\Leftrightarrow\; \bigvee_{k \in B_i} \mathrm{presenceOf}(\mathsf{x}_{b_k})
+    && \forall i \in N \!\setminus\! \{0\} \label{eq:ocp-sel} \\
+& \sum_{k \in K_{p_l}} \mathrm{presenceOf}(\mathsf{x}_{b_k}) = \mathrm{presenceOf}(\mathsf{x}_{p_l})
+    && \forall l \in L \label{eq:ocp-branch} \\
+& \bigl(\mathrm{presenceOf}(\mathsf{x}_i) \!\wedge\! \mathrm{presenceOf}(\mathsf{x}_j)\bigr) \Rightarrow \mathrm{endOf}(\mathsf{x}_i) \le \mathrm{startOf}(\mathsf{x}_j)
+    && \forall (i,j) \!\in\! A \label{eq:ocp-prec} \\
+& \sum_{i \in N} \mathrm{pulse}(\mathsf{x}_i,\, r_{i,v}) \le a_v
+    && \forall v \in R \label{eq:ocp-res} \\
+& \mathsf{x}_i \;\text{optional interval, size}\; d_i
+    && \forall i \in N \label{eq:ocp-var}
+\end{align}
+
+\noindent
+After preprocessing, activity selection~\eqref{eq:ocp-sel} is unified: activity~$i$ is present if and only if at least one branch containing it is selected. This single rule covers both fixed activities (via the dummy branch~$k^*$ tied to the always-present source) and alternative activities. Constraints \eqref{eq:ocp-branch}--\eqref{eq:ocp-res} mirror the ILP: branch selection, conditional precedence timing, and cumulative resource limits.
+
+%% ============================================================================
+\section{Simplified Formulation}
+%% ============================================================================
+
+The simplified formulation replaces the explicit classification into $N^f$, $N^a$, $t_l$, and $\kappa$ with a single mechanism: \emph{selection propagation} along the set of non-branching arcs $A_{\mathrm{prop}} = A \setminus \{(p_l, j) \in A : l \in L\}$. Since the source is always selected and $A_{\mathrm{prop}}$ contains all arcs except those from principal activities to their branch successors, fixed activities are selected by transitivity. Within a selected branch, successor selection follows the same propagation. Cross-branch links are handled automatically because the link arc $(i, j)$ belongs to $A_{\mathrm{prop}}$ whenever the source~$i$ is not a principal activity. No preprocessing is needed.
+
+\subsection{ILP}
+
+\begin{align}
+\min \quad & s_n + d_n \label{eq:s-obj} \\[2mm]
+\text{s.t.} \quad
+& x_0 = 1
+    \label{eq:s-source} \\
+& x_i \le x_j
+    && \forall (i,j) \in A_{\mathrm{prop}} \label{eq:s-prop} \\
+& \sum_{j:\,(p_l,j) \in A} x_j = x_{p_l}
+    && \forall l \in L \label{eq:s-branch} \\
+& s_i + d_i \le s_j + M(2 - x_i - x_j)
+    && \forall (i,j) \in A \label{eq:s-prec} \\
+& \sum_{\substack{i \in N:\\ s_i \le t < s_i\!+\!d_i}} r_{i,v} \cdot x_i \le a_v
+    && \forall v \in R,\; t \in \mathcal{T} \label{eq:s-res} \\
+& x_i \in \{0,1\},\;\; s_i \in \mathbb{Z}_{\ge 0}
+    && \forall i \in N \label{eq:s-var}
+\end{align}
+
+\noindent
+\textbf{\eqref{eq:s-source}} The source activity is selected.
+\textbf{\eqref{eq:s-prop}} Selection propagates along non-branching arcs---this single rule replaces~\eqref{eq:o-fixed}, \eqref{eq:o-terminal}, \eqref{eq:o-succ}, and~\eqref{eq:o-link}.
+\textbf{\eqref{eq:s-branch}} Exactly one successor of $p_l$ is chosen iff $p_l$ is selected.
+\textbf{\eqref{eq:s-prec}}--\textbf{\eqref{eq:s-res}} Precedence and resource constraints are unchanged.
+
+
+\subsection{CP}
+
+\begin{align}
+\min \quad & \mathrm{endOf}(\mathsf{x}_n) \label{eq:scp-obj} \\[2mm]
+\text{s.t.} \quad
+& \mathrm{presenceOf}(\mathsf{x}_0) = 1
+    \label{eq:scp-source} \\
+& \mathrm{presenceOf}(\mathsf{x}_i) \Rightarrow \mathrm{presenceOf}(\mathsf{x}_j)
+    && \forall (i,j) \in A_{\mathrm{prop}} \label{eq:scp-prop} \\
+& \sum_{j:\,(p_l,j) \in A} \mathrm{presenceOf}(\mathsf{x}_j) = \mathrm{presenceOf}(\mathsf{x}_{p_l})
+    && \forall l \in L \label{eq:scp-branch} \\
+& \bigl(\mathrm{presenceOf}(\mathsf{x}_i) \!\wedge\! \mathrm{presenceOf}(\mathsf{x}_j)\bigr) \Rightarrow \mathrm{endOf}(\mathsf{x}_i) \le \mathrm{startOf}(\mathsf{x}_j)
+    && \forall (i,j) \!\in\! A \label{eq:scp-prec} \\
+& \sum_{i \in N} \mathrm{pulse}(\mathsf{x}_i,\, r_{i,v}) \le a_v
+    && \forall v \in R \label{eq:scp-res} \\
+& \mathsf{x}_i \;\text{optional interval, size}\; d_i
+    && \forall i \in N \label{eq:scp-var}
+\end{align}
+
+\noindent
+The CP formulation mirrors the simplified ILP directly. Optional interval variables~\eqref{eq:scp-var} unify the selection ($\mathrm{presenceOf}$) and timing ($\mathrm{startOf}$, $\mathrm{endOf}$) decisions. The $\mathrm{pulse}$ function~\eqref{eq:scp-res} models time-varying resource usage, enabling the solver's built-in cumulative constraint.
+
 
 \section{References}
 
+\noindent
 Servranckx, T., \& Vanhoucke, M. (2019). A tabu search procedure for the resource-constrained project scheduling problem with alternative subgraphs. \textit{European Journal of Operational Research}, 273(3), 841--860.
 
 \end{document}
