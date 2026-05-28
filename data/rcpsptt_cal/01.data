@@ -1,0 +1,57 @@
+# =====================================================================
+# RCPSP-TT-cal  --  instance "01"  (variant-separating)
+#
+# Designed so all four variants give DIFFERENT makespans, exposing what
+# migration and interruption each buy. One bottleneck work task A of size 4
+# needs 1 unit of type 0; two units have fragmented, complementary calendars
+# so that no single unit is free for 4 consecutive steps early on.
+#
+#   Optimal makespan per variant:
+#     V1  no-migration / no-interruption      = 16
+#     V2  migration    / no-interruption      =  9
+#     V4  no-migration / blocked-interruption =  7
+#     V3  migration    / interruption         =  6
+#
+# Why:
+#   V1 must place A in ONE unit's continuous 4-window -> only U0/U1 tail
+#      [12,..) qualifies -> A = [12,16).
+#   V2 may swap units mid-run (no pause): aggregate cover is continuous on
+#      [5,9) (U0 [5,7) then U1 [7,9)) -> A = [5,9), end 9.
+#   V4 keeps one fixed unit but may pause while it is off (unit reserved):
+#      U0 works [0,2)+[5,7) = 4 across the pause [2,5) -> end 7.
+#   V3 may pause AND swap: work [0,2)U0 + [2,3)U1 (=3), pause [3,5),
+#      [5,6)U0 (=4) -> end 6.
+# =====================================================================
+
+# HEADER: <num_tasks> <num_types> <num_units>
+3 1 2
+
+# RESOURCE TYPES: <type_id> <num_units> <unit_ids...>
+0 2 0 1
+
+# RESOURCE UNITS (calendars): <unit_id> <num_steps> <t1> <v1> ...
+# U0: on[0,2) off[2,5) on[5,7) off[7,12) on[12,..)
+0 5 0 100 2 0 5 100 7 0 12 100
+# U1: off[0,2) on[2,3) off[3,7) on[7,9) off[9,12) on[12,..)
+1 6 0 0 2 100 3 0 7 100 9 0 12 100
+
+# TASKS: <task_id> <size> <num_reqs>  then <type_id> <qty>
+0 0 1
+ 0 0
+1 4 1
+ 0 1
+2 0 1
+ 0 0
+
+# PRECEDENCES: <count> then <pred> <succ>
+2
+0 1
+1 2
+
+# TRANSFER TIMES: <num_types> then per type <type_id> + N x N matrix.
+# Single work task here, so transfers do not bind (see 00.data for those).
+1
+0
+0 0 0
+0 0 0
+0 0 0

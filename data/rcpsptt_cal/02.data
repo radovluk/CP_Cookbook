@@ -1,0 +1,59 @@
+# =====================================================================
+# RCPSP-TT-cal  --  instance "02"  (transfers + all four variants differ)
+#
+# Fan-out: A (size 4) precedes B (size 2) and C (size 2); each work task
+# needs 1 unit of type 0; two units with fragmented complementary calendars.
+# Transfer times between the work tasks are non-zero, so whenever a unit is
+# reused (A -> B, A -> C, B <-> C) an in-transit block appears.
+#
+#   Optimal makespan per variant (CPO and OptalCP agree):
+#     V1  no-migration / no-interruption      = 19
+#     V2  migration    / no-interruption      = 15
+#     V4  no-migration / blocked-interruption = 11
+#     V3  migration    / interruption         = 10
+#
+# All four differ (lattice V1 >= V2 >= V3 and V1 >= V4 >= V3) and every
+# variant uses at least one transfer (V2/V3 use two), so the Gantt shows
+# both the calendar/assignment structure and the resource transfers.
+# =====================================================================
+
+# HEADER: <num_tasks> <num_types> <num_units>
+5 1 2
+
+# RESOURCE TYPES: <type_id> <num_units> <unit_ids...>
+0 2 0 1
+
+# RESOURCE UNITS (calendars): <unit_id> <num_steps> <t1> <v1> ...
+# U0: on[0,1) off[1,3) on[3,5) off[5,6) on[6,8) off[8,9) on[9,11) off[11,12) on[12,..)
+0 9 0 100 1 0 3 100 5 0 6 100 8 0 9 100 11 0 12 100
+# U1: off[0,3) on[3,4) off[4,6) on[6,7) off[7,8) on[8,10) off[10,13) on[13,..)
+1 8 0 0 3 100 4 0 6 100 7 0 8 100 10 0 13 100
+
+# TASKS: <task_id> <size> <num_reqs>  then <type_id> <qty>
+0 0 1
+ 0 0
+1 4 1
+ 0 1
+2 2 1
+ 0 1
+3 2 1
+ 0 1
+4 0 1
+ 0 0
+
+# PRECEDENCES: <count> then <pred> <succ>   (A -> B, A -> C, B -> sink, C -> sink)
+5
+0 1
+1 2
+1 3
+2 4
+3 4
+
+# TRANSFER TIMES: <num_types> then per type <type_id> + N x N matrix Delta[i][j]
+1
+0
+0 0 0 0 0
+0 0 1 1 0
+0 3 0 2 0
+0 3 2 0 0
+0 0 0 0 0
